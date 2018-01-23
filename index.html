@@ -12,13 +12,13 @@
     <body>
         <main class="container">
             <form class="note">
-                <input class="note__title" type="text" name="title" placeholder="Título" autofocus />
-                <textarea class="note__body" name="body" rows="5" placeholder="Criar uma nota..."></textarea>
-                <button class="note__control" type="button" onclick="">
+                <input class="note__title" type="text" name="titulo" placeholder="Título" autofocus />
+                <textarea class="note__body" name="texto" rows="5" placeholder="Criar uma nota..."></textarea>
+                <button class="note__control" type="button" onclick="adicionarNota(this.form.titulo, this.form.texto, this.form, this.form.nextElementSibling)">
                     Concluído
                 </button>
             </form>
-
+            
             <section class="notes"></section>
         </main>
 
