@@ -14,12 +14,21 @@
             <form class="note">
                 <input class="note__title" type="text" name="title" placeholder="Título" autofocus />
                 <textarea class="note__body" name="body" rows="5" placeholder="Criar uma nota..."></textarea>
-                <button class="note__control" type="button" onclick="">
+                <button class="note__control" type="button" onclick="adicionarNota(this.form.title, this.form.body, this.form, this.form.nextElementSibling)">
                     Concluído
                 </button>
             </form>
 
             <section class="notes"></section>
+
+            <!--<div class="note">
+                <button class="note__excluir">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+                <h1 class="note__body">Titulo</h1>
+                <p class="note__control">Texto</p>
+            </div>-->
+            
         </main>
 
         <script src="js/scripts.js"></script>
