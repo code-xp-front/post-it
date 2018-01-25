@@ -45,6 +45,7 @@ function adicionarNota(inputTitulo, textareaTexto, formulario, secao, posicao) {
         notas[posicao].editando = false;
         
         // chamar o atualiza secao
+        atualizarSecao(secao);
 
     } else {
         // criar uma variavel nota
