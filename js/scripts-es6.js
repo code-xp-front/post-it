@@ -1,7 +1,8 @@
-// a tela se atualizar sozinhanpm install babel-preset-env --save-dev
+// converter o objeto notas em uma instância de uma classe lista
 var notas = {
     lista: [],
     adiciona: function(titulo, texto, secao) {
+        // converter o objeto nota em uma instancia de uma classe nota
         var nota = {
             titulo: titulo,
             texto: texto,
@@ -31,7 +32,7 @@ var notas = {
 function atualizarSecao(secao) {
     var conteudoSecao = "";
 
-    // forEach, mapa, reduce
+''
     for (var posicao = 0; posicao < notas.lista.length; posicao++) {
         if (notas.lista[posicao].editando) {
             conteudoSecao += '<form class="note">'+
@@ -72,7 +73,6 @@ function atualizaNota(inputTitulo, textareaTexto, formulario, secao, posicao) {
 }
 
 function removerNota(evento, posicao, secao) {
-    // falar de propagação de evento
     evento.stopPropagation();
     notas.remove(posicao, secao);
 }
