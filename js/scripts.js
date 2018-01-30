@@ -46,7 +46,6 @@ function adicionarNota(inputTitulo, textareaTexto, formulario, secao, posicao) {
         
         // chamar o atualiza secao
         atualizarSecao(secao);
-
     } else {
         // criar uma variavel nota
         var nota = {
