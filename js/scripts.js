@@ -1,7 +1,5 @@
 var listaNotas = [];
 
-// var editando = false;
-
 //////////////////////////////////////////////////
 
 function atualizarSecao(secao) {
@@ -25,7 +23,7 @@ function atualizarSecao(secao) {
         } else {
 
             inserirHTML += '<form class="note" onclick="editarNota(' + index + ', this.parentElement)">' +
-                '<button class="note__excluir" onclick="excluirNota(this.form.parentElement,' + index + ')">' +
+                '<button class="note__excluir" onclick="excluirNota(event, this.form.parentElement,' + index + ')">' +
                 '<i class="fa fa-times" aria-hidden="true"></i>' +
                 '</button>' +
                 '<h1 class="note__title">' + listaNotas[index].titulo + '</h1>' +
@@ -90,7 +88,25 @@ function adicionarNota(inputTitulo, inputTexto, formulario, secao, index) {
 
 //////////////////////////////////////////////////
 
-function excluirNota(secao, index) {
+function editarNota(index, secao) {
+
+    console.log("blablabla edit");
+
+    //clicando na nota criada para virar editavel
+    listaNotas[index].editando = true;
+
+    //atualizar a tela
+    atualizarSecao(secao);
+
+}
+
+//////////////////////////////////////////////////
+
+function excluirNota(evento, secao, index) {
+    // console.log("blablabla delete");
+
+    //cancelar propagação de evento
+    evento.stopPropagation();
 
     //excluir a nota da lista de notas
     listaNotas.splice(index, 1);
@@ -100,15 +116,7 @@ function excluirNota(secao, index) {
     
 }
 
-//////////////////////////////////////////////////
 
-function editarNota(index, secao) {
-
-    //clicando na nota criada para virar editavel
-    listaNotas[index].editando = true;
-
-    //atualizar a tela
-    atualizarSecao(secao);
-}
 
 //////////////////////////////////////////////////
+
