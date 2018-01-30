@@ -1,0 +1,41 @@
+// Exemplo de objeto:
+var pessoa = {
+    nome: "Camila",
+    idade: 18,
+    peso: 54.5,
+    ehCasada: false,
+    filhos: ["João", "Maria", "Eduardo"],
+    descobreAnoNascimento() {
+        return 2018 - this.idade;
+    },
+    contaFilhos: function() {
+        return this.filhos.length;
+    }
+};
+
+pessoa.nome; // Camila
+pessoa.ehCasada; // false
+pessoa.descobreAnoNascimento(); // 2000
+
+// Sintaxe antiga
+function ListaObservavel() {
+	this.observers = function(){console.log("observing");}
+	this.push = function(item){
+		this.__proto__.push(item);
+		this.observers();
+    }
+}
+
+ListaObservavel.prototype = [];
+
+// Sintaxe nova
+class ListaObservavel extends Array { 
+    constructor(observador) {
+        this.observador = observador;
+    }
+
+    push(item){
+        super.push(item);
+        this.observador();
+    }
+}

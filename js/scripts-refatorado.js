@@ -1,29 +1,36 @@
-// a tela se atualizar sozinhanpm install babel-preset-env --save-dev
-var notas = {
-    lista: [],
-    adiciona: function(titulo, texto, secao) {
-        var nota = {
-            titulo: titulo,
-            texto: texto,
-            editando: false
-        };
+var secaoNotas = document.getElementsByClassName("notes")[0];
 
-        this.lista.push(nota);
-        atualizarSecao(secao);
+function observaListaNotas() {
+    atualizarSecao(secaoNotas);
+}
+
+
+var listaNotas = {
+    listaInterna: [],
+    // Refatoração: desacoplamento da lista com a tela
+    observador: observaListaNotas,
+    adiciona: function(item) {
+        this.listaInterna.push(item);
+        this.observador();
     },
-    remove: function(posicao, secao) {
-        this.lista.splice(posicao, 1);
-        atualizarSecao(secao);
+    remove: function(posicao) {
+        this.listaInterna.splice(posicao, 1);
+        this.observador();
     },
-    edita: function(posicao, secao) {
-        this.lista[posicao].editando = true;
-        atualizarSecao(secao);
+    edita: function(posicao, item) {
+        // Refatoração: usar internamente nossa função pega
+        var itemAtual = this.pega(posicao);
+        itemAtual = item; 
+        this.observador();
     },
-    atualiza: function(titulo, texto, posicao, secao) {
-        this.lista[posicao].titulo = titulo;
-        this.lista[posicao].texto = texto;
-        this.lista[posicao].editando = false;
-        atualizarSecao(secao);
+    temItem: function(posicao) {
+        return posicao in this.listaInterna;
+    },
+    pega: function(posicao) {
+        return this.listaInterna[posicao];
+    },
+    contaTotal: function() {
+        return this.listaInterna.length;
     }
 };
 
@@ -31,23 +38,25 @@ var notas = {
 function atualizarSecao(secao) {
     var conteudoSecao = "";
 
-    // forEach, mapa, reduce
-    for (var posicao = 0; posicao < notas.lista.length; posicao++) {
-        if (notas.lista[posicao].editando) {
+    for (var posicao = 0; posicao < listaNotas.contaTotal(); posicao++) {
+        // Refatoração: guardar numa variável a nota pega
+        var notaAtual = listaNotas.pega(posicao);
+
+        if (notaAtual.editando) {
             conteudoSecao += '<form class="note">'+
-                                '<input class="note__title" type="text" name="titulo" value="' + notas.lista[posicao].titulo + '" placeholder="Título">'+
-                                '<textarea class="note__body" name="texto" rows="5" placeholder="Criar uma nota...">' + notas.lista[posicao].texto +'</textarea>'+
-                                '<button class="note__control" type="button" onclick="atualizaNota(this.form.titulo, this.form.texto, this.form, this.form.parentElement, ' + posicao +')">'+
+                                '<input class="note__title" type="text" name="titulo" value="' + notaAtual.titulo + '" placeholder="Título">'+
+                                '<textarea class="note__body" name="texto" rows="5" placeholder="Criar uma nota...">' + notaAtual.texto +'</textarea>'+
+                                '<button class="note__control" type="button" onclick="adicionarNota(this.form.titulo, this.form.texto, this.form, ' + posicao +')">'+
                                     'Concluído'+
                                 '</button>'+
                              '</form>';
         } else {
-            conteudoSecao += '<form class="note" onclick="editaFormulario(' + posicao + ', this.parentElement)">'+
-                                '<button class="note__control" type="button" onclick="removerNota(event, ' + posicao + ', this.form.parentElement)">'+
+            conteudoSecao += '<form class="note" onclick="editaFormulario(' + posicao + ')">'+
+                                '<button class="note__control" type="button" onclick="removerNota(event,' + posicao + ')">'+
                                     '<i class="fa fa-times" aria-hidden="true"></i>'+
                                 '</button>'+
-                                '<h1 class="note__title">' + notas.lista[posicao].titulo + '</h1>'+
-                                '<p class="note__body">' + notas.lista[posicao].texto + '</p>'+
+                                '<h1 class="note__title">' + notaAtual.titulo + '</h1>'+
+                                '<p class="note__body">' + notaAtual.texto + '</p>'+
                              '</form>';
         }
     }
@@ -55,29 +64,31 @@ function atualizarSecao(secao) {
     secao.innerHTML = conteudoSecao;
 }
 
-function adicionarNota(inputTitulo, textareaTexto, formulario, secao) {
-    var titulo = inputTitulo.value;
-    var texto = textareaTexto.value;
-
-    notas.adiciona(titulo, texto, secao);
-
-    formulario.reset();
+function editaFormulario(posicao) {
+    var nota = listaNotas.pega(posicao);
+    nota.editando = true;
+    listaNotas.edita(posicao, nota);
 }
 
-function atualizaNota(inputTitulo, textareaTexto, formulario, secao, posicao) {
-    var titulo = inputTitulo.value;
-    var texto = textareaTexto.value;
+function adicionarNota(inputTitulo, textareaTexto, formulario, posicao) {
+    // Refatoração: guardar os valores em uma variavel
+    var titulo = inputTitulo.value,
+        texto = textareaTexto.value;
 
-    notas.atualiza(titulo, texto, posicao, secao);
+    if (listaNotas.temItem(posicao)) {
+        var notaExistente = listaNotas.pega(posicao);
+        notaExistente.titulo = titulo;
+        notaExistente.texto = texto;
+        notaExistente.editando = false;
+        listaNotas.edita(posicao, notaExistente);
+    } else {
+        var novaNota = {titulo: titulo, texto: texto};
+        listaNotas.adiciona(novaNota);
+        formulario.reset();
+    }
 }
 
-function removerNota(evento, posicao, secao) {
-    // falar de propagação de evento
+function removerNota(evento, posicao) {
     evento.stopPropagation();
-    notas.remove(posicao, secao);
-}
-
-function editaFormulario(posicao, secao) {
-    notas.edita(posicao, secao);
-    return false;
+    listaNotas.remove(posicao);
 }
