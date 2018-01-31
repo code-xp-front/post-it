@@ -12,7 +12,7 @@ var novaLista = {
     listaNotas: [],
     secao: document.getElementsByClassName("notes")[0],
 
-    adicionar: function (novoTitulo, novoTexto, secao) {
+    adicionar: (novoTitulo, novoTexto, secao) => {
 
         var nota = {
             titulo: novoTitulo,
@@ -26,7 +26,7 @@ var novaLista = {
 
     },
 
-    editar: function (index) {
+    editar: (index) => {
 
         this.listaNotas[index].editando = true;
 
@@ -34,7 +34,7 @@ var novaLista = {
 
     },
 
-    remover: function (index) {
+    remover: (index) => {
 
         this.listaNotas.splice(index, 1);
 
@@ -42,7 +42,7 @@ var novaLista = {
 
     },
 
-    salvar: function (index, novoTitulo, novoTexto) {
+    salvar: (index, novoTitulo, novoTexto) => {
 
         this.listaNotas[index].titulo = novoTitulo;
         this.listaNotas[index].texto = novoTexto;
@@ -52,35 +52,37 @@ var novaLista = {
         atualizarSecao(this.secao);
 
     },
-    pegaNota: function(index) {
-        return this.listaNotas[index];
-    }
-};
 
+    pegar: (index) => this.listaNotas[index],
 
-function atualizarSecao(secao) {
+    contaTotal: () => this.listaNotas.length
+;
+
+const atualizarSecao = (secao) => {
 
     var inserirHTML = "";
 
-    for (var index = 0; index < novaLista.listaNotas.length; index++) {
+    for (var index = 0; index < novaLista.contaTotal(); index++) {
 
-        if (novaLista.listaNotas[index].editando == true) {
+        var notaAtual = novaLista.pegar(index);
 
-            inserirHTML += '<form class="note note--editing">' +
-                '<input class="note__title note__title--editing" type="text" name="title" placeholder="Título" value="' + novaLista.listaNotas[index].titulo + '" autofocus />' +
-                '<textarea class="note__body note__body--editing" name="body" rows="5" placeholder="Criar uma nota...">' + novaLista.listaNotas[index].texto + '</textarea>' +
-                '<button class="note__control" type="button" onclick="adicionarNota(this.form.title, this.form.body, this.form,' + index + ')"> Salvar </button>' +
-                '</form>'
+        if (notaAtual.editando == true) {
+
+            inserirHTML += `<form class="note note--editing">
+                    <input class="note__title note__title--editing" type="text" name="title" placeholder="Título" value="${notaAtual.titulo}" autofocus /> 
+                    <textarea class="note__body note__body--editing" name="body" rows="5" placeholder="Criar uma nota..."> ${notaAtual.texto} </textarea>
+                    <button class="note__control" type="button" onclick="adicionarNota(this.form.title, this.form.body, this.form, ${index} )"> Salvar </button> 
+                    </form>`;
 
         } else {
 
-            inserirHTML += '<form class="note" onclick="editarNota(' + index + '")>' +
-                '<button class="note__excluir" onclick="excluirNota(event,' + index + ')">' +
-                '<i class="fa fa-times" aria-hidden="true"></i>' +
-                '</button>' +
-                '<h1 class="note__title">' + novaLista.listaNotas[index].titulo + '</h1>' +
-                '<p class="note__body">' + novaLista.listaNotas[index].texto + '</p>' +
-                '</form>'
+            inserirHTML += `<form class="note" onclick="editarNota(${index})">
+                    <button class="note__excluir" onclick="excluirNota(event, ${index} )">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                    <h1 class="note__title"> ${notaAtual.titulo} </h1>
+                    <p class="note__body"> ${notaAtual.texto} </p>
+                    </form>`;
         }
     }
 
@@ -89,18 +91,14 @@ function atualizarSecao(secao) {
 };
 
 
-function editarNota(index) {
-
-    novaLista.editar(index);
-
-}
+const editarNota = (index) => novaLista.editar(index);
 
 
-function adicionarNota(inputTitulo, inputTexto, formulario, index) {
+const adicionarNota = (inputTitulo, inputTexto, formulario, index) => {
 
     console.log(inputTexto);
 
-    if (novaLista.listaNotas[index]) {
+    if (novaLista.pegar(index)) {
 
         novaLista.salvar(index, inputTitulo.value, inputTexto.value);
 
@@ -110,13 +108,13 @@ function adicionarNota(inputTitulo, inputTexto, formulario, index) {
         formulario.reset();
 
     }
-}
+};
 
 
-function excluirNota(evento, index) {
+const excluirNota = (evento, index) => {
 
     evento.stopPropagation();
 
     novaLista.listaNotas.splice(index, 1);
 
-}
+};
