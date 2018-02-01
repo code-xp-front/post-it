@@ -1,7 +1,9 @@
+let qualquerCoisa = "";
+
 const listaNotas = {
     secao: document.getElementsByClassName("notes")[0],
     listaInterna: [],
-    adiciona: (novoTitulo, novoTexto) => {
+    adiciona(novoTitulo, novoTexto) {
         let nota = {
             titulo: novoTitulo,
             texto: novoTexto,
@@ -10,25 +12,25 @@ const listaNotas = {
         this.listaInterna.push(nota);
         atualizarSecao(this.secao);
     },
-    remove: (posicao) => {
+    remove(posicao) {
         this.listaInterna.splice(posicao, 1);
         atualizarSecao(this.secao);
     },
-    edita: (posicao) => {
+    edita(posicao) {
         this.listaInterna[posicao].editando = true;
         atualizarSecao(this.secao);
     },
-    salva: (posicao, novoTitulo, novoTexto) => {
+    salva(posicao, novoTitulo, novoTexto) {
         this.listaInterna[posicao].titulo = novoTitulo;
         this.listaInterna[posicao].texto = novoTexto;
         this.listaInterna[posicao].editando = false;
         atualizarSecao(this.secao);
     },
-    pega: (posicao) => {
-        return this.listaInterna[posicao];
+    pega(posicao) {
+        return this.listaInterna[posicao] // não esquecer do return
     },
-    contaTotal: () => {
-        return this.listaInterna.length;
+    contaTotal() {
+        return this.listaInterna.length; // não esquecer do return
     }
 };
 
@@ -36,7 +38,7 @@ const atualizarSecao = secao => {
     let conteudoSecao = "";
 
     for (let posicao = 0; posicao < listaNotas.contaTotal(); posicao++) {
-        var notaAtual = listaNotas.pega(posicao);
+        let notaAtual = listaNotas.pega(posicao);
         if (notaAtual.editando) {
             conteudoSecao += `<form class="note">
                                 <input class="note__title" type="text" name="titulo" value="${notaAtual.titulo}" placeholder="Título">
@@ -51,7 +53,7 @@ const atualizarSecao = secao => {
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </button>
                                 <h1 class="note__title">${notaAtual.titulo}</h1>
-                                <p class="note__body">'${notaAtual.texto}</p>
+                                <p class="note__body">${notaAtual.texto}</p>
                               </form>`;
         }
     }
