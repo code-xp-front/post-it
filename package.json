@@ -6,11 +6,10 @@
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "jest": "^22.1.4"
+    "babel-preset-env": "^1.6.1"
   },
   "scripts": {
-    "test": "jest"
+    "build": "babel js -d lib"
   },
   "repository": {
     "type": "git",

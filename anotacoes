@@ -1,3 +1,5 @@
+// Falar .gitignore
+
 // Exemplo de objeto:
 var pessoa = {
     nome: "Camila",
@@ -31,6 +33,7 @@ ListaObservavel.prototype = [];
 // Sintaxe nova
 class ListaObservavel extends Array { 
     constructor(observador) {
+        super();
         this.observador = observador;
     }
 
@@ -39,3 +42,13 @@ class ListaObservavel extends Array {
         this.observador();
     }
 }
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Object/proto
+https://facebook.github.io/jest/docs/en/mock-function-api.html
+https://jakearchibald.com/2017/es-modules-in-browsers/
+https://udgwebdev.com/frontend-lindo-usando-babel-para-rodar-es6/
+https://babeljs.io/faq
+https://babeljs.io/repl/#?babili=true&browsers=&build=&builtIns=false&code_lz=G4QwTgBAZhC8EAoCUcB8EDeByArgZwFMI8AXMASwGMSsBuCMAknMAOwhIAty8BfWgFBRkcWPADu5VgBMA9uPoB6RRFk5VqgEYArJrIgBzADazNIIwIGVZrUhHwFI8DAIjRyYUgDkQAWwIAXBAARADKBGak5CCswQA0rhBGIN5-gSEAspQA0gSsAF7kBPGJBkwAYjhGRj7-QSKw6C5ubsoQ4pyysgAOeACEEAAGXDyDEHIEeKxYJBAg1DjmRgCeDARQjnmURIMOYGOcm4lujMxsHNx4AHRQHqn-EADUIS_PI9fJ9wSCbrwJrSoHBciP4uLJpMROmAuDEIVItLpqHhShUqjU0gAmETNFqnFjsd43O4kWpEZ7BV4XHhXT4ktI_CC8AT8IA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&lineWrap=false&presets=es2015%2Cstage-0%2Cbabili&prettier=false&targets=&version=6.26.0&envVersion=1.6.2
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Strict_mode
+https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-function-after-import
