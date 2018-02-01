@@ -52,3 +52,36 @@ https://babeljs.io/faq
 https://babeljs.io/repl/#?babili=true&browsers=&build=&builtIns=false&code_lz=G4QwTgBAZhC8EAoCUcB8EDeByArgZwFMI8AXMASwGMSsBuCMAknMAOwhIAty8BfWgFBRkcWPADu5VgBMA9uPoB6RRFk5VqgEYArJrIgBzADazNIIwIGVZrUhHwFI8DAIjRyYUgDkQAWwIAXBAARADKBGak5CCswQA0rhBGIN5-gSEAspQA0gSsAF7kBPGJBkwAYjhGRj7-QSKw6C5ubsoQ4pyysgAOeACEEAAGXDyDEHIEeKxYJBAg1DjmRgCeDARQjnmURIMOYGOcm4lujMxsHNx4AHRQHqn-EADUIS_PI9fJ9wSCbrwJrSoHBciP4uLJpMROmAuDEIVItLpqHhShUqjU0gAmETNFqnFjsd43O4kWpEZ7BV4XHhXT4ktI_CC8AT8IA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&lineWrap=false&presets=es2015%2Cstage-0%2Cbabili&prettier=false&targets=&version=6.26.0&envVersion=1.6.2
 https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Strict_mode
 https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-function-after-import
+
+
+
+// Crie a definição de uma Pessoa
+// primeiroNome, segundoNome, peso, altura, idade
+// mostrar nome completo
+// mostrar ano que a pessoa nasceu
+// calcular o IMC
+
+class Pessoa {
+	constructor(primeiroNome, segundoNome, peso, altura, idade) {
+		this.primeiroNome = primeiroNome;
+		this.segundoNome = segundoNome;
+		this.peso = peso;
+		this.altura = altura;
+		this.idade = idade;
+    }
+
+	mostraNomeCompleto() {
+    	return `${this.primeiroNome} ${this.segundoNome}`;
+	}
+
+	mostraAnoNascimeto() {
+		let dataHoje = new Date();
+		let mesEstamos = dataHoje.getFullYear()
+		return mesEstamos - this.idade;
+    }
+
+	calculaIMC() {
+		let alturaQuadrado = Math.pow(this.altura, 2);
+		return this.peso * alturaQuadrado;
+    }
+}

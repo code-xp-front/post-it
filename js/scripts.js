@@ -1,8 +1,9 @@
-let qualquerCoisa = "";
+class ListaNotas {
+    constructor(secao) {
+        this.secao = secao;
+        this.listaInterna = []
+    }
 
-const listaNotas = {
-    secao: document.getElementsByClassName("notes")[0],
-    listaInterna: [],
     adiciona(novoTitulo, novoTexto) {
         let nota = {
             titulo: novoTitulo,
@@ -11,28 +12,35 @@ const listaNotas = {
         };
         this.listaInterna.push(nota);
         atualizarSecao(this.secao);
-    },
+    }
+
     remove(posicao) {
         this.listaInterna.splice(posicao, 1);
         atualizarSecao(this.secao);
-    },
+    }
+
     edita(posicao) {
         this.listaInterna[posicao].editando = true;
         atualizarSecao(this.secao);
-    },
+    }
+
     salva(posicao, novoTitulo, novoTexto) {
         this.listaInterna[posicao].titulo = novoTitulo;
         this.listaInterna[posicao].texto = novoTexto;
         this.listaInterna[posicao].editando = false;
         atualizarSecao(this.secao);
-    },
+    }
+
     pega(posicao) {
-        return this.listaInterna[posicao] // não esquecer do return
-    },
+        return this.listaInterna[posicao];
+    }
+
     contaTotal() {
-        return this.listaInterna.length; // não esquecer do return
+        return this.listaInterna.length;
     }
 };
+
+const listaNotas = new ListaNotas(document.getElementsByClassName("notes")[0]);
 
 const atualizarSecao = secao => {
     let conteudoSecao = "";
