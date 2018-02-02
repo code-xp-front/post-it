@@ -76,12 +76,12 @@ class Pessoa {
 
 	mostraAnoNascimeto() {
 		let dataHoje = new Date();
-		let mesEstamos = dataHoje.getFullYear()
-		return mesEstamos - this.idade;
+		let anoEstamos = dataHoje.getFullYear()
+		return anoEstamos - this.idade;
     }
 
 	calculaIMC() {
 		let alturaQuadrado = Math.pow(this.altura, 2);
-		return this.peso * alturaQuadrado;
+		return this.peso / alturaQuadrado;
     }
 }

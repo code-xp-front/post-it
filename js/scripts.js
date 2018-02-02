@@ -1,47 +1,72 @@
 class Nota {
     constructor(novoTitulo, novoTexto) {
-        // modificadores visibilidade: getters/setters
-        this.titulo = novoTitulo;
-        this.texto = novoTexto;
-        this.editando = false;
+        // modificadores visibilidade
+        this._titulo = novoTitulo;
+        this._texto = novoTexto;
+        this._editando = false;
+    }
+
+    // getters/setters
+    get titulo() {
+        return this._titulo;
+    }
+
+    get texto() {
+        return this._texto;
+    }
+
+    get editando() {
+        return this._texto;
+    }
+
+    set titulo(tituloAlterado) {
+        this._titulo = tituloAlterado;
+    }
+
+    set texto(textoAlterado) {
+        this._texto = textoAlterado;
+    }
+
+    set editando(editandoAlterado) {
+        this._editando = editandoAlterado;
     }
 }
 
-class ListaNotas {
+class ListaNotas extends Array {
     constructor() {
+        super();
         this._secao = document.getElementsByClassName("notes")[0];
-        this._listaInterna = [];
     }
 
-    adiciona(novoTitulo, novoTexto) {
+    push(novoTitulo, novoTexto) {
         let nota = new Nota(novoTitulo, novoTexto);
-        this._listaInterna.push(nota);
+        super.push(nota);
         atualizarSecao(this._secao);
     }
 
-    remove(posicao) {
-        this._listaInterna.splice(posicao, 1);
+    splice(posicao, quantidade) {
+        super.splice(posicao, 1);
         atualizarSecao(this._secao);
     }
 
     edita(posicao) {
-        this._listaInterna[posicao].editando = true;
+        this[posicao].editando = true;
         atualizarSecao(this._secao);
     }
 
     salva(posicao, novoTitulo, novoTexto) {
-        this._listaInterna[posicao].titulo = novoTitulo;
-        this._listaInterna[posicao].texto = novoTexto;
-        this._listaInterna[posicao].editando = false;
+        this[posicao].titulo = novoTitulo;
+        this[posicao].texto = novoTexto;
+        this[posicao].editando = false;
         atualizarSecao(this._secao);
     }
 
     pega(posicao) {
-        return this._listaInterna[posicao];
+        return this[posicao];
     }
 
     contaTotal() {
-        return this._listaInterna.length;
+        return this.length;
     }
 };
 
