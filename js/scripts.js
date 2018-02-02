@@ -1,46 +1,51 @@
+class Nota {
+    constructor(novoTitulo, novoTexto) {
+        // modificadores visibilidade: getters/setters
+        this.titulo = novoTitulo;
+        this.texto = novoTexto;
+        this.editando = false;
+    }
+}
+
 class ListaNotas {
-    constructor(secao) {
-        this.secao = secao;
-        this.listaInterna = []
+    constructor() {
+        this._secao = document.getElementsByClassName("notes")[0];
+        this._listaInterna = [];
     }
 
     adiciona(novoTitulo, novoTexto) {
-        let nota = {
-            titulo: novoTitulo,
-            texto: novoTexto,
-            editando: false
-        };
-        this.listaInterna.push(nota);
-        atualizarSecao(this.secao);
+        let nota = new Nota(novoTitulo, novoTexto);
+        this._listaInterna.push(nota);
+        atualizarSecao(this._secao);
     }
 
     remove(posicao) {
-        this.listaInterna.splice(posicao, 1);
-        atualizarSecao(this.secao);
+        this._listaInterna.splice(posicao, 1);
+        atualizarSecao(this._secao);
     }
 
     edita(posicao) {
-        this.listaInterna[posicao].editando = true;
-        atualizarSecao(this.secao);
+        this._listaInterna[posicao].editando = true;
+        atualizarSecao(this._secao);
     }
 
     salva(posicao, novoTitulo, novoTexto) {
-        this.listaInterna[posicao].titulo = novoTitulo;
-        this.listaInterna[posicao].texto = novoTexto;
-        this.listaInterna[posicao].editando = false;
-        atualizarSecao(this.secao);
+        this._listaInterna[posicao].titulo = novoTitulo;
+        this._listaInterna[posicao].texto = novoTexto;
+        this._listaInterna[posicao].editando = false;
+        atualizarSecao(this._secao);
     }
 
     pega(posicao) {
-        return this.listaInterna[posicao];
+        return this._listaInterna[posicao];
     }
 
     contaTotal() {
-        return this.listaInterna.length;
+        return this._listaInterna.length;
     }
 };
 
-const listaNotas = new ListaNotas(document.getElementsByClassName("notes")[0]);
+const listaNotas = new ListaNotas();
 
 const atualizarSecao = secao => {
     let conteudoSecao = "";
