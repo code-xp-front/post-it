@@ -1,56 +1,90 @@
-
-class ClasseNovaLista {
-    constructor(elementoLaDoHTML) {
-        this.listaNotas = [];
-        this.secao = elementoLaDoHTML;
+class Nota {
+    constructor(novoTitulo, novoTexto) {
+        this._titulo = novoTitulo;
+        this._texto = novoTexto;
+        this._editando = false;
     }
 
-    adicionar(novoTitulo, novoTexto, secao) {
+    get titulo() {
+        return this._titulo;
+    }
 
-        let nota = {
-            titulo: novoTitulo,
-            texto: novoTexto,
-            editando: false
-        };
+    get texto() {
+        return this._texto;
+    }
 
-        this.listaNotas.push(nota);
-        atualizarSecao(this.secao);
+    get editando() {
+        return this._editando;
+    }
+
+    set titulo(tituloAlterado) {
+        this._titulo = tituloAlterado;
+    }
+
+    set texto(textoAlterado) {
+        this._texto = textoAlterado;
+    }
+
+    set editando(editandoAlterado) {
+        this._editando = editandoAlterado;
+    }
+};
+
+class ClasseNovaLista extends Array {
+    constructor() {
+        // this._listaNotas = [];
+        super();
+        this._secao = document.getElementsByClassName("notes")[0];
+    }
+
+    push(novoTitulo, novoTexto) {
+
+        // let nota = {
+        //     titulo: novoTitulo,
+        //     texto: novoTexto,
+        //     editando: false
+        // };
+
+        let novaNota = new Nota(novoTitulo, novoTexto);
+
+        super.push(novaNota);
+        atualizarSecao(this._secao);
 
     }
 
     editar(index) {
 
-        this.listaNotas[index].editando = true;
-        atualizarSecao(this.secao);
+        this[index].editando = true;
+        atualizarSecao(this._secao);
 
     }
 
-    remover(index) {
+    splice(index) {
 
-        this.listaNotas.splice(index, 1);
-        atualizarSecao(this.secao);
+        super.splice(index, 1);
+        atualizarSecao(this._secao);
 
     }
 
     salvar(index, novoTitulo, novoTexto) {
 
-        this.listaNotas[index].titulo = novoTitulo;
-        this.listaNotas[index].texto = novoTexto;
-        this.listaNotas[index].editando = false;
+        this[index].titulo = novoTitulo;
+        this[index].texto = novoTexto;
+        this[index].editando = false;
 
-        atualizarSecao(this.secao);
+        atualizarSecao(this._secao);
 
     }
 
     pegar(index) {
-        return this.listaNotas[index]
+        return this[index]
     }
     contaTotal() {
-        return this.listaNotas.length
+        return this.length
     }
 };
 
-let novaLista = new ClasseNovaLista(document.getElementsByClassName("notes")[0]);
+let novaLista = new ClasseNovaLista();
 
 
 
@@ -100,7 +134,7 @@ const adicionarNota = (inputTitulo, inputTexto, formulario, index) => {
 
     } else {
 
-        novaLista.adicionar(inputTitulo.value, inputTexto.value);
+        novaLista.push(inputTitulo.value, inputTexto.value);
         formulario.reset();
 
     }
@@ -117,32 +151,119 @@ const excluirNota = (evento, index) => {
 
 //////////////////////////////////////////////////////////////
 
-class Pessoa {
-    constructor(nome, sobrenome, peso, altura, idade) {
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.peso = peso;
-        this.altura = altura;
-        this.idade = idade;
-        // this.nomeCompleto = `${nome} ${sobrenome}`;
-        // this.anoNascimento = 2018 - idade;
-        // this.imc = peso/(altura*altura);
-    }
+// class Pessoa {
+//     constructor(nome, sobrenome, peso, altura, idade) {
+//         this.nome = nome;
+//         this.sobrenome = sobrenome;
+//         this.peso = peso;
+//         this.altura = altura;
+//         this.idade = idade;
+//         // this.nomeCompleto = `${nome} ${sobrenome}`;
+//         // this.anoNascimento = 2018 - idade;
+//         // this.imc = peso/(altura*altura);
+//     }
 
-    mostraNomeCompleto() {
-        return `${this.nome} ${this.sobrenome}`;
-    }
+//     mostraNomeCompleto() {
+//         return `${this.nome} ${this.sobrenome}`;
+//     }
 
-    mostraAnoNascimento() {
-        let dataHoje = new Date();
-        let anoAtual = dataHoje.getFullYear();
-        return anoAtual - this.idade;
-    }
+//     mostraAnoNascimento() {
+//         let dataHoje = new Date();
+//         let anoAtual = dataHoje.getFullYear();
+//         return anoAtual - this.idade;
+//     }
 
-    calcIMC(peso, altura) {
-        let alturaQuadrado = Math.pow(this.altura, 2);
-        return this.peso / alturaQuadrado;
-    }
-};
+//     calcIMC(peso, altura) {
+//         let alturaQuadrado = Math.pow(this.altura, 2);
+//         return this.peso / alturaQuadrado;
+//     }
+// };
 
-let bruna = new Pessoa("Bruna", "Vieira", 40, 1.57, 24);
+// let bruna = new Pessoa("Bruna", "Vieira", 40, 1.57, 24);
+
+// class Medico extends Pessoa {
+//     constructor(nome, sobrenome, peso, altura, idade, crm) {
+//         super(nome, sobrenome, peso, altura, idade);
+//         this._crm = crm;
+//     }
+
+//     get crm() {
+//         return this._crm;
+//     }
+
+//     set crm(crmAlterado) {
+//         this._crm = crmAlterado;
+//     }
+// }
+
+// let brunaMedica = new Medico("Bruna", "Vieira", 50, 1.57, 30, "492084923489");
+
+///////////////////////////////////////////////////////////////
+
+// class Casa {
+//     constructor(qtdComodos, valor, alugada, vendedor) {
+//         this._qtdComodos = qtdComodos;
+//         this._valor = valor;
+//         this._alugada = alugada;
+//         this._vendedor = vendedor;
+//     }
+
+//     get qtdComodos() {
+//         return this._qtdComodos;
+//     }
+
+//     get valor() {
+//         return this._valor;
+//     }
+
+//     get alugada() {
+//         return this._alugada;
+//     }
+
+//     get vendedor() {
+//         return this._vendedor;
+//     }
+
+//     set qtdComodos(qtdComodosAlterado) {
+//         this._qtdComodos = qtdComodosAlterado;
+//     }
+
+//     set valor(valorAlterado) {
+//         this._valor = valorAlterado;
+//     }
+
+//     set alugada(alugadaAlterado) {
+//         this._alugada = alugadaAlterado;
+//     }
+
+//     set vendedor(vendedorAlterado) {
+//         this._vendedor = vendedorAlterado;
+//     }
+// }
+
+// class Apartamento extends Casa {
+//     constructor(qtdComodos, valor, alugada, vendedor, bloco, andar) {
+//         super(qtdComodos, valor, alugada, vendedor);
+//         this._bloco = bloco;
+//         this._andar = andar;
+//     }
+    
+//     get bloco() {
+//         return this._bloco;
+//     }
+
+//     get andar() {
+//         return this._andar;
+//     }
+
+//     set bloco(blocoAlterado) {
+//         this._bloco = blocoAlterado;
+//     }
+
+//     set andar(andarAlterado) {
+//         this._andar = andarAlterado;
+//     }
+// }
+
+
+
