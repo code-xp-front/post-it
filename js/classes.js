@@ -1,16 +1,9 @@
-// var pessoa = {
-//     nome: "Camila",
-//     idade: 18,
-//     descobrirAnoNascimento: function() {
 
-//     }
-// }
-
-// pessoa.descobrirAnoNascimento()
-
-const novaLista = {
-    listaNotas: [],
-    secao: document.getElementsByClassName("notes")[0],
+class ClasseNovaLista {
+    constructor(elementoLaDoHTML) {
+        this.listaNotas = [];
+        this.secao = elementoLaDoHTML;
+    }
 
     adicionar(novoTitulo, novoTexto, secao) {
 
@@ -23,21 +16,21 @@ const novaLista = {
         this.listaNotas.push(nota);
         atualizarSecao(this.secao);
 
-    },
+    }
 
     editar(index) {
 
         this.listaNotas[index].editando = true;
         atualizarSecao(this.secao);
 
-    },
+    }
 
-    remover(index){
+    remover(index) {
 
         this.listaNotas.splice(index, 1);
         atualizarSecao(this.secao);
 
-    },
+    }
 
     salvar(index, novoTitulo, novoTexto) {
 
@@ -47,15 +40,19 @@ const novaLista = {
 
         atualizarSecao(this.secao);
 
-    },
+    }
 
     pegar(index) {
         return this.listaNotas[index]
-    },
+    }
     contaTotal() {
         return this.listaNotas.length
     }
 };
+
+let novaLista = new ClasseNovaLista(document.getElementsByClassName("notes")[0]);
+
+
 
 const atualizarSecao = secao => {
 
@@ -117,3 +114,35 @@ const excluirNota = (evento, index) => {
     novaLista.listaNotas.splice(index, 1);
 
 };
+
+//////////////////////////////////////////////////////////////
+
+class Pessoa {
+    constructor(nome, sobrenome, peso, altura, idade) {
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.peso = peso;
+        this.altura = altura;
+        this.idade = idade;
+        // this.nomeCompleto = `${nome} ${sobrenome}`;
+        // this.anoNascimento = 2018 - idade;
+        // this.imc = peso/(altura*altura);
+    }
+
+    mostraNomeCompleto() {
+        return `${this.nome} ${this.sobrenome}`;
+    }
+
+    mostraAnoNascimento() {
+        let dataHoje = new Date();
+        let anoAtual = dataHoje.getFullYear();
+        return anoAtual - this.idade;
+    }
+
+    calcIMC(peso, altura) {
+        let alturaQuadrado = Math.pow(this.altura, 2);
+        return this.peso / alturaQuadrado;
+    }
+};
+
+let bruna = new Pessoa("Bruna", "Vieira", 40, 1.57, 24);
