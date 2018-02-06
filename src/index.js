@@ -1,0 +1,102 @@
+import NovaLista from './ClasseNovaLista.js';
+import formularioNotas from './components/formInput.js';
+
+let secao = document.getElementsByClassName('notes')[0];
+
+const observaMudancasNaLista = () => {
+    atualizarSecao(secao);
+};
+
+const novaLista = new NovaLista(observaMudancasNaLista);
+
+
+const atualizarSecao = secao => {
+
+    let inserirHTML = "";
+
+    for (let index = 0; index < novaLista.contaTotal(); index++) {
+
+        let notaAtual = novaLista.pegar(index);
+
+        if (notaAtual.editando == true) {
+
+            // let formularioNotas = document.createElement('form');
+            // formularioNotas.setAttribute('class', 'note note--editing');
+
+            let formularioNotas = new formularioNotas();
+
+            let inputTitulo = document.createElement('input');
+            inputTitulo.setAttribute('class', 'note__title note--editing');
+            inputTitulo.setAttribute('type', 'text');
+            inputTitulo.setAttribute('name', 'title');
+            inputTitulo.setAttribute('placeholder', 'Título');
+            inputTitulo.setAttribute('value', notaAtual.titulo);
+
+            let inputTexto = document.createElement('textarea');
+            inputTexto.setAttribute('class', 'note__body note__body--editing');
+            inputTexto.setAttribute('name', 'body');
+            inputTexto.setAttribute('rows', '5');
+            inputTexto.setAttribute('placeholder', 'Criar uma nota...');
+            // inputTexto.value = notaAtual.texto;
+            inputTexto.innerHTML = notaAtual.texto;
+
+            let botaoSalvar = document.createElement('button');
+            botaoSalvar.setAttribute('class', 'note__control');
+            botaoSalvar.setAttribute('type', 'button');
+            botaoSalvar.addEventListener('click', () => {
+                // event.target.form
+                adicionarNota(inputTitulo, inputTexto, formularioNotas, index);
+            });
+            botaoSalvar.setAttribute('value', 'Salvar');
+
+
+            // inserirHTML += `<form class="note note--editing">
+            //         <input class="note__title note__title--editing" type="text" name="title" placeholder="Título" value="${notaAtual.titulo}" autofocus /> 
+            //         <textarea class="note__body note__body--editing" name="body" rows="5" placeholder="Criar uma nota..."> ${notaAtual.texto} </textarea>
+            //         <button class="note__control" type="button" onclick="adicionarNota(this.form.title, this.form.body, this.form, ${index} )"> Salvar </button> 
+            //         </form>`;
+
+        } else {
+
+            inserirHTML += `<form class="note" onclick="editarNota(${index})">
+                    <button class="note__excluir" onclick="excluirNota(event, ${index} )">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                    <h1 class="note__title"> ${notaAtual.titulo} </h1>
+                    <p class="note__body"> ${notaAtual.texto} </p>
+                    </form>`;
+        }
+    }
+
+    secao.innerHTML = inserirHTML;
+
+};
+
+
+window.editarNota = index => novaLista.editar(index);
+
+
+window.adicionarNota = (inputTitulo, inputTexto, formulario, index) => {
+
+    // console.log("testeeeeee");
+
+    if (novaLista.pegar(index)) {
+
+        novaLista.salvar(index, inputTitulo.value, inputTexto.value);
+
+    } else {
+
+        novaLista.adicionar(inputTitulo.value, inputTexto.value);
+        formulario.reset();
+
+    }
+};
+
+
+window.excluirNota = (evento, index) => {
+
+    evento.stopPropagation();
+
+    novaLista.remover(index);
+
+};
