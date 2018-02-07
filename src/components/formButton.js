@@ -1,14 +1,14 @@
 // props param
-function FormButton(propriedades) {
+function FormButton(props) {
     let formButton = document.createElement('button');
     
     // destructuring
-    formButton.setAttribute('class', propriedades.className);
-    formButton.setAttribute('type', propriedades.type);
+    formButton.setAttribute('class', props.className);
+    formButton.setAttribute('type', props.type);
     
-    formButton.addEventListener('click', propriedades.click);
+    formButton.addEventListener('click', props.click);
 
-    formButton.innerHTML = propriedades.children;
+    formButton.innerHTML = props.children;
 
     return formButton;
 }

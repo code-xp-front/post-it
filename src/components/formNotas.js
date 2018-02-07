@@ -60,11 +60,13 @@ function FormNotas(propriedades) {
     // destructuring
     const { posicao, notaAtual, editarFormulario } = propriedades;
 
+    // variable shorthand declaration
     let inputTitulo = criaInputTitulo(propriedades),
         textareaTexto = criaTextareaTexto(propriedades),
         buttonConcluido = criaButtonConcluir(propriedades, inputTitulo, textareaTexto, formNotas);
     
-    let props = {
+    // immutable
+    const props = {
         className: 'note',
         click: notaAtual.editando ? () => {} : () => editarFormulario(posicao),
         children: [inputTitulo, textareaTexto, buttonConcluido]
