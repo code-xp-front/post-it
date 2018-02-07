@@ -1,13 +1,20 @@
-function FormInput() {
-    let inputTitulo = document.createElement('input');
+// props param
+function FormInput(props) {
+    let formInput = document.createElement('input');
     
-    inputTitulo.setAttribute('class', 'note__title');
-    inputTitulo.setAttribute('type', 'text');
-    inputTitulo.setAttribute('name', 'titulo');
-    inputTitulo.setAttribute('value', notaAtual.titulo);
-    inputTitulo.setAttribute('placeholder', 'Título')
+    // destructuring
+    formInput.setAttribute('class', props.className);
+    formInput.setAttribute('type', props.type);
+    formInput.setAttribute('name', props.name);
+    formInput.setAttribute('value', props.value);
+    formInput.setAttribute('placeholder', props.placeholder);
+
+    // qualquer valor é true
+    if (props.readonly) {
+        formInput.setAttribute('readonly', true);
+    }
     
-    return inputTitulo;
+    return formInput;
 }
 
 export default FormInput;

@@ -42,6 +42,7 @@ class ListaObservavel extends Array {
         this.observador();
     }
 }
+
 https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Functions/Arrow_functions
 https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain
 https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Object/proto
@@ -55,7 +56,7 @@ https://stackoverflow.com/questions/44590393/es6-modules-undefined-onclick-funct
 
 
 
-// Crie a definição de uma Pessoa
+// Exercício: Crie a definição de uma Pessoa
 // primeiroNome, segundoNome, peso, altura, idade
 // mostrar nome completo
 // mostrar ano que a pessoa nasceu
@@ -85,3 +86,7 @@ class Pessoa {
 		return this.peso / alturaQuadrado;
     }
 }
+
+https://stackoverflow.com/questions/33832646/extending-built-in-natives-in-es6-with-babel
+https://github.com/loganfsmyth/babel-plugin-transform-builtin-extend
+https://babeljs.io/docs/usage/caveats/
