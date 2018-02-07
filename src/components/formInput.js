@@ -1,20 +1,22 @@
-// props param
-function FormInput(props) {
-    let formInput = document.createElement('input');
-    
-    // destructuring
-    formInput.setAttribute('class', props.className);
-    formInput.setAttribute('type', props.type);
-    formInput.setAttribute('name', props.name);
-    formInput.setAttribute('value', props.value);
-    formInput.setAttribute('placeholder', props.placeholder);
+import React from 'react';
 
-    // qualquer valor é true
-    if (props.readonly) {
-        formInput.setAttribute('readonly', true);
+class FormInput extends React.Component {
+    constructor(props) {
+        super(props);
+        this.alteraValor = this.alteraValor.bind(this);
     }
-    
-    return formInput;
+
+    get value() {
+        return this.state.value;
+    }
+
+    alteraValor(event) {
+        this.setState({ value: event.target.value });
+    }
+
+    render() {
+       return React.createElement('input', this.props);  
+    }
 }
 
 export default FormInput;

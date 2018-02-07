@@ -1,83 +1,97 @@
+import React from 'react';
 import Form from './form.js';
 import FormInput from './formInput.js';
 import FormTextarea from './formTextarea.js';
 import FormButton from './formButton.js';
 
-const criaInputTitulo = ({ notaAtual }) => {
-    // immutable
+const criaInputTitulo = ({ posicao, notaAtual }) => {
     const props = {
         className: 'note__title',
         type: 'text',
         name: 'titulo',
         placeholder: 'Título',
-        readonly: notaAtual.editando ? false : true,
-        value: notaAtual.titulo
+        defaultValue: notaAtual.titulo
     };
+
+    if (posicao && !notaAtual.editando) {
+        props.readOnly = true;
+    }
     
-    return new FormInput(props);
+    return React.createElement(FormInput, props);
 };
 
-const criaTextareaTexto = ({ notaAtual }) => {
-    // immutable
+const criaTextareaTexto = ({ posicao, notaAtual }) => {
     const props = {
         className: 'note__body', 
         name: 'texto', 
         placeholder: 'Criar uma nota...', 
         rows: 5, 
-        readonly: notaAtual.editando ? false : true,
-        children: notaAtual.texto
+        defaultValue: notaAtual.texto
     };
 
-    return new FormTextarea(props);
+    if (posicao && !notaAtual.editando) {
+        props.readOnly = true;
+    }
+
+    return React.createElement(FormTextarea, props);
 };
 
-const criaButtonConcluir = ({ posicao, nota, adicionarNota, salvarNota }, inputTitulo, textareaTexto, formNotas) => {
-    // immutable
+const criaButtonConcluir = ({ posicao, adicionarNota }, inputTitulo, textareaTexto, formNotas) => {   
     const props = {
         className: 'note__control', 
         type: 'button', 
         children: 'Concluído',
-        click: () => adicionarNota(inputTitulo, textareaTexto, formNotas, posicao)
+        onClick: (event) => adicionarNota(inputTitulo, textareaTexto, event.target.form, posicao)
     };
 
-    return new FormButton(props);
+    return React.createElement(FormButton, props);
 };
 
 const criaButtonRemover = ({ posicao, removerNota}) => {
-    // immutable
     const props = {
         className: 'note__control', 
         type: 'button', 
         children: '<i class="fa fa-times" aria-hidden="true"></i>',
-        click: event => removerNota(event, posicao)
+        onClick: event => removerNota(event, posicao)
     };
     
-    return new FormButton(props);
+    return React.createElement(FormButton, props);
 };
 
 
-function FormNotas(propriedades) {
-    // destructuring
-    const { posicao, notaAtual, editarFormulario } = propriedades;
+function FormNotas(props) {
+    let formNotas;
+    let inputTitulo = criaInputTitulo(props);
+    let textareaTexto = criaTextareaTexto(props);
 
-    let inputTitulo = criaInputTitulo(propriedades),
-        textareaTexto = criaTextareaTexto(propriedades),
-        buttonConcluido = criaButtonConcluir(propriedades, inputTitulo, textareaTexto, formNotas);
-    
-    let props = {
-        className: 'note',
-        click: notaAtual.editando ? () => {} : () => editarFormulario(posicao),
-        children: [inputTitulo, textareaTexto, buttonConcluido]
-    };
+    if (!props.posicao) {
+        let buttonConcluido = criaButtonConcluir(props, inputTitulo, textareaTexto, formNotas);
 
-    if (notaAtual.editando) {
-        let buttonRemover = criaButtonRemover(propriedades);
-        props.children = [buttonRemover].concat(props.children);
+        return React.createElement(
+            Form, 
+            {className: "note"}, 
+            [inputTitulo, textareaTexto, buttonConcluido]
+        );
+    } else if(props.notaAtual.editando) {
+        let buttonRemover = criaButtonRemover(props);
+        let buttonConcluido = criaButtonConcluir(props, inputTitulo, textareaTexto, formNotas);
+
+        return React.createElement(
+            Form, 
+            {className: "note"}, 
+            [buttonRemover, inputTitulo, textareaTexto, buttonConcluido]
+        );
+    } else {
+        return React.createElement(
+            Form, 
+            {className: "note", onClick: props.editarFormulario(props.posicao)}, 
+            [inputTitulo, textareaTexto]
+        );
     }
 
-    let formNotas = new Form(props);
+    formNotas = new Form(formProps);
 
-    return formNotas;
+    return React.createElement(Form, formProps);
 }
 
 export default FormNotas;

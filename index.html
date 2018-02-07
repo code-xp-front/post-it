@@ -10,17 +10,7 @@
         <title>Post-it</title>
     </head>
     <body>
-        <main class="container">
-            <form class="note">
-                <input class="note__title" type="text" name="titulo" placeholder="Título" autofocus />
-                <textarea class="note__body" name="texto" rows="5" placeholder="Criar uma nota..."></textarea>
-                <button class="note__control" type="button" onclick="adicionarNota(this.form.titulo, this.form.texto, this.form, null)">
-                    Concluído
-                </button>
-            </form>
-            
-            <section class="notes"></section>
-        </main>
+        <div id="root"></div>
 
         <script src="dist/bundle.js"></script>
     </body>

@@ -1,21 +1,7 @@
-// props param
+import React from 'react';
+
 function FormTextarea(props) {
-    let formTextarea = document.createElement('textarea');
-
-    // destructuring
-    formTextarea.setAttribute('class', props.className);
-    formTextarea.setAttribute('name', props.name);
-    formTextarea.setAttribute('rows', props.rows);
-    formTextarea.setAttribute('placeholder', props.placeholder);
-
-    // qualquer valor é true
-    if (props.readonly) {
-        formTextarea.setAttribute('readonly', true);
-    }
-    
-    formTextarea.innerHTML = props.children;
-
-    return formTextarea;
+    return React.createElement('textarea', props);
 }
 
 export default FormTextarea;
