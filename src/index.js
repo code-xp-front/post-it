@@ -1,11 +1,15 @@
 import NovaLista from './ClasseNovaLista.js';
-import formularioNotas from './components/formInput.js';
+// import FormInput from './components/FormInput.js';
+// import FormTextArea from './components/FormTextArea.js';
+// import FormButton from './components/FormButton.js';
+
 
 let secao = document.getElementsByClassName('notes')[0];
 
 const observaMudancasNaLista = () => {
     atualizarSecao(secao);
 };
+
 
 const novaLista = new NovaLista(observaMudancasNaLista);
 
@@ -20,34 +24,52 @@ const atualizarSecao = secao => {
 
         if (notaAtual.editando == true) {
 
-            // let formularioNotas = document.createElement('form');
-            // formularioNotas.setAttribute('class', 'note note--editing');
+            let formularioNotas = document.createElement('form');
+            formularioNotas.setAttribute('class', 'note note--editing');
 
-            let formularioNotas = new formularioNotas();
+            // let formularioNotas = new formularioNotas();
 
-            let inputTitulo = document.createElement('input');
-            inputTitulo.setAttribute('class', 'note__title note--editing');
-            inputTitulo.setAttribute('type', 'text');
-            inputTitulo.setAttribute('name', 'title');
-            inputTitulo.setAttribute('placeholder', 'Título');
-            inputTitulo.setAttribute('value', notaAtual.titulo);
-
-            let inputTexto = document.createElement('textarea');
-            inputTexto.setAttribute('class', 'note__body note__body--editing');
-            inputTexto.setAttribute('name', 'body');
-            inputTexto.setAttribute('rows', '5');
-            inputTexto.setAttribute('placeholder', 'Criar uma nota...');
-            // inputTexto.value = notaAtual.texto;
-            inputTexto.innerHTML = notaAtual.texto;
-
-            let botaoSalvar = document.createElement('button');
-            botaoSalvar.setAttribute('class', 'note__control');
-            botaoSalvar.setAttribute('type', 'button');
-            botaoSalvar.addEventListener('click', () => {
-                // event.target.form
-                adicionarNota(inputTitulo, inputTexto, formularioNotas, index);
+            let inputTitulo = new FormInput({
+                className: 'note__title note--editing',
+                type: 'text',
+                name: 'title',
+                placeholder: 'Título',
+                value: notaAtual.titulo
             });
-            botaoSalvar.setAttribute('value', 'Salvar');
+            // inputTitulo.setAttribute('class', 'note__title note--editing');
+            // inputTitulo.setAttribute('type', 'text');
+            // inputTitulo.setAttribute('name', 'title');
+            // inputTitulo.setAttribute('placeholder', 'Título');
+            // inputTitulo.setAttribute('value', notaAtual.titulo);
+
+            let inputTexto = new FormTextArea({
+                className: 'note__body note__body--editing',
+                name: 'body',
+                rows: '5',
+                placeholder: 'Criar uma nota...',
+                valueTextArea: notaAtual.texto
+            });
+            // inputTexto.setAttribute('class', 'note__body note__body--editing');
+            // inputTexto.setAttribute('name', 'body');
+            // inputTexto.setAttribute('rows', '5');
+            // inputTexto.setAttribute('placeholder', 'Criar uma nota...');
+            // inputTexto.innerHTML = notaAtual.texto;
+
+            let botaoSalvar = new FormButton({
+                className: 'note__control',
+                type: 'button',
+                value: 'Salvar',
+                onclick: () => {
+                    adicionarNota(inputTitulo, inputTexto, formularioNotas, index);
+                }
+            });
+            // botaoSalvar.setAttribute('class', 'note__control');
+            // botaoSalvar.setAttribute('type', 'button');
+            // botaoSalvar.setAttribute('value', 'Salvar');
+            // botaoSalvar.addEventListener('click', () => {
+            //     // event.target.form
+            //     adicionarNota(inputTitulo, inputTexto, formularioNotas, index);
+            // });
 
 
             // inserirHTML += `<form class="note note--editing">

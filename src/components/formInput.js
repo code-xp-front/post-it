@@ -1,10 +1,18 @@
-function FormInput() {
+function FormInput(props) {
 
-    let formularioNotas = document.createElement('form');
+    let inputTitulo = document.createElement('input');
 
-    formularioNotas.setAttribute('class', 'note note--editing');
+    inputTitulo.setAttribute('class', props.className);
+    inputTitulo.setAttribute('type', props.type);
+    inputTitulo.setAttribute('name', props.name);
+    inputTitulo.setAttribute('placeholder', props.placeholder);
+    inputTitulo.setAttribute('value', props.value);
 
-    return FormInput;
+    if (props.readonly) {
+        inputTitulo.setAttribute('readonly', true);
+    }
+
+    return inputTitulo;
 };
 
-export default formularioNotas;
+export default FormInput;
