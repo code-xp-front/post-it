@@ -1,4 +1,4 @@
-// Falar .gitignore
+// Falar .gitignore (node_modules, .DS_Store e dist)
 
 // Exemplo de objeto:
 var pessoa = {
