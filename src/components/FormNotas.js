@@ -49,6 +49,7 @@ const createButtonRemover = (evento, index) => {
     
     const props = {
         className: 'note__excluir',
+        children: '<i class="fa fa-times" aria-hidden="true"></i>',
         onclick: () => {
             excluirNota(evento, index);
         }
