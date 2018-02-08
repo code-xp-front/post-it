@@ -10,7 +10,9 @@ function Form(props) {
         form.appendChild(props.children[i]);
     }
 
-    form.addEventListener("click", props.click);
+    if (props.click) {
+        form.addEventListener("click", props.click);
+    }
     
     return form;
 }
