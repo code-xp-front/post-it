@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,23 +70,112 @@
 "use strict";
 
 
-var _ClasseNovaLista = __webpack_require__(1);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function FormInput(props) {
+
+    var inputTitulo = document.createElement('input');
+
+    inputTitulo.setAttribute('class', props.className);
+    inputTitulo.setAttribute('type', props.type);
+    inputTitulo.setAttribute('name', props.name);
+    inputTitulo.setAttribute('placeholder', props.placeholder);
+    inputTitulo.setAttribute('value', props.value);
+
+    if (props.readonly) {
+        inputTitulo.setAttribute('readonly', true);
+    }
+
+    return inputTitulo;
+};
+
+exports.default = FormInput;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function FormTextArea(props) {
+
+    var inputTexto = document.createElement('textarea');
+
+    inputTexto.setAttribute('class', props.className);
+    inputTexto.setAttribute('name', props.name);
+    inputTexto.setAttribute('rows', props.rows);
+    inputTexto.setAttribute('placeholder', props.placeholder);
+    // inputTexto.innerHTML = notaAtual.texto;
+    inputTexto.innerHTML = props.children;
+
+    if (props.readonly) {
+        inputTexto.setAttribute('readonly', true);
+    }
+
+    return inputTexto;
+};
+
+exports.default = FormTextArea;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function FormButton(props) {
+
+    var botaoSalvar = document.createElement('button');
+
+    //<button></button>
+
+    botaoSalvar.setAttribute('class', props.className);
+    //<button class="note__control"></button>
+    botaoSalvar.setAttribute('type', props.type);
+    // botaoSalvar.setAttribute('value', props.value);
+
+    botaoSalvar.addEventListener('click', props.onclick);
+
+    botaoSalvar.innerHTML = props.children;
+
+    return botaoSalvar;
+};
+
+exports.default = FormButton;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _ClasseNovaLista = __webpack_require__(4);
 
 var _ClasseNovaLista2 = _interopRequireDefault(_ClasseNovaLista);
 
-var _FormInput = __webpack_require__(5);
+var _FormInput = __webpack_require__(0);
 
 var _FormInput2 = _interopRequireDefault(_FormInput);
 
-var _FormTextArea = __webpack_require__(6);
+var _FormTextArea = __webpack_require__(1);
 
 var _FormTextArea2 = _interopRequireDefault(_FormTextArea);
 
-var _FormButton = __webpack_require__(7);
+var _FormButton = __webpack_require__(2);
 
 var _FormButton2 = _interopRequireDefault(_FormButton);
 
-var _FormNotas = __webpack_require__(4);
+var _FormNotas = __webpack_require__(6);
 
 var _FormNotas2 = _interopRequireDefault(_FormNotas);
 
@@ -152,7 +241,7 @@ window.excluirNota = function (evento, index) {
 };
 
 /***/ }),
-/* 1 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -164,7 +253,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Nota = __webpack_require__(2);
+var _Nota = __webpack_require__(5);
 
 var _Nota2 = _interopRequireDefault(_Nota);
 
@@ -233,7 +322,7 @@ var ClasseNovaLista = function () {
 exports.default = ClasseNovaLista;
 
 /***/ }),
-/* 2 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -258,38 +347,7 @@ var Nota = function Nota(novoTitulo, novoTexto) {
 exports.default = Nota;
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-// import FormNotas from './FormNotas.js';
-
-function Form(props) {
-    console.log(props.onclick);
-    var formularioNotas = document.createElement('form');
-
-    formularioNotas.setAttribute('class', props.className);
-
-    // for (let index = 0; index < novaLista.contaTotal(); index++) {
-
-    for (var index = 0; index < props.children.length; index++) {
-        formularioNotas.appendChild(props.children[index]);
-    }
-
-    formularioNotas.addEventListener('click', props.onclick);
-
-    return formularioNotas;
-}
-
-exports.default = Form;
-
-/***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -299,19 +357,27 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _FormInput = __webpack_require__(5);
+var _FormInput = __webpack_require__(0);
 
 var _FormInput2 = _interopRequireDefault(_FormInput);
 
-var _FormTextArea = __webpack_require__(6);
+var _FormTextArea = __webpack_require__(1);
 
 var _FormTextArea2 = _interopRequireDefault(_FormTextArea);
 
-var _FormButton = __webpack_require__(7);
+var _FormButton = __webpack_require__(2);
 
 var _FormButton2 = _interopRequireDefault(_FormButton);
 
-var _Form = __webpack_require__(3);
+var _TituloNaoEditavel = __webpack_require__(8);
+
+var _TituloNaoEditavel2 = _interopRequireDefault(_TituloNaoEditavel);
+
+var _TextoNaoEditavel = __webpack_require__(9);
+
+var _TextoNaoEditavel2 = _interopRequireDefault(_TextoNaoEditavel);
+
+var _Form = __webpack_require__(7);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -336,7 +402,8 @@ var createInputTexto = function createInputTexto(notaAtual) {
         name: 'body',
         rows: '5',
         placeholder: 'Criar uma nota...',
-        children: notaAtual.texto
+        children: notaAtual.texto,
+        readonly: !notaAtual.editando
     };
 
     return new _FormTextArea2.default(props);
@@ -348,7 +415,16 @@ var createTituloNaoEditavel = function createTituloNaoEditavel(notaAtual) {
         children: notaAtual.titulo
     };
 
-    return new TituloNaoEditavel(props);
+    return new _TituloNaoEditavel2.default(props);
+};
+
+var createTextoNaoEditavel = function createTextoNaoEditavel(notaAtual) {
+    var props = {
+        className: 'note__body',
+        children: notaAtual.texto
+    };
+
+    return new _TextoNaoEditavel2.default(props);
 };
 
 var createBotaoSalvar = function createBotaoSalvar(inputTitulo, inputTexto, formularioNotas, index) {
@@ -381,21 +457,29 @@ function FormNotas(props) {
 
     var inputTitulo = createInputTitulo(props.notaAtual);
     var inputTexto = createInputTexto(props.notaAtual);
-    var botaoSalvar = createBotaoSalvar(props);
+
+    var h1Titulo = createTituloNaoEditavel(props.notaAtual);
+    var pTexto = createTextoNaoEditavel(props.notaAtual);
+
+    var botaoSalvar = createBotaoSalvar(inputTitulo, inputTexto, formularioNotas, index);
+    var botaoExcluir = createButtonRemover(evento, index);
 
     var funcaoClick = void 0;
+    var children = void 0;
 
     if (props.notaAtual.editando === true) {
         funcaoClick = function funcaoClick() {};
+        children: [inputTitulo, inputTexto, botaoSalvar];
     } else {
         funcaoClick = function funcaoClick() {
             props.editarNota(props.index);
         };
+        children: [h1Titulo, pTexto, botaoExcluir];
     };
 
     var propsForm = {
         className: 'note note--editing',
-        children: [inputTitulo, inputTexto],
+        children: children,
         onclick: funcaoClick
     };
 
@@ -441,65 +525,6 @@ exports.default = FormNotas;
 // });
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-function FormInput(props) {
-
-    var inputTitulo = document.createElement('input');
-
-    inputTitulo.setAttribute('class', props.className);
-    inputTitulo.setAttribute('type', props.type);
-    inputTitulo.setAttribute('name', props.name);
-    inputTitulo.setAttribute('placeholder', props.placeholder);
-    inputTitulo.setAttribute('value', props.value);
-
-    if (props.readonly) {
-        inputTitulo.setAttribute('readonly', true);
-    }
-
-    return inputTitulo;
-};
-
-exports.default = FormInput;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-function FormTextArea(props) {
-
-    var inputTexto = document.createElement('textarea');
-
-    inputTexto.setAttribute('class', props.className);
-    inputTexto.setAttribute('name', props.name);
-    inputTexto.setAttribute('rows', props.rows);
-    inputTexto.setAttribute('placeholder', props.placeholder);
-    // inputTexto.innerHTML = notaAtual.texto;
-    inputTexto.innerHTML = props.children;
-
-    if (props.readonly) {
-        inputTexto.setAttribute('readonly', true);
-    }
-
-    return inputTexto;
-};
-
-exports.default = FormTextArea;
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -509,25 +534,66 @@ exports.default = FormTextArea;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-function FormButton(props) {
+// import FormNotas from './FormNotas.js';
 
-    var botaoSalvar = document.createElement('button');
+function Form(props) {
+    console.log(props.onclick);
+    var formularioNotas = document.createElement('form');
 
-    //<button></button>
+    formularioNotas.setAttribute('class', props.className);
 
-    botaoSalvar.setAttribute('class', props.className);
-    //<button class="note__control"></button>
-    botaoSalvar.setAttribute('type', props.type);
-    // botaoSalvar.setAttribute('value', props.value);
+    for (var index = 0; index < props.children.length; index++) {
+        formularioNotas.appendChild(props.children[index]);
+    }
 
-    botaoSalvar.addEventListener('click', props.onclick);
+    formularioNotas.addEventListener('click', props.onclick);
 
-    botaoSalvar.innerHTML = props.children;
+    return formularioNotas;
+}
 
-    return botaoSalvar;
-};
+exports.default = Form;
 
-exports.default = FormButton;
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function TituloNaoEditavel(props) {
+
+    var h1Titulo = document.createElement('h1');
+
+    h1Titulo.innerHTML = props.children;
+
+    return h1Titulo;
+}
+
+exports.default = TituloNaoEditavel;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function TextoNaoEditavel(props) {
+
+    var pTexto = document.createElement('p');
+
+    pTexto.innerHTML = props.children;
+
+    return pTexto;
+}
+
+exports.default = TextoNaoEditavel;
 
 /***/ })
 /******/ ]);

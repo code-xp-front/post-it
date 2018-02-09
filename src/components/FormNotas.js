@@ -1,6 +1,8 @@
 import FormInput from './FormInput.js';
 import FormTextArea from './FormTextArea.js';
 import FormButton from './FormButton.js';
+import TituloNaoEditavel from './TituloNaoEditavel.js';
+import TextoNaoEditavel from './TextoNaoEditavel.js';
 
 import Form from './Form.js';
 
@@ -23,7 +25,8 @@ const createInputTexto = (notaAtual) => {
         name: 'body',
         rows: '5',
         placeholder: 'Criar uma nota...',
-        children: notaAtual.texto
+        children: notaAtual.texto,
+        readonly: !notaAtual.editando
     };
 
     return new FormTextArea(props);
@@ -36,6 +39,15 @@ const createTituloNaoEditavel = (notaAtual) => {
     };
 
     return new TituloNaoEditavel(props);
+};
+
+const createTextoNaoEditavel = (notaAtual) => {
+    const props = {
+        className: 'note__body',
+        children: notaAtual.texto,
+    };
+
+    return new TextoNaoEditavel(props);
 };
 
 const createBotaoSalvar = (inputTitulo, inputTexto, formularioNotas, index) => {
@@ -69,21 +81,31 @@ function FormNotas(props) {
 
     let inputTitulo = createInputTitulo(props.notaAtual);
     let inputTexto = createInputTexto(props.notaAtual);
-    let botaoSalvar = createBotaoSalvar(props);
+
+    let h1Titulo = createTituloNaoEditavel(props.notaAtual);
+    let pTexto = createTextoNaoEditavel(props.notaAtual);
+
+    let botaoSalvar = createBotaoSalvar(inputTitulo, inputTexto, formularioNotas, index);
+    let botaoExcluir = createButtonRemover(evento, index);
 
     let funcaoClick;
+    let children;
     
     if (props.notaAtual.editando === true){
         funcaoClick = () => {};
+        children: [inputTitulo, inputTexto, botaoSalvar];
+        
     } else {
         funcaoClick = () => {
             props.editarNota(props.index);
         };
+        children: [h1Titulo, pTexto, botaoExcluir];
+
     };
 
     let propsForm = {
         className: 'note note--editing',
-        children: [inputTitulo, inputTexto],
+        children: children,
         onclick: funcaoClick
     };
 

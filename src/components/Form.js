@@ -6,8 +6,6 @@ function Form(props) {
 
     formularioNotas.setAttribute('class', props.className);
 
-    // for (let index = 0; index < novaLista.contaTotal(); index++) {
-
     for (var index = 0; index < props.children.length; index++) {
         formularioNotas.appendChild(props.children[index]);
     }
