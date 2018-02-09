@@ -7,35 +7,45 @@ class ListaNotas {
         this._observador = observador;
     }
 
-    adiciona(novoTitulo, novoTexto) {
-        let nota = new Nota(novoTitulo, novoTexto);
-        this._listaInterna.push(nota);
-        this._observador();
+    adiciona(titulo, texto) {
+        const nota = new Nota(this._listaInterna.length, titulo, texto);
+        this._listaInterna = [nota].concat(this._listaInterna);
+        this._observador(this);
     }
 
-    remove(posicao, quantidade) {
-        this._listaInterna.splice(posicao, 1);
-        this._observador();
+    remove(posicao) {
+        this._listaInterna = this._listaInterna.filter(nota => nota.posicao !== posicao);
+        this._observador(this);
     }
 
     edita(posicao) {
-        this._listaInterna[posicao].editando = true;
-        this._observador();
+        this._listaInterna = this._listaInterna.map(nota => {
+            if (nota.posicao === posicao) {
+                return new Nota(nota.posicao, nota.titulo, nota.texto, true);
+            } else {
+                return nota;
+            }
+        });
+        this._observador(this);
     }
 
-    salva(posicao, novoTitulo, novoTexto) {
-        this._listaInterna[posicao].titulo = novoTitulo;
-        this._listaInterna[posicao].texto = novoTexto;
-        this._listaInterna[posicao].editando = false;
-        this._observador();
+    salva(posicao, titulo, texto) {
+        this._listaInterna = this._listaInterna.map(nota => {
+            if (nota.posicao === posicao) {
+                return new Nota(posicao, titulo, texto, false);
+            } else {
+                return nota;
+            }
+        })
+        this._observador(this);
     }
 
     pega(posicao) {
         return this._listaInterna[posicao];
     }
 
-    contaTotal() {
-        return this._listaInterna.length;
+    pegaTodas() {
+        return this._listaInterna;
     }
 };
 

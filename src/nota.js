@@ -1,31 +1,40 @@
 export default class Nota {
-    constructor(novoTitulo, novoTexto) {
-        this._titulo = novoTitulo;
-        this._texto = novoTexto;
-        this._editando = false;
+    constructor(posicao, titulo, texto, editando = false) {
+        this._posicao = posicao;
+        this._titulo = titulo;
+        this._texto = texto;
+        this._editando = editando;
+    }
+
+    get posicao() {
+        return this._posicao;
+    }
+
+    set posicao(posicao) {
+        this._posicao = posicao;
     }
 
     get titulo() {
         return this._titulo;
     }
 
-    set titulo(novoTitulo) {
-        this._titulo = novoTitulo;
+    set titulo(titulo) {
+        this._titulo = titulo;
     }
 
     get texto() {
         return this._texto;
     }
 
-    set texto(novoTexto) {
-        this._texto = novoTexto;
+    set texto(texto) {
+        this._texto = texto;
     }
 
     get editando() {
         return this._editando;
     }
 
-    set editando(novoEditando) {
-        this._editando = novoEditando;
+    set editando(editando) {
+        this._editando = editando;
     }
 }
