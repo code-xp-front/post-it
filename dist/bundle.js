@@ -134,6 +134,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 function FormButton(props) {
 
+    console.log(props);
+
     var botaoSalvar = document.createElement('button');
 
     //<button></button>
@@ -181,9 +183,6 @@ var _FormNotas2 = _interopRequireDefault(_FormNotas);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import Form from './components/Form.js';
-
-
 var secao = document.getElementsByClassName('notes')[0];
 
 var observaMudancasNaLista = function observaMudancasNaLista() {
@@ -194,8 +193,6 @@ var novaLista = new _ClasseNovaLista2.default(observaMudancasNaLista);
 
 var atualizarSecao = function atualizarSecao(secao) {
 
-    // let formNovo = new FormNotas();
-    console.log(secao);
     secao.innerHTML = "";
 
     for (var index = 0; index < novaLista.contaTotal(); index++) {
@@ -220,8 +217,6 @@ window.editarNota = function (index) {
 };
 
 window.adicionarNota = function (inputTitulo, inputTexto, formulario, index) {
-
-    // console.log("testeeeeee");
 
     if (novaLista.pegar(index)) {
 
@@ -369,15 +364,15 @@ var _FormButton = __webpack_require__(2);
 
 var _FormButton2 = _interopRequireDefault(_FormButton);
 
-var _TituloNaoEditavel = __webpack_require__(8);
+var _TituloNaoEditavel = __webpack_require__(7);
 
 var _TituloNaoEditavel2 = _interopRequireDefault(_TituloNaoEditavel);
 
-var _TextoNaoEditavel = __webpack_require__(9);
+var _TextoNaoEditavel = __webpack_require__(8);
 
 var _TextoNaoEditavel2 = _interopRequireDefault(_TextoNaoEditavel);
 
-var _Form = __webpack_require__(7);
+var _Form = __webpack_require__(9);
 
 var _Form2 = _interopRequireDefault(_Form);
 
@@ -409,29 +404,11 @@ var createInputTexto = function createInputTexto(notaAtual) {
     return new _FormTextArea2.default(props);
 };
 
-var createTituloNaoEditavel = function createTituloNaoEditavel(notaAtual) {
-    var props = {
-        className: 'note__title',
-        children: notaAtual.titulo
-    };
-
-    return new _TituloNaoEditavel2.default(props);
-};
-
-var createTextoNaoEditavel = function createTextoNaoEditavel(notaAtual) {
-    var props = {
-        className: 'note__body',
-        children: notaAtual.texto
-    };
-
-    return new _TextoNaoEditavel2.default(props);
-};
-
 var createBotaoSalvar = function createBotaoSalvar(inputTitulo, inputTexto, formularioNotas, index) {
     var props = {
         className: 'note__control',
         type: 'button',
-        value: 'Salvar',
+        children: 'Salvar',
         onclick: function onclick() {
             adicionarNota(inputTitulo, inputTexto, formularioNotas, index);
         }
@@ -440,17 +417,17 @@ var createBotaoSalvar = function createBotaoSalvar(inputTitulo, inputTexto, form
     return new _FormButton2.default(props);
 };
 
-var createButtonRemover = function createButtonRemover(evento, index) {
+var createButtonRemover = function createButtonRemover(index) {
 
     var props = {
         className: 'note__excluir',
         children: '<i class="fa fa-times" aria-hidden="true"></i>',
-        onclick: function onclick() {
+        onclick: function onclick(evento) {
             excluirNota(evento, index);
         }
     };
 
-    return new _FormButton2.default();
+    return new _FormButton2.default(props);
 };
 
 function FormNotas(props) {
@@ -458,23 +435,25 @@ function FormNotas(props) {
     var inputTitulo = createInputTitulo(props.notaAtual);
     var inputTexto = createInputTexto(props.notaAtual);
 
-    var h1Titulo = createTituloNaoEditavel(props.notaAtual);
-    var pTexto = createTextoNaoEditavel(props.notaAtual);
-
-    var botaoSalvar = createBotaoSalvar(inputTitulo, inputTexto, formularioNotas, index);
-    var botaoExcluir = createButtonRemover(evento, index);
+    // let h1Titulo = createTituloNaoEditavel(props.notaAtual);
+    // let pTexto = createTextoNaoEditavel(props.notaAtual);
 
     var funcaoClick = void 0;
     var children = void 0;
 
     if (props.notaAtual.editando === true) {
+        var botaoSalvar = createBotaoSalvar(inputTitulo, inputTexto, formNotas, props.index);
+        var botaoExcluir = createButtonRemover(props.index);
+
         funcaoClick = function funcaoClick() {};
-        children: [inputTitulo, inputTexto, botaoSalvar];
+
+        children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
     } else {
         funcaoClick = function funcaoClick() {
             props.editarNota(props.index);
         };
-        children: [h1Titulo, pTexto, botaoExcluir];
+
+        children = [inputTitulo, inputTexto];
     };
 
     var propsForm = {
@@ -482,15 +461,6 @@ function FormNotas(props) {
         children: children,
         onclick: funcaoClick
     };
-
-    // if (props.notaAtual.editando === true){
-    //     let buttonRemover = createButtonRemover(props);
-    //     propsForm.children = [buttonRemover].concat(props.children);
-    // } else {
-    //     funcaoClick = () => {
-    //         props.editarNota(props.index);
-    //     };
-    // };
 
     var formNotas = new _Form2.default(propsForm);
 
@@ -524,8 +494,68 @@ exports.default = FormNotas;
 //     }
 // });
 
+//     const createTituloNaoEditavel = (notaAtual) => {
+//     const props = {
+//         className: 'note__title',
+//         children: notaAtual.titulo,
+//     };
+
+//     return new TituloNaoEditavel(props);
+// };
+
+// const createTextoNaoEditavel = (notaAtual) => {
+//     const props = {
+//         className: 'note__body',
+//         children: notaAtual.texto,
+//     };
+
+//     return new TextoNaoEditavel(props);
+// };
+
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function TituloNaoEditavel(props) {
+
+    var h1Titulo = document.createElement('h1');
+
+    h1Titulo.innerHTML = props.children;
+
+    return h1Titulo;
+}
+
+exports.default = TituloNaoEditavel;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+function TextoNaoEditavel(props) {
+
+    var pTexto = document.createElement('p');
+
+    pTexto.innerHTML = props.children;
+
+    return pTexto;
+}
+
+exports.default = TextoNaoEditavel;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -552,48 +582,6 @@ function Form(props) {
 }
 
 exports.default = Form;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-function TituloNaoEditavel(props) {
-
-    var h1Titulo = document.createElement('h1');
-
-    h1Titulo.innerHTML = props.children;
-
-    return h1Titulo;
-}
-
-exports.default = TituloNaoEditavel;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-function TextoNaoEditavel(props) {
-
-    var pTexto = document.createElement('p');
-
-    pTexto.innerHTML = props.children;
-
-    return pTexto;
-}
-
-exports.default = TextoNaoEditavel;
 
 /***/ })
 /******/ ]);

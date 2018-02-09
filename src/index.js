@@ -3,7 +3,6 @@ import FormInput from './components/FormInput.js';
 import FormTextArea from './components/FormTextArea.js';
 import FormButton from './components/FormButton.js';
 import FormNotas from './components/FormNotas.js';
-// import Form from './components/Form.js';
 
 
 let secao = document.getElementsByClassName('notes')[0];
@@ -18,8 +17,6 @@ const novaLista = new NovaLista(observaMudancasNaLista);
 
 const atualizarSecao = secao => {
 
-    // let formNovo = new FormNotas();
-    console.log(secao);
     secao.innerHTML = "" ;
 
     for (let index = 0; index < novaLista.contaTotal(); index++) {
@@ -46,8 +43,6 @@ window.editarNota = index => novaLista.editar(index);
 
 
 window.adicionarNota = (inputTitulo, inputTexto, formulario, index) => {
-
-    // console.log("testeeeeee");
 
     if (novaLista.pegar(index)) {
 

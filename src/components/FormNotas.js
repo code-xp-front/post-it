@@ -32,29 +32,11 @@ const createInputTexto = (notaAtual) => {
     return new FormTextArea(props);
 };
 
-const createTituloNaoEditavel = (notaAtual) => {
-    const props = {
-        className: 'note__title',
-        children: notaAtual.titulo,
-    };
-
-    return new TituloNaoEditavel(props);
-};
-
-const createTextoNaoEditavel = (notaAtual) => {
-    const props = {
-        className: 'note__body',
-        children: notaAtual.texto,
-    };
-
-    return new TextoNaoEditavel(props);
-};
-
 const createBotaoSalvar = (inputTitulo, inputTexto, formularioNotas, index) => {
     const props = {
-         className: 'note__control',
+        className: 'note__control',
         type: 'button',
-        value: 'Salvar',
+        children: 'Salvar',
         onclick: () => {
             adicionarNota(inputTitulo, inputTexto, formularioNotas, index);
         }
@@ -64,17 +46,17 @@ const createBotaoSalvar = (inputTitulo, inputTexto, formularioNotas, index) => {
 
 };
 
-const createButtonRemover = (evento, index) => {
+const createButtonRemover = (index) => {
 
     const props = {
         className: 'note__excluir',
         children: '<i class="fa fa-times" aria-hidden="true"></i>',
-        onclick: () => {
+        onclick: (evento) => {
             excluirNota(evento, index);
         }
     };
 
-    return new FormButton();
+    return new FormButton(props);
 };
 
 function FormNotas(props) {
@@ -82,24 +64,26 @@ function FormNotas(props) {
     let inputTitulo = createInputTitulo(props.notaAtual);
     let inputTexto = createInputTexto(props.notaAtual);
 
-    let h1Titulo = createTituloNaoEditavel(props.notaAtual);
-    let pTexto = createTextoNaoEditavel(props.notaAtual);
-
-    let botaoSalvar = createBotaoSalvar(inputTitulo, inputTexto, formularioNotas, index);
-    let botaoExcluir = createButtonRemover(evento, index);
+    // let h1Titulo = createTituloNaoEditavel(props.notaAtual);
+    // let pTexto = createTextoNaoEditavel(props.notaAtual);
 
     let funcaoClick;
     let children;
-    
-    if (props.notaAtual.editando === true){
-        funcaoClick = () => {};
-        children: [inputTitulo, inputTexto, botaoSalvar];
-        
+
+    if (props.notaAtual.editando === true) {
+        let botaoSalvar = createBotaoSalvar(inputTitulo, inputTexto, formNotas, props.index);
+        let botaoExcluir = createButtonRemover(props.index);
+
+        funcaoClick = () => { };
+
+        children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
+
     } else {
         funcaoClick = () => {
             props.editarNota(props.index);
         };
-        children: [h1Titulo, pTexto, botaoExcluir];
+        
+        children = [inputTitulo, inputTexto];
 
     };
 
@@ -108,16 +92,6 @@ function FormNotas(props) {
         children: children,
         onclick: funcaoClick
     };
-
-
-    // if (props.notaAtual.editando === true){
-    //     let buttonRemover = createButtonRemover(props);
-    //     propsForm.children = [buttonRemover].concat(props.children);
-    // } else {
-    //     funcaoClick = () => {
-    //         props.editarNota(props.index);
-    //     };
-    // };
 
     let formNotas = new Form(propsForm);
 
@@ -151,3 +125,21 @@ export default FormNotas;
     //         adicionarNota(inputTitulo, inputTexto, formularioNotas, index);
     //     }
     // });
+
+//     const createTituloNaoEditavel = (notaAtual) => {
+//     const props = {
+//         className: 'note__title',
+//         children: notaAtual.titulo,
+//     };
+
+//     return new TituloNaoEditavel(props);
+// };
+
+// const createTextoNaoEditavel = (notaAtual) => {
+//     const props = {
+//         className: 'note__body',
+//         children: notaAtual.texto,
+//     };
+
+//     return new TextoNaoEditavel(props);
+// };

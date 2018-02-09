@@ -1,5 +1,7 @@
 function FormButton(props) {
 
+    console.log(props);
+
     let botaoSalvar = document.createElement('button');
 
     //<button></button>
