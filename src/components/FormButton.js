@@ -2,7 +2,10 @@ function FormButton(props) {
 
     let botaoSalvar = document.createElement('button');
 
+    //<button></button>
+
     botaoSalvar.setAttribute('class', props.className);
+    //<button class="note__control"></button>
     botaoSalvar.setAttribute('type', props.type);
     // botaoSalvar.setAttribute('value', props.value);
 

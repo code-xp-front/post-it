@@ -1,19 +1,20 @@
-import FormNotas from './components/FormNotas.js';
+// import FormNotas from './FormNotas.js';
 
 function Form(props) {
+    console.log(props.onclick);
     let formularioNotas = document.createElement('form');
-    // formularioNotas.setAttribute('class', 'note note--editing');
-    formularioNotas.setAttribute('class', className);
 
-    // let props = {
-    //     children: [FormInput, FormTextArea, FormButton]
-    // };
+    formularioNotas.setAttribute('class', props.className);
 
-    for (var index = 0; index < children.length; index++) {
-        form.appendChild(props.children[index]);
+    // for (let index = 0; index < novaLista.contaTotal(); index++) {
+
+    for (var index = 0; index < props.children.length; index++) {
+        formularioNotas.appendChild(props.children[index]);
     }
 
-    form.addEventListener();
+    formularioNotas.addEventListener('click', props.onclick);
 
     return formularioNotas;
 }
+
+export default Form;

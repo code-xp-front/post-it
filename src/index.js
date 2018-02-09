@@ -1,7 +1,9 @@
 import NovaLista from './ClasseNovaLista.js';
-// import FormInput from './components/FormInput.js';
-// import FormTextArea from './components/FormTextArea.js';
-// import FormButton from './components/FormButton.js';
+import FormInput from './components/FormInput.js';
+import FormTextArea from './components/FormTextArea.js';
+import FormButton from './components/FormButton.js';
+import FormNotas from './components/FormNotas.js';
+// import Form from './components/Form.js';
 
 
 let secao = document.getElementsByClassName('notes')[0];
@@ -16,81 +18,26 @@ const novaLista = new NovaLista(observaMudancasNaLista);
 
 const atualizarSecao = secao => {
 
-    let inserirHTML = "";
+    // let formNovo = new FormNotas();
+    console.log(secao);
+    secao.innerHTML = "" ;
 
     for (let index = 0; index < novaLista.contaTotal(); index++) {
+        console.log(index);
 
         let notaAtual = novaLista.pegar(index);
 
-        if (notaAtual.editando == true) {
+        const props = {
+            index: index, 
+            notaAtual: notaAtual, 
+            editarNota: editarNota, 
+            adicionarNota: adicionarNota, 
+            excluirNota: excluirNota
+        };
 
-            let formularioNotas = document.createElement('form');
-            formularioNotas.setAttribute('class', 'note note--editing');
-
-            // let formularioNotas = new formularioNotas();
-
-            let inputTitulo = new FormInput({
-                className: 'note__title note--editing',
-                type: 'text',
-                name: 'title',
-                placeholder: 'Título',
-                value: notaAtual.titulo
-            });
-            // inputTitulo.setAttribute('class', 'note__title note--editing');
-            // inputTitulo.setAttribute('type', 'text');
-            // inputTitulo.setAttribute('name', 'title');
-            // inputTitulo.setAttribute('placeholder', 'Título');
-            // inputTitulo.setAttribute('value', notaAtual.titulo);
-
-            let inputTexto = new FormTextArea({
-                className: 'note__body note__body--editing',
-                name: 'body',
-                rows: '5',
-                placeholder: 'Criar uma nota...',
-                valueTextArea: notaAtual.texto
-            });
-            // inputTexto.setAttribute('class', 'note__body note__body--editing');
-            // inputTexto.setAttribute('name', 'body');
-            // inputTexto.setAttribute('rows', '5');
-            // inputTexto.setAttribute('placeholder', 'Criar uma nota...');
-            // inputTexto.innerHTML = notaAtual.texto;
-
-            let botaoSalvar = new FormButton({
-                className: 'note__control',
-                type: 'button',
-                value: 'Salvar',
-                onclick: () => {
-                    adicionarNota(inputTitulo, inputTexto, formularioNotas, index);
-                }
-            });
-            // botaoSalvar.setAttribute('class', 'note__control');
-            // botaoSalvar.setAttribute('type', 'button');
-            // botaoSalvar.setAttribute('value', 'Salvar');
-            // botaoSalvar.addEventListener('click', () => {
-            //     // event.target.form
-            //     adicionarNota(inputTitulo, inputTexto, formularioNotas, index);
-            // });
-
-
-            // inserirHTML += `<form class="note note--editing">
-            //         <input class="note__title note__title--editing" type="text" name="title" placeholder="Título" value="${notaAtual.titulo}" autofocus /> 
-            //         <textarea class="note__body note__body--editing" name="body" rows="5" placeholder="Criar uma nota..."> ${notaAtual.texto} </textarea>
-            //         <button class="note__control" type="button" onclick="adicionarNota(this.form.title, this.form.body, this.form, ${index} )"> Salvar </button> 
-            //         </form>`;
-
-        } else {
-
-            inserirHTML += `<form class="note" onclick="editarNota(${index})">
-                    <button class="note__excluir" onclick="excluirNota(event, ${index} )">
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                    </button>
-                    <h1 class="note__title"> ${notaAtual.titulo} </h1>
-                    <p class="note__body"> ${notaAtual.texto} </p>
-                    </form>`;
-        }
+        secao.appendChild(new FormNotas(props));
+        
     }
-
-    secao.innerHTML = inserirHTML;
 
 };
 

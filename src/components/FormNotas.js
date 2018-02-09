@@ -1,8 +1,8 @@
-import FormInput from './components/FormInput.js';
-import FormTextArea from './components/FormTextArea.js';
-import FormButton from './components/FormButton.js';
+import FormInput from './FormInput.js';
+import FormTextArea from './FormTextArea.js';
+import FormButton from './FormButton.js';
 
-import Form from './components/Form.js';
+import Form from './Form.js';
 
 const createInputTitulo = (notaAtual) => {
     const props = {
@@ -10,8 +10,8 @@ const createInputTitulo = (notaAtual) => {
         type: 'text',
         name: 'title',
         placeholder: 'Título',
-        value: props.notaAtual.titulo,
-        readonly: !props.notaAtual.editando
+        value: notaAtual.titulo,
+        readonly: !notaAtual.editando
     };
 
     return new FormInput(props);
@@ -22,10 +22,20 @@ const createInputTexto = (notaAtual) => {
         className: 'note__body note__body--editing',
         name: 'body',
         rows: '5',
-        placeholder: 'Criar uma nota...'
+        placeholder: 'Criar uma nota...',
+        children: notaAtual.texto
     };
 
     return new FormTextArea(props);
+};
+
+const createTituloNaoEditavel = (notaAtual) => {
+    const props = {
+        className: 'note__title',
+        children: notaAtual.titulo,
+    };
+
+    return new TituloNaoEditavel(props);
 };
 
 const createBotaoSalvar = (inputTitulo, inputTexto, formularioNotas, index) => {
@@ -38,15 +48,12 @@ const createBotaoSalvar = (inputTitulo, inputTexto, formularioNotas, index) => {
         }
     };
 
-    return new FormButton(inputTitulo, inputTexto, formularioNotas, index);
+    return new FormButton(props);
 
 };
 
 const createButtonRemover = (evento, index) => {
-    /*<button class="note__excluir" onclick="excluirNota(event, ${index} )">
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                    </button>*/
-    
+
     const props = {
         className: 'note__excluir',
         children: '<i class="fa fa-times" aria-hidden="true"></i>',
@@ -55,7 +62,7 @@ const createButtonRemover = (evento, index) => {
         }
     };
 
-    return 
+    return new FormButton();
 };
 
 function FormNotas(props) {
@@ -67,7 +74,6 @@ function FormNotas(props) {
     let funcaoClick;
     
     if (props.notaAtual.editando === true){
-        // funcaoClick = function() {};
         funcaoClick = () => {};
     } else {
         funcaoClick = () => {
@@ -77,15 +83,19 @@ function FormNotas(props) {
 
     let propsForm = {
         className: 'note note--editing',
-        children: [FormInput, FormTextArea, FormButton],
+        children: [inputTitulo, inputTexto],
         onclick: funcaoClick
     };
 
 
-    if (props.notaAtual.editando === true){
-        let buttonRemover = createButtonRemover(props);
-        propsForm.children = [buttonRemover].concat(props.children);
-    };
+    // if (props.notaAtual.editando === true){
+    //     let buttonRemover = createButtonRemover(props);
+    //     propsForm.children = [buttonRemover].concat(props.children);
+    // } else {
+    //     funcaoClick = () => {
+    //         props.editarNota(props.index);
+    //     };
+    // };
 
     let formNotas = new Form(propsForm);
 
@@ -93,6 +103,7 @@ function FormNotas(props) {
 }
 
 export default FormNotas;
+
 
 // let inputTitulo = new FormInput({
     //     className: 'note__title note--editing',
