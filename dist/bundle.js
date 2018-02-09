@@ -196,7 +196,6 @@ var atualizarSecao = function atualizarSecao(secao) {
     secao.innerHTML = "";
 
     for (var index = 0; index < novaLista.contaTotal(); index++) {
-        console.log(index);
 
         var notaAtual = novaLista.pegar(index);
 
@@ -380,7 +379,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var createInputTitulo = function createInputTitulo(notaAtual) {
     var props = {
-        className: 'note__title note--editing',
+        className: 'note__title',
         type: 'text',
         name: 'title',
         placeholder: 'Título',
@@ -393,7 +392,7 @@ var createInputTitulo = function createInputTitulo(notaAtual) {
 
 var createInputTexto = function createInputTexto(notaAtual) {
     var props = {
-        className: 'note__body note__body--editing',
+        className: 'note__body',
         name: 'body',
         rows: '5',
         placeholder: 'Criar uma nota...',
@@ -444,6 +443,7 @@ function FormNotas(props) {
     if (props.notaAtual.editando === true) {
         var botaoSalvar = createBotaoSalvar(inputTitulo, inputTexto, formNotas, props.index);
         var botaoExcluir = createButtonRemover(props.index);
+        // formNotas.className = 'note note--editing';
 
         funcaoClick = function funcaoClick() {};
 
@@ -457,12 +457,18 @@ function FormNotas(props) {
     };
 
     var propsForm = {
-        className: 'note note--editing',
+        className: 'note',
         children: children,
         onclick: funcaoClick
     };
 
     var formNotas = new _Form2.default(propsForm);
+
+    if (props.notaAtual.editando === true) {
+        formNotas.className = 'note note--editing';
+        inputTitulo.className = 'note__title note--editing';
+        inputTexto.className = 'note__body note__body--editing';
+    }
 
     return formNotas;
 }
@@ -567,12 +573,13 @@ Object.defineProperty(exports, "__esModule", {
 // import FormNotas from './FormNotas.js';
 
 function Form(props) {
-    console.log(props.onclick);
+
     var formularioNotas = document.createElement('form');
 
     formularioNotas.setAttribute('class', props.className);
 
     for (var index = 0; index < props.children.length; index++) {
+
         formularioNotas.appendChild(props.children[index]);
     }
 

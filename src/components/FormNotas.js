@@ -8,7 +8,7 @@ import Form from './Form.js';
 
 const createInputTitulo = (notaAtual) => {
     const props = {
-        className: 'note__title note--editing',
+        className: 'note__title',
         type: 'text',
         name: 'title',
         placeholder: 'Título',
@@ -21,7 +21,7 @@ const createInputTitulo = (notaAtual) => {
 
 const createInputTexto = (notaAtual) => {
     const props = {
-        className: 'note__body note__body--editing',
+        className: 'note__body',
         name: 'body',
         rows: '5',
         placeholder: 'Criar uma nota...',
@@ -73,6 +73,7 @@ function FormNotas(props) {
     if (props.notaAtual.editando === true) {
         let botaoSalvar = createBotaoSalvar(inputTitulo, inputTexto, formNotas, props.index);
         let botaoExcluir = createButtonRemover(props.index);
+        // formNotas.className = 'note note--editing';
 
         funcaoClick = () => { };
 
@@ -82,18 +83,26 @@ function FormNotas(props) {
         funcaoClick = () => {
             props.editarNota(props.index);
         };
-        
+
         children = [inputTitulo, inputTexto];
 
     };
 
+
     let propsForm = {
-        className: 'note note--editing',
+        className: 'note',
         children: children,
         onclick: funcaoClick
     };
 
     let formNotas = new Form(propsForm);
+
+
+    if (props.notaAtual.editando === true) {
+        formNotas.className = 'note note--editing';
+        inputTitulo.className = 'note__title note--editing';
+        inputTexto.className = 'note__body note__body--editing';
+    }
 
     return formNotas;
 }

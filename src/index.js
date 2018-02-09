@@ -20,7 +20,6 @@ const atualizarSecao = secao => {
     secao.innerHTML = "" ;
 
     for (let index = 0; index < novaLista.contaTotal(); index++) {
-        console.log(index);
 
         let notaAtual = novaLista.pegar(index);
 
