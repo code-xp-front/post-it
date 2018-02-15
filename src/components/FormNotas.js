@@ -73,7 +73,6 @@ function FormNotas(props) {
     if (props.notaAtual.editando === true) {
         let botaoSalvar = createBotaoSalvar(inputTitulo, inputTexto, formNotas, props.index);
         let botaoExcluir = createButtonRemover(props.index);
-        // formNotas.className = 'note note--editing';
 
         funcaoClick = () => { };
 
