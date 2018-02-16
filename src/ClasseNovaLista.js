@@ -13,21 +13,21 @@ class NovaLista {
         let novaNota = new Nota(novoTitulo, novoTexto);
 
         this._listaNotas.push(novaNota);
-        this._observador();
+        this._observador(this);
 
     }
 
     editar(index) {
 
         this._listaNotas[index].editando = true;
-        this._observador();
+        this._observador(this);
 
     }
 
     remover(index) {
 
         this._listaNotas.splice(index, 1);
-        this._observador();
+        this._observador(this);
 
     }
 
@@ -37,7 +37,7 @@ class NovaLista {
         this._listaNotas[index].texto = novoTexto;
         this._listaNotas[index].editando = false;
 
-        this._observador();
+        this._observador(this);
 
     }
 

@@ -1,0 +1,161 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #E8E8E8;
+    font-family: Helvetica, sans-serif;
+}
+
+.navbar {
+    background:  #FCB522;
+    padding: 1%;
+    margin-bottom: 5%;
+}
+
+.form-add-notes {
+    margin: 0 auto;
+    width: 70%;
+}
+
+.fieldset__notas {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.form__notas , .form__item-add {  
+    height: 20px;
+    border: none;
+    border-radius: 3px;
+    margin: 5px 0;
+}
+
+.form__button-item{
+   width:15px;
+   height: 18px;
+   text-align: center;
+   border: 1px solid black;
+   border-radius: 3px;
+   margin: 5px;
+}
+
+.form__button-itemremove{
+    float:right;
+    width:15px;
+   height: 18px;
+   text-align: center;
+   border: 1px solid black;
+   border-radius: 3px;
+   margin: -25px 40px 10px 5px;
+}
+
+.form__item, .form__item-num{
+    float: left;
+}
+
+.form__item-add{
+    width: 78%;
+    margin: -5px 5px 10px 30px;
+}
+
+.fieldset__itens{
+    border-radius: 5px;
+}
+
+.form__notas{
+    width: 100%;
+}
+
+.form__buttons{
+    text-align: right;
+}
+
+.form__button{
+     background:  #FCB522;
+     border: none;
+     margin: 10px;
+     width: 130px;
+     height: 22px;
+     border-radius: 3px;
+     box-shadow: 2px 2px 8px 0px rgba(158,152,158,1);
+}
+
+/*****************POST-IT*******************/
+
+.postit-container {
+    max-width: 80%;
+    margin: 0 auto;
+    /*display: none;*/
+}
+
+.note {
+    font-family: 'Roboto', sans-serif;
+    line-height: 18px;
+    width: 100%;
+    padding: .5rem;
+    margin: 0 0 1rem;
+    border-radius: 2px;
+    background: #92C1FF;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.note--editing {
+    background: #F9BC61;
+}
+
+.note__excluir {
+    border: none;
+    background: none;
+    float: right;
+}
+
+.note__title {
+    font-weight: bold;
+}
+
+.note__title, .note__body {
+    font-size: 14px;
+    outline: 0;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0 0 .3rem;
+    border: 0;
+    background: #B0CBFF;
+}
+
+.note__title--editing, .note__body--editing {
+    background: #FFD387;
+}
+
+.note__control {
+    font-size: 12px;
+    display: block;
+    margin-left: auto;
+    border: 0;
+    background: none;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.notes {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+    .note {
+        width: 40%;
+    }
+}
+
+@media (min-width: 992px) {
+    .note {
+        width: 20%;
+    }
+}

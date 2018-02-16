@@ -7,7 +7,7 @@ import Form from './formReact'
 import Nota from '../Nota'
 
 
-createInputTitulo = (notaAlterada) => {
+const createInputTitulo = (notaAlterada) => {
     const props = {
         className: 'note__title',
         type: 'text',
@@ -23,7 +23,7 @@ createInputTitulo = (notaAlterada) => {
     return React.createElement(FormInput, props)
 }
 
-createInputTexto = (notaAlterada) => {
+const createInputTexto = (notaAlterada) => {
     const props = {
         className: 'note__body',
         name: 'body',
@@ -39,7 +39,7 @@ createInputTexto = (notaAlterada) => {
     return React.createElement(FormTextArea, props)
 }
 
-createBotaoSalvar = (adicionarNota, notaAlterada, index) => {
+const createBotaoSalvar = (adicionarNota, notaAlterada, index) => {
     const props = {
         className: 'note__control',
         type: 'button',
@@ -52,7 +52,7 @@ createBotaoSalvar = (adicionarNota, notaAlterada, index) => {
 
 };
 
-createButtonRemover = (excluirNota, index) => {
+const createButtonRemover = (excluirNota, index) => {
 
     const props = {
         className: 'note__excluir',
