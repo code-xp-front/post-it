@@ -1,0 +1,58 @@
+.container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.note {
+    font-family: 'Roboto', sans-serif;
+    line-height: 18px;
+    width: 100%;
+    padding: .5rem;
+    margin: 0 0 1rem;
+    border-radius: 2px;
+    background: rgb(255, 246, 141);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+}
+
+@media (min-width: 768px) {
+    .note {
+        width: 40%;
+    }
+}
+
+@media (min-width: 992px) {
+    .note {
+        width: 20%;
+    }
+}
+
+.note__title {
+    font-weight: bold;
+}
+
+.note__title, .note__body {
+    font-size: 14px;
+    outline: 0;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0 0 .3rem;
+    border: 0;
+    background: rgb(255, 255, 141);
+}
+
+.note__control {
+    font-size: 12px;
+    display: block;
+    margin-left: auto;
+    border: 0;
+    background: rgb(255, 246, 141);
+    text-transform: uppercase;
+}
+
+.notes {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
