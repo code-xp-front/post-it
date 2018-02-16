@@ -1,7 +1,8 @@
+import React from 'react'
+
 import Nota from './Nota.js';
 
-
-class ClasseNovaLista {
+class NovaLista {
     constructor(observador) {
         this._listaNotas = [];
         this._observador = observador;
@@ -48,4 +49,4 @@ class ClasseNovaLista {
     }
 };
 
-export default ClasseNovaLista;
+export default NovaLista;

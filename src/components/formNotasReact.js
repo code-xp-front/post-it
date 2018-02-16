@@ -67,49 +67,37 @@ createButtonRemover = (excluirNota, index) => {
     return React.createElement(FormButton, props, children)
 };
 
-function FormNotas(props) {
 
-    let notaAlterada = new Nota(props.notaAtual.titulo, props.notaAtual.texto, props.notaAtual.editando)
+function FormNotas(props) {
+    const {notaAtual, index, adicionarNota, excluirNota, editarNota} = props;
+
+    let notaAlterada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando)
 
     let inputTitulo = createInputTitulo(notaAlterada);
     let inputTexto = createInputTexto(notaAlterada);
+    let botaoExcluir = createButtonRemover(excluirNota, index);
 
-    let onClick;
-    let children;
+    let children;    
+    let propsForm = { className: 'note' };
 
-    if (props.notaAtual.editando === true) {
-        let botaoSalvar = createBotaoSalvar(props.adicionarNota, notaAlterada, props.index);
-        let botaoExcluir = createButtonRemover(props.excluirNota, props.index);
 
-        onClick = () => { };
-
+    if (notaAlterada.editando === true) {
+        let botaoSalvar = createBotaoSalvar(adicionarNota, notaAlterada, index);
         children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
 
     } else {
-        onClick = () => {
-            props.editarNota(props.index);
-        };
-
-        children = [inputTitulo, inputTexto];
-
-    };
+        propsForm.onClick = () => editarNota(index);
+        children = [botaoExcluir, inputTitulo, inputTexto];
+    }
 
 
-    let formProps = {
-        className: 'note',
-        // onClick: onClick
-    };
-
-    formNotas = React.createElement(Form, formProps, children);
-
-
-    if (props.notaAtual.editando === true) {
+    if (notaAlterada.editando === true) {
         formNotas.className = 'note note--editing';
         inputTitulo.className = 'note__title note--editing';
         inputTexto.className = 'note__body note__body--editing';
     }
 
-    return formNotas;
+    return React.createElement(Form, propsForm, children)
 }
 
 export default FormNotas;

@@ -1,10 +1,8 @@
-import React from 'react'
-
-import NovaLista from './ClasseNovaLista.js'
-import FormInput from './components/FormInputReact.js'
-import FormTextArea from './components/FormTextAreaReact.js'
-import FormButton from './components/FormButtonReact.js'
-import FormNotas from './components/FormNotasReact.js'
+import NovaLista from './ClasseNovaLista.js';
+import FormInput from './components/FormInput.js';
+import FormTextArea from './components/FormTextArea.js';
+import FormButton from './components/FormButton.js';
+import FormNotas from './components/FormNotas.js';
 
 
 let secao = document.getElementsByClassName('notes')[0];
@@ -40,10 +38,10 @@ const atualizarSecao = secao => {
 };
 
 
-const editarNota = index => novaLista.editar(index);
+window.editarNota = index => novaLista.editar(index);
 
 
-const adicionarNota = (inputTitulo, inputTexto, formulario, index) => {
+window.adicionarNota = (inputTitulo, inputTexto, formulario, index) => {
 
     if (novaLista.pegar(index)) {
 
@@ -58,7 +56,7 @@ const adicionarNota = (inputTitulo, inputTexto, formulario, index) => {
 };
 
 
-const excluirNota = (evento, index) => {
+window.excluirNota = (evento, index) => {
 
     evento.stopPropagation();
 
