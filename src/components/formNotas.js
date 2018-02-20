@@ -12,8 +12,8 @@ function montaInputTitulo(notaCopiada) {
         type: 'text',
         name: 'titulo',
         placeholder: 'Título',
-        readOnly: !notaAtual.editando,
-        defaultValue: notaAtual.titulo
+        readOnly: !notaCopiada.editando,
+        defaultValue: notaCopiada.titulo
     }
 
     return React.createElement(FormInput, props)
@@ -25,8 +25,8 @@ function montaTextareaTexto(notaCopiada) {
         name: 'texto', 
         placeholder: 'Criar uma nota...', 
         rows: 5, 
-        readOnly: !notaAtual.editando,
-        defaultValue: notaAtual.texto
+        readOnly: !notaCopiada.editando,
+        defaultValue: notaCopiada.texto
     }
 
     return React.createElement(FormTextarea, props)
@@ -74,7 +74,7 @@ function FormNotas({ posicao, notaAtual, adicionarNota, removerNota, editarFormu
         props.onClick = () => editarFormulario(posicao)
     }
 
-    return React.createElement(Form, props, children)
+    return React.createElement(Form, props, ...children)
 }
 
 export default FormNotas

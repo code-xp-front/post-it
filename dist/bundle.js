@@ -1027,14 +1027,16 @@ var _nota2 = _interopRequireDefault(_nota);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function montaInputTitulo(notaCopiada) {
     var props = {
         className: 'note__title',
         type: 'text',
         name: 'titulo',
         placeholder: 'Título',
-        readOnly: !notaAtual.editando,
-        defaultValue: notaAtual.titulo
+        readOnly: !notaCopiada.editando,
+        defaultValue: notaCopiada.titulo
     };
 
     return _react2.default.createElement(_formInput2.default, props);
@@ -1046,8 +1048,8 @@ function montaTextareaTexto(notaCopiada) {
         name: 'texto',
         placeholder: 'Criar uma nota...',
         rows: 5,
-        readOnly: !notaAtual.editando,
-        defaultValue: notaAtual.texto
+        readOnly: !notaCopiada.editando,
+        defaultValue: notaCopiada.texto
     };
 
     return _react2.default.createElement(_formTextarea2.default, props);
@@ -1107,7 +1109,7 @@ function FormNotas(_ref) {
         };
     }
 
-    return _react2.default.createElement(_form2.default, props, children);
+    return _react2.default.createElement.apply(_react2.default, [_form2.default, props].concat(_toConsumableArray(children)));
 }
 
 exports.default = FormNotas;
@@ -18554,7 +18556,7 @@ var Page = function (_React$Component) {
             var sectionNotas = montaSectionNotas(this.state.listaNotas, this.adicionarNota, this.removerNota, this.editarFormulario);
             var children = [formNotas, sectionNotas];
 
-            return _react2.default.createElement('main', props, children);
+            return _react2.default.createElement.apply(_react2.default, ['main', props].concat(children));
         }
     }]);
 
@@ -18660,8 +18662,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (props, children) {
-  return _react2.default.createElement('form', props, children);
+exports.default = function (props) {
+  return _react2.default.createElement('form', props);
 };
 
 /***/ }),
@@ -18723,8 +18725,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (props, children) {
-  return _react2.default.createElement('button', props, children);
+exports.default = function (props) {
+  return _react2.default.createElement('button', props);
 };
 
 /***/ }),
@@ -18752,6 +18754,8 @@ var _formNotas2 = _interopRequireDefault(_formNotas);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function montaFormNotas(posicao, listaNotas, adicionarNota, removerNota, editarFormulario) {
     var props = {
         posicao: posicao,
@@ -18772,11 +18776,11 @@ function SectionNotas(_ref) {
 
     var props = { className: 'notes' };
 
-    var children = listaNotas.map(function (notaAtual, posicao) {
+    var children = listaNotas.pegaTodos().map(function (notaAtual, posicao) {
         return montaFormNotas(posicao, listaNotas, adicionarNota, removerNota, editarFormulario);
     });
 
-    return _react2.default.createElement(_section2.default, props, children);
+    return _react2.default.createElement.apply(_react2.default, [_section2.default, props].concat(_toConsumableArray(children)));
 }
 
 exports.default = SectionNotas;
@@ -18798,8 +18802,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (props, children) {
-  return _react2.default.createElement('section', props, children);
+exports.default = function (props) {
+  return _react2.default.createElement('section', props);
 };
 
 /***/ })

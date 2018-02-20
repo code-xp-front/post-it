@@ -18,11 +18,11 @@ function montaFormNotas(posicao, listaNotas, adicionarNota, removerNota, editarF
 function SectionNotas({ listaNotas, adicionarNota, removerNota, editarFormulario }) {
     const props = { className: 'notes' }
 
-    const children = listaNotas.map((notaAtual, posicao) => (
+    const children = listaNotas.pegaTodos().map((notaAtual, posicao) => (
         montaFormNotas(posicao, listaNotas, adicionarNota, removerNota, editarFormulario)
     ))
 
-    return React.createElement(Section, props, children)
+    return React.createElement(Section, props, ...children)
 }
 
 export default SectionNotas
