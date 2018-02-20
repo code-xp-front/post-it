@@ -2,6 +2,7 @@ import React from 'react'
 import Section from './section'
 import FormNotas from './formNotas'
 
+
 function montaFormNotas(posicao, listaNotas, adicionarNota, removerNota, editarFormulario) {
     const props = {
         posicao: posicao,

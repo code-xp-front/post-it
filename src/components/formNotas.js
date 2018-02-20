@@ -1,70 +1,80 @@
-import Form from './form.js';
-import FormInput from './formInput.js';
-import FormTextarea from './formTextarea.js';
-import FormButton from './formButton.js';
+import React from 'react'
+import Form from './form.js'
+import FormInput from './formInput.js'
+import FormTextarea from './formTextarea.js'
+import FormButton from './formButton.js'
+import Nota from '../nota'
 
-// destructuring / immutable
-// extract function
-// variable shorthand declaration
-function FormNotas(props) {
-    let formNotas;
-    
-    let inputTitulo = new FormInput({
+
+function montaInputTitulo(notaCopiada) {
+    const props = {
         className: 'note__title',
         type: 'text',
         name: 'titulo',
         placeholder: 'Título',
-        readonly: !props.notaAtual.editando,
-        value: props.notaAtual.titulo
-    });
-    
-    let textareaTexto = new FormTextarea({
+        readOnly: !notaAtual.editando,
+        defaultValue: notaAtual.titulo
+    }
+
+    return React.createElement(FormInput, props)
+}
+
+function montaTextareaTexto(notaCopiada) {
+    const props = {
         className: 'note__body', 
         name: 'texto', 
         placeholder: 'Criar uma nota...', 
         rows: 5, 
-        readonly: !props.notaAtual.editando,
-        children: props.notaAtual.texto
-    });
-    
-    let children;
-    let click;
-
-    if (props.notaAtual.editando) {
-        let buttonRemover = new FormButton({
-            className: 'note__control', 
-            type: 'button', 
-            children: '<i class="fa fa-times" aria-hidden="true"></i>',
-            click: event => {
-                props.removerNota(event, props.posicao);
-            }
-        });
-
-        let buttonConcluido = new FormButton({
-            className: 'note__control', 
-            type: 'button', 
-            children: 'Concluído',
-            click: () => {
-                props.adicionarNota(inputTitulo, textareaTexto, formNotas, props.posicao);
-            }
-        });
-
-        children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido];
-    } else {
-        children = [inputTitulo, textareaTexto];
-
-        click = () => {
-            props.editarFormulario(props.posicao);
-        }
+        readOnly: !notaAtual.editando,
+        defaultValue: notaAtual.texto
     }
 
-    formNotas = new Form({
-        className: 'note',
-        children: children,
-        click: click
-    });
-
-    return formNotas;
+    return React.createElement(FormTextarea, props)
 }
 
-export default FormNotas;
+function montaButtonRemover(removerNota, posicao) {
+    const props = {
+        className: 'note__control', 
+        type: 'button', 
+        onClick: event => removerNota(event, posicao)
+    }
+
+    const children = React.createElement('i', { className: 'fa fa-times', 'aria-hidden': true})
+
+    return React.createElement(FormButton, props, children)
+}
+
+function montaButtonConcluir(adicionarNota, notaCopiada, posicao) {
+    const props = {
+        className: 'note__control', 
+        type: 'button', 
+        onClick: () => adicionarNota(notaCopiada.titulo, notaCopiada.texto, event.target.form, posicao)
+    }
+
+    const children = 'Concluído'
+
+    return React.createElement(FormButton, props, children)
+}
+
+function FormNotas({ posicao, notaAtual, adicionarNota, removerNota, editarFormulario }) {
+    let notaCopiada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando)    
+    
+    let inputTitulo = montaInputTitulo(notaCopiada)
+    let textareaTexto = montaTextareaTexto(notaCopiada)
+    
+    let props = { className: 'note' }
+    let children
+
+    if (notaCopiada.editando) {
+        let buttonRemover = montaButtonRemover(removerNota, posicao)
+        let buttonConcluido = montaButtonConcluir(adicionarNota, notaCopiada, posicao)
+        children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido]
+    } else {
+        children = [inputTitulo, textareaTexto]
+        props.onClick = () => editarFormulario(posicao)
+    }
+
+    return React.createElement(Form, props, children)
+}
+
+export default FormNotas

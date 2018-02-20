@@ -1,16 +1,4 @@
-// props param
-function FormButton(props) {
-    let formButton = document.createElement('button');
-    
-    // destructuring
-    formButton.setAttribute('class', props.className);
-    formButton.setAttribute('type', props.type);
-    
-    formButton.addEventListener('click', props.click);
+import React from 'react'
 
-    formButton.innerHTML = props.children;
 
-    return formButton;
-}
-
-export default FormButton;
+export default (props, children) => React.createElement('button', props, children)
