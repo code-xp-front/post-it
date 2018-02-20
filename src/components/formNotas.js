@@ -6,27 +6,35 @@ import FormButton from './formButton.js'
 import Nota from '../nota'
 
 
-function montaInputTitulo(notaCopiada) {
+function montaInputTitulo(notaCopiada, posicao) {
     const props = {
         className: 'note__title',
         type: 'text',
         name: 'titulo',
         placeholder: 'Título',
-        readOnly: !notaCopiada.editando,
-        defaultValue: notaCopiada.titulo
+        defaultValue: notaCopiada.titulo,
+        onChange: (event) => notaCopiada.titulo = event.target.value
+    }
+
+    if (posicao !== undefined && !notaCopiada.editando) {
+        props.readOnly = true;
     }
 
     return React.createElement(FormInput, props)
 }
 
-function montaTextareaTexto(notaCopiada) {
+function montaTextareaTexto(notaCopiada, posicao) {
     const props = {
         className: 'note__body', 
         name: 'texto', 
         placeholder: 'Criar uma nota...', 
         rows: 5, 
-        readOnly: !notaCopiada.editando,
-        defaultValue: notaCopiada.texto
+        defaultValue: notaCopiada.texto,
+        onChange: (event) => notaCopiada.texto = event.target.value
+    }
+
+    if (posicao !== undefined && !notaCopiada.editando) {
+        props.readOnly = true;
     }
 
     return React.createElement(FormTextarea, props)
@@ -48,7 +56,7 @@ function montaButtonConcluir(adicionarNota, notaCopiada, posicao) {
     const props = {
         className: 'note__control', 
         type: 'button', 
-        onClick: () => adicionarNota(notaCopiada.titulo, notaCopiada.texto, event.target.form, posicao)
+        onClick: (event) => adicionarNota(notaCopiada.titulo, notaCopiada.texto, event.target.form, posicao)
     }
 
     const children = 'Concluído'
@@ -59,19 +67,23 @@ function montaButtonConcluir(adicionarNota, notaCopiada, posicao) {
 function FormNotas({ posicao, notaAtual, adicionarNota, removerNota, editarFormulario }) {
     let notaCopiada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando)    
     
-    let inputTitulo = montaInputTitulo(notaCopiada)
-    let textareaTexto = montaTextareaTexto(notaCopiada)
+    let inputTitulo = montaInputTitulo(notaCopiada, posicao)
+    let textareaTexto = montaTextareaTexto(notaCopiada, posicao)
+    let buttonRemover = montaButtonRemover(removerNota, posicao)
+    let buttonConcluido = montaButtonConcluir(adicionarNota, notaCopiada, posicao)
     
     let props = { className: 'note' }
     let children
 
-    if (notaCopiada.editando) {
-        let buttonRemover = montaButtonRemover(removerNota, posicao)
-        let buttonConcluido = montaButtonConcluir(adicionarNota, notaCopiada, posicao)
-        children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido]
+    if (posicao === undefined) {
+        children = [inputTitulo, textareaTexto, buttonConcluido]
     } else {
-        children = [inputTitulo, textareaTexto]
-        props.onClick = () => editarFormulario(posicao)
+        if (notaCopiada.editando) {
+            children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido]
+        } else {
+            children = [inputTitulo, textareaTexto]
+            props.onClick = () => editarFormulario(posicao)
+        }
     }
 
     return React.createElement(Form, props, ...children)

@@ -30,23 +30,22 @@ function montaSectionNotas(listaNotas, adicionarNota, removerNota, editarFormula
 class Page extends React.Component {
     constructor(props) {
         super(props)
+        this.atualizaPagina = this.atualizaPagina.bind(this);
+        this.adicionarNota = this.adicionarNota.bind(this);
+        this.removerNota = this.removerNota.bind(this);
+        this.editarFormulario = this.editarFormulario.bind(this);
         this.state = { listaNotas: new ListaNotas(this.atualizaPagina) }
     }
 
     atualizaPagina(novaLista) {
-        console.log('Quem é this?', this)
         this.setState({ listaNotas: novaLista })
     }
 
-    editarFormulario(posicao) {
-        this.state.listaNotas.edita(posicao)
-    }
-
-    adicionarNota(inputTitulo, textareaTexto, formulario, posicao) {
+    adicionarNota(titulo, texto, formulario, posicao) {
         if (this.state.listaNotas.pega(posicao)) {
-            this.state.listaNotas.salva(posicao, inputTitulo.value, textareaTexto.value)
+            this.state.listaNotas.salva(posicao, titulo, texto)
         } else {
-            this.state.listaNotas.adiciona(inputTitulo.value, textareaTexto.value)
+            this.state.listaNotas.adiciona(titulo, texto)
             formulario.reset()
         }
     }
@@ -54,6 +53,10 @@ class Page extends React.Component {
     removerNota(evento, posicao) {
         evento.stopPropagation()
         this.state.listaNotas.remove(posicao)
+    }
+
+    editarFormulario(posicao) {
+        this.state.listaNotas.edita(posicao)
     }
 
     render() {

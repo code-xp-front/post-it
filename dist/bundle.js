@@ -1029,28 +1029,40 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-function montaInputTitulo(notaCopiada) {
+function montaInputTitulo(notaCopiada, posicao) {
     var props = {
         className: 'note__title',
         type: 'text',
         name: 'titulo',
         placeholder: 'Título',
-        readOnly: !notaCopiada.editando,
-        defaultValue: notaCopiada.titulo
+        defaultValue: notaCopiada.titulo,
+        onChange: function onChange(event) {
+            return notaCopiada.titulo = event.target.value;
+        }
     };
+
+    if (posicao !== undefined && !notaCopiada.editando) {
+        props.readOnly = true;
+    }
 
     return _react2.default.createElement(_formInput2.default, props);
 }
 
-function montaTextareaTexto(notaCopiada) {
+function montaTextareaTexto(notaCopiada, posicao) {
     var props = {
         className: 'note__body',
         name: 'texto',
         placeholder: 'Criar uma nota...',
         rows: 5,
-        readOnly: !notaCopiada.editando,
-        defaultValue: notaCopiada.texto
+        defaultValue: notaCopiada.texto,
+        onChange: function onChange(event) {
+            return notaCopiada.texto = event.target.value;
+        }
     };
+
+    if (posicao !== undefined && !notaCopiada.editando) {
+        props.readOnly = true;
+    }
 
     return _react2.default.createElement(_formTextarea2.default, props);
 }
@@ -1073,7 +1085,7 @@ function montaButtonConcluir(adicionarNota, notaCopiada, posicao) {
     var props = {
         className: 'note__control',
         type: 'button',
-        onClick: function onClick() {
+        onClick: function onClick(event) {
             return adicionarNota(notaCopiada.titulo, notaCopiada.texto, event.target.form, posicao);
         }
     };
@@ -1092,21 +1104,25 @@ function FormNotas(_ref) {
 
     var notaCopiada = new _nota2.default(notaAtual.titulo, notaAtual.texto, notaAtual.editando);
 
-    var inputTitulo = montaInputTitulo(notaCopiada);
-    var textareaTexto = montaTextareaTexto(notaCopiada);
+    var inputTitulo = montaInputTitulo(notaCopiada, posicao);
+    var textareaTexto = montaTextareaTexto(notaCopiada, posicao);
+    var buttonRemover = montaButtonRemover(removerNota, posicao);
+    var buttonConcluido = montaButtonConcluir(adicionarNota, notaCopiada, posicao);
 
     var props = { className: 'note' };
     var children = void 0;
 
-    if (notaCopiada.editando) {
-        var buttonRemover = montaButtonRemover(removerNota, posicao);
-        var buttonConcluido = montaButtonConcluir(adicionarNota, notaCopiada, posicao);
-        children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido];
+    if (posicao === undefined) {
+        children = [inputTitulo, textareaTexto, buttonConcluido];
     } else {
-        children = [inputTitulo, textareaTexto];
-        props.onClick = function () {
-            return editarFormulario(posicao);
-        };
+        if (notaCopiada.editando) {
+            children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido];
+        } else {
+            children = [inputTitulo, textareaTexto];
+            props.onClick = function () {
+                return editarFormulario(posicao);
+            };
+        }
     }
 
     return _react2.default.createElement.apply(_react2.default, [_form2.default, props].concat(_toConsumableArray(children)));
@@ -18516,6 +18532,10 @@ var Page = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).call(this, props));
 
+        _this.atualizaPagina = _this.atualizaPagina.bind(_this);
+        _this.adicionarNota = _this.adicionarNota.bind(_this);
+        _this.removerNota = _this.removerNota.bind(_this);
+        _this.editarFormulario = _this.editarFormulario.bind(_this);
         _this.state = { listaNotas: new _listaNotas2.default(_this.atualizaPagina) };
         return _this;
     }
@@ -18523,21 +18543,15 @@ var Page = function (_React$Component) {
     _createClass(Page, [{
         key: 'atualizaPagina',
         value: function atualizaPagina(novaLista) {
-            console.log('Quem é this?', this);
             this.setState({ listaNotas: novaLista });
         }
     }, {
-        key: 'editarFormulario',
-        value: function editarFormulario(posicao) {
-            this.state.listaNotas.edita(posicao);
-        }
-    }, {
         key: 'adicionarNota',
-        value: function adicionarNota(inputTitulo, textareaTexto, formulario, posicao) {
+        value: function adicionarNota(titulo, texto, formulario, posicao) {
             if (this.state.listaNotas.pega(posicao)) {
-                this.state.listaNotas.salva(posicao, inputTitulo.value, textareaTexto.value);
+                this.state.listaNotas.salva(posicao, titulo, texto);
             } else {
-                this.state.listaNotas.adiciona(inputTitulo.value, textareaTexto.value);
+                this.state.listaNotas.adiciona(titulo, texto);
                 formulario.reset();
             }
         }
@@ -18546,6 +18560,11 @@ var Page = function (_React$Component) {
         value: function removerNota(evento, posicao) {
             evento.stopPropagation();
             this.state.listaNotas.remove(posicao);
+        }
+    }, {
+        key: 'editarFormulario',
+        value: function editarFormulario(posicao) {
+            this.state.listaNotas.edita(posicao);
         }
     }, {
         key: 'render',
