@@ -8,25 +8,35 @@ class ListaNotas {
     }
 
     adiciona(novoTitulo, novoTexto) {
-        let nota = new Nota(novoTitulo, novoTexto)
-        this._listaInterna.push(nota)
+        let nota = new Nota(this._listaInterna.length, novoTitulo, novoTexto)
+        this._listaInterna = this._listaInterna.concat(nota)
         this._observador(this)
     }
 
-    remove(posicao, quantidade) {
-        this._listaInterna.splice(posicao, 1)
+    remove(posicao) {
+        this._listaInterna = this._listaInterna.filter(nota => nota.posicao !== posicao)
         this._observador(this)
     }
 
     edita(posicao) {
-        this._listaInterna[posicao].editando = true
+        this._listaInterna = this._listaInterna.map(nota => {
+            if (nota.posicao === posicao) {
+                return new Nota(posicao, nota.titulo, nota.texto, true)
+            } else {
+                return nota
+            }
+        })
         this._observador(this)
     }
 
     salva(posicao, novoTitulo, novoTexto) {
-        this._listaInterna[posicao].titulo = novoTitulo
-        this._listaInterna[posicao].texto = novoTexto
-        this._listaInterna[posicao].editando = false
+        this._listaInterna = this._listaInterna.map(nota => {
+            if (nota.posicao === posicao) {
+                return new Nota(posicao, novoTitulo, novoTexto, false)
+            } else {
+                return nota
+            }
+        })
         this._observador(this)
     }
 

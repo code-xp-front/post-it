@@ -6,87 +6,91 @@ import FormButton from './formButton.js'
 import Nota from '../nota'
 
 
-function montaInputTitulo(notaCopiada, posicao) {
+function montaInputTitulo(notaCopiada) {
     const props = {
         className: 'note__title',
         type: 'text',
         name: 'titulo',
         placeholder: 'Título',
         defaultValue: notaCopiada.titulo,
-        onChange: (event) => notaCopiada.titulo = event.target.value
+        onChange: event => notaCopiada.titulo = event.target.value
     }
 
-    if (posicao !== undefined && !notaCopiada.editando) {
-        props.readOnly = true;
+    if (notaCopiada.estaVisualizando()) {
+        props.readOnly = true
     }
 
-    return React.createElement(FormInput, props)
+    return <FormInput {...props} />
 }
 
-function montaTextareaTexto(notaCopiada, posicao) {
+function montaTextareaTexto(notaCopiada) {
     const props = {
         className: 'note__body', 
         name: 'texto', 
         placeholder: 'Criar uma nota...', 
         rows: 5, 
         defaultValue: notaCopiada.texto,
-        onChange: (event) => notaCopiada.texto = event.target.value
+        onChange: event => notaCopiada.texto = event.target.value
     }
 
-    if (posicao !== undefined && !notaCopiada.editando) {
-        props.readOnly = true;
+    if (notaCopiada.estaVisualizando()) {
+        props.readOnly = true
     }
 
-    return React.createElement(FormTextarea, props)
+    return <FormTextarea {...props} />
 }
 
-function montaButtonRemover(removerNota, posicao) {
+function montaButtonRemover(removerNota, notaCopiada) {
     const props = {
         className: 'note__control', 
         type: 'button', 
-        onClick: event => removerNota(event, posicao)
+        onClick: event => {
+            event.stopPropagation()
+            removerNota(notaCopiada.posicao)
+        }
     }
 
-    const children = React.createElement('i', { className: 'fa fa-times', 'aria-hidden': true})
+    const children = <i className='fa fa-times' aria-hidden={true} />
 
-    return React.createElement(FormButton, props, children)
+    return <FormButton {...props}>{children}</FormButton>
 }
 
-function montaButtonConcluir(adicionarNota, notaCopiada, posicao) {
+function montaButtonConcluir(adicionarNota, notaCopiada) {
     const props = {
         className: 'note__control', 
         type: 'button', 
-        onClick: (event) => adicionarNota(notaCopiada.titulo, notaCopiada.texto, event.target.form, posicao)
+        onClick: event => {
+            adicionarNota(notaCopiada.titulo, notaCopiada.texto, notaCopiada.posicao)
+            event.target.form.reset()
+        }
     }
 
     const children = 'Concluído'
 
-    return React.createElement(FormButton, props, children)
+    return <FormButton {...props}>{children}</FormButton>
 }
 
-function FormNotas({ posicao, notaAtual, adicionarNota, removerNota, editarFormulario }) {
-    let notaCopiada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando)    
+function FormNotas({ notaAtual, adicionarNota, removerNota, editarFormulario }) {
+    let notaCopiada = new Nota(notaAtual.posicao, notaAtual.titulo, notaAtual.texto, notaAtual.editando)
     
-    let inputTitulo = montaInputTitulo(notaCopiada, posicao)
-    let textareaTexto = montaTextareaTexto(notaCopiada, posicao)
-    let buttonRemover = montaButtonRemover(removerNota, posicao)
-    let buttonConcluido = montaButtonConcluir(adicionarNota, notaCopiada, posicao)
+    let inputTitulo = montaInputTitulo(notaCopiada)
+    let textareaTexto = montaTextareaTexto(notaCopiada)
+    let buttonRemover = montaButtonRemover(removerNota, notaCopiada)
+    let buttonConcluir = montaButtonConcluir(adicionarNota, notaCopiada)
     
     let props = { className: 'note' }
-    let children
-
-    if (posicao === undefined) {
-        children = [inputTitulo, textareaTexto, buttonConcluido]
-    } else {
-        if (notaCopiada.editando) {
-            children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido]
-        } else {
-            children = [inputTitulo, textareaTexto]
-            props.onClick = () => editarFormulario(posicao)
-        }
+    if (notaCopiada.estaVisualizando()) {
+        props.onClick = () => editarFormulario(notaCopiada.posicao)
     }
 
-    return React.createElement(Form, props, ...children)
+    return (
+        <Form {...props}>
+            {notaCopiada.estaAlterando() && buttonRemover}
+            {inputTitulo}
+            {textareaTexto}
+            {(notaCopiada.estaCadastrando() || notaCopiada.estaAlterando()) && buttonConcluir}
+        </Form>
+    )
 }
 
 export default FormNotas

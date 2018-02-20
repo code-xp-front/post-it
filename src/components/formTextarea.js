@@ -1,4 +1,4 @@
 import React from 'react'
 
 
-export default props => React.createElement('textarea', props)
+export default props => <textarea {...props} />

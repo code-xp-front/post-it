@@ -7,13 +7,13 @@ import SectionNotas from './sectionNotas'
 
 function montaFormNotas(adicionarNota, removerNota, editarFormulario) {
     const props = {
-        notaAtual: new Nota('', ''), 
+        notaAtual: new Nota(undefined, '', ''), 
         adicionarNota, 
         removerNota, 
         editarFormulario
     }
 
-    return React.createElement(FormNotas, props)
+    return <FormNotas {...props} />
 }
 
 function montaSectionNotas(listaNotas, adicionarNota, removerNota, editarFormulario) {
@@ -24,7 +24,7 @@ function montaSectionNotas(listaNotas, adicionarNota, removerNota, editarFormula
         editarFormulario
     }
 
-    return React.createElement(SectionNotas, props)
+    return <SectionNotas {...props} />
 }
 
 class Page extends React.Component {
@@ -41,17 +41,15 @@ class Page extends React.Component {
         this.setState({ listaNotas: novaLista })
     }
 
-    adicionarNota(titulo, texto, formulario, posicao) {
+    adicionarNota(titulo, texto, posicao) {
         if (this.state.listaNotas.pega(posicao)) {
             this.state.listaNotas.salva(posicao, titulo, texto)
         } else {
             this.state.listaNotas.adiciona(titulo, texto)
-            formulario.reset()
         }
     }
 
-    removerNota(evento, posicao) {
-        evento.stopPropagation()
+    removerNota(posicao) {
         this.state.listaNotas.remove(posicao)
     }
 
@@ -60,13 +58,19 @@ class Page extends React.Component {
     }
 
     render() {
+        const { state, adicionarNota, removerNota, editarFormulario } = this
+        const { listaNotas } = state
         const props = { className: 'container' }
 
-        let formNotas = montaFormNotas(this.adicionarNota, this.removerNota, this.editarFormulario)
-        let sectionNotas = montaSectionNotas(this.state.listaNotas, this.adicionarNota, this.removerNota, this.editarFormulario)
-        const children = [formNotas, sectionNotas]
+        let formNotas = montaFormNotas(adicionarNota, removerNota, editarFormulario)
+        let sectionNotas = montaSectionNotas(listaNotas, adicionarNota, removerNota, editarFormulario)
 
-        return React.createElement('main', props, ...children)
+        return (
+            <main {...props}>
+                {formNotas}
+                {sectionNotas}
+            </main>
+        )
     }
 }
 

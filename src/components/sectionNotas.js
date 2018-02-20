@@ -3,26 +3,26 @@ import Section from './section'
 import FormNotas from './formNotas'
 
 
-function montaFormNotas(posicao, listaNotas, adicionarNota, removerNota, editarFormulario) {
+function montaFormNotas(posicao, notaAtual, adicionarNota, removerNota, editarFormulario) {
     const props = {
-        posicao: posicao,
-        notaAtual: listaNotas.pega(posicao),
-        removerNota: removerNota,
-        adicionarNota: adicionarNota,
-        editarFormulario: editarFormulario,
+        posicao,
+        notaAtual,
+        removerNota,
+        adicionarNota,
+        editarFormulario,
     }
 
-    return React.createElement(FormNotas, props)
+    return <FormNotas key={posicao} {...props} />
 }
 
 function SectionNotas({ listaNotas, adicionarNota, removerNota, editarFormulario }) {
     const props = { className: 'notes' }
 
     const children = listaNotas.pegaTodos().map((notaAtual, posicao) => (
-        montaFormNotas(posicao, listaNotas, adicionarNota, removerNota, editarFormulario)
+        montaFormNotas(posicao, notaAtual, adicionarNota, removerNota, editarFormulario)
     ))
 
-    return React.createElement(Section, props, ...children)
+    return <Section {...props}>{children}</Section>
 }
 
 export default SectionNotas

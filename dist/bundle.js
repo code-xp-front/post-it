@@ -576,17 +576,41 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Nota = function () {
-    function Nota(novoTitulo, novoTexto) {
-        var novoEditando = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    function Nota(novaPosicao, novoTitulo, novoTexto) {
+        var novoEditando = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
         _classCallCheck(this, Nota);
 
+        this._posicao = novaPosicao;
         this._titulo = novoTitulo;
         this._texto = novoTexto;
         this._editando = novoEditando;
     }
 
     _createClass(Nota, [{
+        key: "estaCadastrando",
+        value: function estaCadastrando() {
+            return this.posicao === undefined;
+        }
+    }, {
+        key: "estaVisualizando",
+        value: function estaVisualizando() {
+            return this.posicao !== undefined && !this.editando;
+        }
+    }, {
+        key: "estaAlterando",
+        value: function estaAlterando() {
+            return this.posicao !== undefined && this.editando;
+        }
+    }, {
+        key: "posicao",
+        get: function get() {
+            return this._posicao;
+        },
+        set: function set(novoPosicao) {
+            this._posicao = novoPosicao;
+        }
+    }, {
         key: "titulo",
         get: function get() {
             return this._titulo;
@@ -1027,9 +1051,7 @@ var _nota2 = _interopRequireDefault(_nota);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function montaInputTitulo(notaCopiada, posicao) {
+function montaInputTitulo(notaCopiada) {
     var props = {
         className: 'note__title',
         type: 'text',
@@ -1041,14 +1063,14 @@ function montaInputTitulo(notaCopiada, posicao) {
         }
     };
 
-    if (posicao !== undefined && !notaCopiada.editando) {
+    if (notaCopiada.estaVisualizando()) {
         props.readOnly = true;
     }
 
     return _react2.default.createElement(_formInput2.default, props);
 }
 
-function montaTextareaTexto(notaCopiada, posicao) {
+function montaTextareaTexto(notaCopiada) {
     var props = {
         className: 'note__body',
         name: 'texto',
@@ -1060,72 +1082,79 @@ function montaTextareaTexto(notaCopiada, posicao) {
         }
     };
 
-    if (posicao !== undefined && !notaCopiada.editando) {
+    if (notaCopiada.estaVisualizando()) {
         props.readOnly = true;
     }
 
     return _react2.default.createElement(_formTextarea2.default, props);
 }
 
-function montaButtonRemover(removerNota, posicao) {
+function montaButtonRemover(removerNota, notaCopiada) {
     var props = {
         className: 'note__control',
         type: 'button',
         onClick: function onClick(event) {
-            return removerNota(event, posicao);
+            event.stopPropagation();
+            removerNota(notaCopiada.posicao);
         }
     };
 
     var children = _react2.default.createElement('i', { className: 'fa fa-times', 'aria-hidden': true });
 
-    return _react2.default.createElement(_formButton2.default, props, children);
+    return _react2.default.createElement(
+        _formButton2.default,
+        props,
+        children
+    );
 }
 
-function montaButtonConcluir(adicionarNota, notaCopiada, posicao) {
+function montaButtonConcluir(adicionarNota, notaCopiada) {
     var props = {
         className: 'note__control',
         type: 'button',
         onClick: function onClick(event) {
-            return adicionarNota(notaCopiada.titulo, notaCopiada.texto, event.target.form, posicao);
+            adicionarNota(notaCopiada.titulo, notaCopiada.texto, notaCopiada.posicao);
+            event.target.form.reset();
         }
     };
 
     var children = 'Concluído';
 
-    return _react2.default.createElement(_formButton2.default, props, children);
+    return _react2.default.createElement(
+        _formButton2.default,
+        props,
+        children
+    );
 }
 
 function FormNotas(_ref) {
-    var posicao = _ref.posicao,
-        notaAtual = _ref.notaAtual,
+    var notaAtual = _ref.notaAtual,
         adicionarNota = _ref.adicionarNota,
         removerNota = _ref.removerNota,
         editarFormulario = _ref.editarFormulario;
 
-    var notaCopiada = new _nota2.default(notaAtual.titulo, notaAtual.texto, notaAtual.editando);
+    var notaCopiada = new _nota2.default(notaAtual.posicao, notaAtual.titulo, notaAtual.texto, notaAtual.editando);
 
-    var inputTitulo = montaInputTitulo(notaCopiada, posicao);
-    var textareaTexto = montaTextareaTexto(notaCopiada, posicao);
-    var buttonRemover = montaButtonRemover(removerNota, posicao);
-    var buttonConcluido = montaButtonConcluir(adicionarNota, notaCopiada, posicao);
+    var inputTitulo = montaInputTitulo(notaCopiada);
+    var textareaTexto = montaTextareaTexto(notaCopiada);
+    var buttonRemover = montaButtonRemover(removerNota, notaCopiada);
+    var buttonConcluir = montaButtonConcluir(adicionarNota, notaCopiada);
 
     var props = { className: 'note' };
-    var children = void 0;
-
-    if (posicao === undefined) {
-        children = [inputTitulo, textareaTexto, buttonConcluido];
-    } else {
-        if (notaCopiada.editando) {
-            children = [buttonRemover, inputTitulo, textareaTexto, buttonConcluido];
-        } else {
-            children = [inputTitulo, textareaTexto];
-            props.onClick = function () {
-                return editarFormulario(posicao);
-            };
-        }
+    if (notaCopiada.estaVisualizando()) {
+        props.onClick = function () {
+            return editarFormulario(notaCopiada.posicao);
+        };
     }
 
-    return _react2.default.createElement.apply(_react2.default, [_form2.default, props].concat(_toConsumableArray(children)));
+    return _react2.default.createElement(
+        _form2.default,
+        props,
+        notaCopiada.estaAlterando() && buttonRemover,
+        inputTitulo,
+        textareaTexto,
+        (notaCopiada.estaCadastrando() || notaCopiada.estaAlterando()) && buttonConcluir
+    );
 }
 
 exports.default = FormNotas;
@@ -18504,7 +18533,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function montaFormNotas(adicionarNota, removerNota, editarFormulario) {
     var props = {
-        notaAtual: new _nota2.default('', ''),
+        notaAtual: new _nota2.default(undefined, '', ''),
         adicionarNota: adicionarNota,
         removerNota: removerNota,
         editarFormulario: editarFormulario
@@ -18547,18 +18576,16 @@ var Page = function (_React$Component) {
         }
     }, {
         key: 'adicionarNota',
-        value: function adicionarNota(titulo, texto, formulario, posicao) {
+        value: function adicionarNota(titulo, texto, posicao) {
             if (this.state.listaNotas.pega(posicao)) {
                 this.state.listaNotas.salva(posicao, titulo, texto);
             } else {
                 this.state.listaNotas.adiciona(titulo, texto);
-                formulario.reset();
             }
         }
     }, {
         key: 'removerNota',
-        value: function removerNota(evento, posicao) {
-            evento.stopPropagation();
+        value: function removerNota(posicao) {
             this.state.listaNotas.remove(posicao);
         }
     }, {
@@ -18569,13 +18596,23 @@ var Page = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var state = this.state,
+                adicionarNota = this.adicionarNota,
+                removerNota = this.removerNota,
+                editarFormulario = this.editarFormulario;
+            var listaNotas = state.listaNotas;
+
             var props = { className: 'container' };
 
-            var formNotas = montaFormNotas(this.adicionarNota, this.removerNota, this.editarFormulario);
-            var sectionNotas = montaSectionNotas(this.state.listaNotas, this.adicionarNota, this.removerNota, this.editarFormulario);
-            var children = [formNotas, sectionNotas];
+            var formNotas = montaFormNotas(adicionarNota, removerNota, editarFormulario);
+            var sectionNotas = montaSectionNotas(listaNotas, adicionarNota, removerNota, editarFormulario);
 
-            return _react2.default.createElement.apply(_react2.default, ['main', props].concat(children));
+            return _react2.default.createElement(
+                'main',
+                props,
+                formNotas,
+                sectionNotas
+            );
         }
     }]);
 
@@ -18616,28 +18653,40 @@ var ListaNotas = function () {
     _createClass(ListaNotas, [{
         key: 'adiciona',
         value: function adiciona(novoTitulo, novoTexto) {
-            var nota = new _nota2.default(novoTitulo, novoTexto);
-            this._listaInterna.push(nota);
+            var nota = new _nota2.default(this._listaInterna.length, novoTitulo, novoTexto);
+            this._listaInterna = this._listaInterna.concat(nota);
             this._observador(this);
         }
     }, {
         key: 'remove',
-        value: function remove(posicao, quantidade) {
-            this._listaInterna.splice(posicao, 1);
+        value: function remove(posicao) {
+            this._listaInterna = this._listaInterna.filter(function (nota) {
+                return nota.posicao !== posicao;
+            });
             this._observador(this);
         }
     }, {
         key: 'edita',
         value: function edita(posicao) {
-            this._listaInterna[posicao].editando = true;
+            this._listaInterna = this._listaInterna.map(function (nota) {
+                if (nota.posicao === posicao) {
+                    return new _nota2.default(posicao, nota.titulo, nota.texto, true);
+                } else {
+                    return nota;
+                }
+            });
             this._observador(this);
         }
     }, {
         key: 'salva',
         value: function salva(posicao, novoTitulo, novoTexto) {
-            this._listaInterna[posicao].titulo = novoTitulo;
-            this._listaInterna[posicao].texto = novoTexto;
-            this._listaInterna[posicao].editando = false;
+            this._listaInterna = this._listaInterna.map(function (nota) {
+                if (nota.posicao === posicao) {
+                    return new _nota2.default(posicao, novoTitulo, novoTexto, false);
+                } else {
+                    return nota;
+                }
+            });
             this._observador(this);
         }
     }, {
@@ -18681,8 +18730,17 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (props) {
-  return _react2.default.createElement('form', props);
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+exports.default = function (_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, ['children']);
+
+  return _react2.default.createElement(
+    'form',
+    props,
+    children
+  );
 };
 
 /***/ }),
@@ -18744,8 +18802,17 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (props) {
-  return _react2.default.createElement('button', props);
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+exports.default = function (_ref) {
+  var children = _ref.children,
+      props = _objectWithoutProperties(_ref, ['children']);
+
+  return _react2.default.createElement(
+    'button',
+    props,
+    children
+  );
 };
 
 /***/ }),
@@ -18758,6 +18825,8 @@ exports.default = function (props) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _react = __webpack_require__(0);
 
@@ -18773,18 +18842,16 @@ var _formNotas2 = _interopRequireDefault(_formNotas);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function montaFormNotas(posicao, listaNotas, adicionarNota, removerNota, editarFormulario) {
+function montaFormNotas(posicao, notaAtual, adicionarNota, removerNota, editarFormulario) {
     var props = {
         posicao: posicao,
-        notaAtual: listaNotas.pega(posicao),
+        notaAtual: notaAtual,
         removerNota: removerNota,
         adicionarNota: adicionarNota,
         editarFormulario: editarFormulario
     };
 
-    return _react2.default.createElement(_formNotas2.default, props);
+    return _react2.default.createElement(_formNotas2.default, _extends({ key: posicao }, props));
 }
 
 function SectionNotas(_ref) {
@@ -18796,10 +18863,14 @@ function SectionNotas(_ref) {
     var props = { className: 'notes' };
 
     var children = listaNotas.pegaTodos().map(function (notaAtual, posicao) {
-        return montaFormNotas(posicao, listaNotas, adicionarNota, removerNota, editarFormulario);
+        return montaFormNotas(posicao, notaAtual, adicionarNota, removerNota, editarFormulario);
     });
 
-    return _react2.default.createElement.apply(_react2.default, [_section2.default, props].concat(_toConsumableArray(children)));
+    return _react2.default.createElement(
+        _section2.default,
+        props,
+        children
+    );
 }
 
 exports.default = SectionNotas;

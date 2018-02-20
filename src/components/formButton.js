@@ -1,4 +1,4 @@
 import React from 'react'
 
 
-export default props => React.createElement('button', props)
+export default ({ children, ...props }) => <button {...props}>{children}</button>
