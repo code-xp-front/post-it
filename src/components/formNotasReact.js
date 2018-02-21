@@ -78,8 +78,7 @@ const createButtonRemover = (excluirNota, index) => {
 };
 
 
-function FormNotas(props) {
-    const { notaAtual, index, adicionarNota, excluirNota, editarNota } = props;
+function FormNotas({notaAtual, index, adicionarNota, excluirNota, editarNota}) {
 
     let notaAlterada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando)
 
@@ -88,23 +87,23 @@ function FormNotas(props) {
     let botaoExcluir = createButtonRemover(excluirNota, index);
     let botaoSalvar = createBotaoSalvar(adicionarNota, notaAlterada, index);
 
-    let children;
-    let propsForm = { className: 'note' };
+    // let children;
+    let props = { className: 'note' };
 
-    if (index === undefined) {
-        // template nova nota
-        children = [inputTitulo, inputTexto, botaoSalvar]
-    } else {
+    // if (index === undefined) {
+    //     // template nova nota
+    //     children = [inputTitulo, inputTexto, botaoSalvar]
+    // } else {
 
-        if (notaAlterada.editando === true) {
+    //     if (notaAlterada.editando === true) {
             
-            children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
+    //         children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
 
-        } else {
-            propsForm.onClick = () => editarNota(index);
-            children = [botaoExcluir, inputTitulo, inputTexto];
-        }
-    }
+    //     } else {
+    //         props.onClick = () => editarNota(index);
+    //         children = [botaoExcluir, inputTitulo, inputTexto];
+    //     }
+    // }
 
 
     if (notaAlterada.editando === true) {
@@ -113,7 +112,15 @@ function FormNotas(props) {
         inputTexto.className = 'note__body note__body--editing';
     }
 
-    return React.createElement(Form, propsForm, children)
+    // return React.createElement(Form, propsForm, children)
+    return (
+        <Form {...props}>
+            {index !== undefined && notaAlterada.editando && botaoExcluir}
+            {inputTitulo}
+            {inputTexto}
+            {(index === undefined || notaAlterada.editando) && botaoSalvar}
+        </Form>
+    )
 }
 
 export default FormNotas;

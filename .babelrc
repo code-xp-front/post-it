@@ -1,7 +1,11 @@
 {
   "presets": [
-    "env", "react"
-    ]
+    "env",
+    "react"
+  ],
+  "plugins": [
+    "transform-object-rest-spread"
+  ]
 }
-
 // npm install --save-dev babel-preset-react
+//npm install --save-dev babel-plugin-transform-object-rest-spread

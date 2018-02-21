@@ -17,6 +17,12 @@ import React from 'react'
 
 // export default props => React.createElement('button', props)
 
-const Button = props => React.createElement('button', props)
+// const Button = props => React.createElement('button', props)
+
+const Button = ({ children, ...props}) => (
+    <button {...props}>
+        {children}
+    </button>
+)
 
 export default Button

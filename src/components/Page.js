@@ -88,9 +88,16 @@ class Page extends React.Component {
         let formNotas = montaFormNotas(this.adicionarNota, this.excluirNota, this.editarNota)
         let secaoNotas = montaSecaoNotas(this.state.listaNotas, this.adicionarNota, this.excluirNota, this.editarNota)
 
-        const children = [formNotas, secaoNotas]
+        // const children = [formNotas, secaoNotas]
 
-        return React.createElement('main', props, children)
+        // return React.createElement('main', props, children)
+
+        return (
+            <main {...props}>
+                {formNotas}
+                {secaoNotas}
+            </main>
+        )
 
     }
 }

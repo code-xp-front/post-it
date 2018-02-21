@@ -3,7 +3,7 @@ import React from 'react'
 // export default (props, children ) => {
 
 //     for (var index = 0; index < props.children.length; index++) {
-        
+
 //         formularioNotas.appendChild(props.children[index]);
 //     }
 
@@ -17,6 +17,12 @@ import React from 'react'
 
 // export default props => React.createElement('form', props)
 
-const Form = props => React.createElement('form', props)
+// const Form = props => React.createElement('form', props)
+
+const Form = ({ children, ...props }) => (
+    <form {...props}>
+        {children}
+    </form>
+)
 
 export default Form
