@@ -7,33 +7,41 @@ import Form from './formReact'
 import Nota from '../Nota'
 
 
-const createInputTitulo = (notaAlterada) => {
+const createInputTitulo = (notaAlterada, index) => {
     const props = {
+        key: 'note-title',
         className: 'note__title',
         type: 'text',
         name: 'title',
         placeholder: 'Título',
-        readOnly: !notaAlterada.editando,
         defaultValue: notaAlterada.titulo,
         onChange: event => {
             notaAlterada.titulo = event.target.value;
         }
     }
 
+    if ( index !== undefined && !notaAlterada.editando) {
+        props.readOnly = true
+    }
+
     return React.createElement(FormInput, props)
 }
 
-const createInputTexto = (notaAlterada) => {
+const createInputTexto = (notaAlterada, index) => {
     const props = {
+        key: 'note-body',
         className: 'note__body',
         name: 'body',
         rows: '5',
         placeholder: 'Criar uma nota...',
-        readOnly: !notaAlterada.editando,
         defaultValue: notaAlterada.texto,
         onChange: event => {
             notaAlterada.texto = event.target.value;
         }
+    }
+
+    if ( index !== undefined && !notaAlterada.editando) {
+        props.readOnly = true
     }
 
     return React.createElement(FormTextArea, props)
@@ -41,9 +49,10 @@ const createInputTexto = (notaAlterada) => {
 
 const createBotaoSalvar = (adicionarNota, notaAlterada, index) => {
     const props = {
+        key: 'note-button-save',
         className: 'note__control',
         type: 'button',
-        onClick: event => adicionarNota(notaAlterada.titulo, notaAlterada.texto, event.target.form, index) 
+        onClick: event => adicionarNota(notaAlterada.titulo, notaAlterada.texto, event.target.form, index)
     }
 
     const children = 'Salvar'
@@ -55,11 +64,12 @@ const createBotaoSalvar = (adicionarNota, notaAlterada, index) => {
 const createButtonRemover = (excluirNota, index) => {
 
     const props = {
+        key: 'note-button-delete',
         className: 'note__excluir',
         onClick: event => excluirNota(event, index)
     }
 
-    const children = React.createElement ('i', {
+    const children = React.createElement('i', {
         className: 'fa fa-times',
         'aria-hidden': true
     })
@@ -69,25 +79,31 @@ const createButtonRemover = (excluirNota, index) => {
 
 
 function FormNotas(props) {
-    const {notaAtual, index, adicionarNota, excluirNota, editarNota} = props;
+    const { notaAtual, index, adicionarNota, excluirNota, editarNota } = props;
 
     let notaAlterada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando)
 
-    let inputTitulo = createInputTitulo(notaAlterada);
-    let inputTexto = createInputTexto(notaAlterada);
+    let inputTitulo = createInputTitulo(notaAlterada, index);
+    let inputTexto = createInputTexto(notaAlterada, index);
     let botaoExcluir = createButtonRemover(excluirNota, index);
+    let botaoSalvar = createBotaoSalvar(adicionarNota, notaAlterada, index);
 
-    let children;    
+    let children;
     let propsForm = { className: 'note' };
 
-
-    if (notaAlterada.editando === true) {
-        let botaoSalvar = createBotaoSalvar(adicionarNota, notaAlterada, index);
-        children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
-
+    if (index === undefined) {
+        // template nova nota
+        children = [inputTitulo, inputTexto, botaoSalvar]
     } else {
-        propsForm.onClick = () => editarNota(index);
-        children = [botaoExcluir, inputTitulo, inputTexto];
+
+        if (notaAlterada.editando === true) {
+            
+            children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
+
+        } else {
+            propsForm.onClick = () => editarNota(index);
+            children = [botaoExcluir, inputTitulo, inputTexto];
+        }
     }
 
 

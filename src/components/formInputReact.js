@@ -13,4 +13,8 @@ import React from 'react'
 
 // NÃO TEM MAIS IF
 
-export default props => React.createElement('input', props)
+// export default props => React.createElement('input', props)
+
+const FormInput = props => React.createElement('input', props)
+
+export default FormInput

@@ -997,40 +997,49 @@ var _Nota2 = _interopRequireDefault(_Nota);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var createInputTitulo = function createInputTitulo(notaAlterada) {
+var createInputTitulo = function createInputTitulo(notaAlterada, index) {
     var props = {
+        key: 'note-title',
         className: 'note__title',
         type: 'text',
         name: 'title',
         placeholder: 'Título',
-        readOnly: !notaAlterada.editando,
         defaultValue: notaAlterada.titulo,
         onChange: function onChange(event) {
             notaAlterada.titulo = event.target.value;
         }
     };
 
+    if (index !== undefined && !notaAlterada.editando) {
+        props.readOnly = true;
+    }
+
     return _react2.default.createElement(_formInputReact2.default, props);
 };
 
-var createInputTexto = function createInputTexto(notaAlterada) {
+var createInputTexto = function createInputTexto(notaAlterada, index) {
     var props = {
+        key: 'note-body',
         className: 'note__body',
         name: 'body',
         rows: '5',
         placeholder: 'Criar uma nota...',
-        readOnly: !notaAlterada.editando,
         defaultValue: notaAlterada.texto,
         onChange: function onChange(event) {
             notaAlterada.texto = event.target.value;
         }
     };
 
+    if (index !== undefined && !notaAlterada.editando) {
+        props.readOnly = true;
+    }
+
     return _react2.default.createElement(_formTextAreaReact2.default, props);
 };
 
 var createBotaoSalvar = function createBotaoSalvar(adicionarNota, notaAlterada, index) {
     var props = {
+        key: 'note-button-save',
         className: 'note__control',
         type: 'button',
         onClick: function onClick(event) {
@@ -1046,6 +1055,7 @@ var createBotaoSalvar = function createBotaoSalvar(adicionarNota, notaAlterada, 
 var createButtonRemover = function createButtonRemover(excluirNota, index) {
 
     var props = {
+        key: 'note-button-delete',
         className: 'note__excluir',
         onClick: function onClick(event) {
             return excluirNota(event, index);
@@ -1070,21 +1080,28 @@ function FormNotas(props) {
 
     var notaAlterada = new _Nota2.default(notaAtual.titulo, notaAtual.texto, notaAtual.editando);
 
-    var inputTitulo = createInputTitulo(notaAlterada);
-    var inputTexto = createInputTexto(notaAlterada);
+    var inputTitulo = createInputTitulo(notaAlterada, index);
+    var inputTexto = createInputTexto(notaAlterada, index);
     var botaoExcluir = createButtonRemover(excluirNota, index);
+    var botaoSalvar = createBotaoSalvar(adicionarNota, notaAlterada, index);
 
     var children = void 0;
     var propsForm = { className: 'note' };
 
-    if (notaAlterada.editando === true) {
-        var botaoSalvar = createBotaoSalvar(adicionarNota, notaAlterada, index);
-        children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
+    if (index === undefined) {
+        // template nova nota
+        children = [inputTitulo, inputTexto, botaoSalvar];
     } else {
-        propsForm.onClick = function () {
-            return editarNota(index);
-        };
-        children = [botaoExcluir, inputTitulo, inputTexto];
+
+        if (notaAlterada.editando === true) {
+
+            children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
+        } else {
+            propsForm.onClick = function () {
+                return editarNota(index);
+            };
+            children = [botaoExcluir, inputTitulo, inputTexto];
+        }
     }
 
     if (notaAlterada.editando === true) {
@@ -1119,7 +1136,9 @@ var _Page2 = _interopRequireDefault(_Page);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_reactDom2.default.render(_react2.default.createElement(_Page2.default, null), document.getElementById('root'));
+_reactDom2.default.render(_react2.default.createElement(_Page2.default, null),
+// React.createElement('h1', { className: 'heading'}, 'Ooooooi Brunaaaa'), 
+document.getElementById('root'));
 
 /***/ }),
 /* 17 */
@@ -18479,6 +18498,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var montaFormNotas = function montaFormNotas(adicionarNota, excluirNota, editarNota) {
 
     var props = {
+        key: 'form-note',
         notaAtual: new _Nota2.default('', ''),
         adicionarNota: adicionarNota, // == IGUAL adicionarNota: adicionarNota
         excluirNota: excluirNota,
@@ -18491,6 +18511,7 @@ var montaFormNotas = function montaFormNotas(adicionarNota, excluirNota, editarN
 var montaSecaoNotas = function montaSecaoNotas(listaNotas, adicionarNota, excluirNota, editarNota) {
 
     var props = {
+        key: 'section-notes',
         listaNotas: listaNotas,
         adicionarNota: adicionarNota,
         excluirNota: excluirNota,
@@ -18506,8 +18527,12 @@ var Page = function (_React$Component) {
     function Page(props) {
         _classCallCheck(this, Page);
 
-        // this.atualizaPagina = this.atualizaPagina.bind(this)
         var _this = _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).call(this, props));
+
+        _this.atualizaPagina = _this.atualizaPagina.bind(_this);
+        _this.adicionarNota = _this.adicionarNota.bind(_this);
+        _this.editarNota = _this.editarNota.bind(_this);
+        _this.excluirNota = _this.excluirNota.bind(_this);
 
         _this.state = {
             listaNotas: new _ClasseNovaLista2.default(_this.atualizaPagina)
@@ -18530,12 +18555,12 @@ var Page = function (_React$Component) {
         }
     }, {
         key: 'adicionarNota',
-        value: function adicionarNota(inputTitulo, inputTexto, formulario, index) {
+        value: function adicionarNota(titulo, texto, formulario, index) {
 
             if (this.state.listaNotas.pegar(index)) {
-                this.state.listaNotas.salvar(index, inputTitulo.value, inputTexto.value);
+                this.state.listaNotas.salvar(index, titulo, texto);
             } else {
-                this.state.listaNotas.adicionar(inputTitulo.value, inputTexto.value);
+                this.state.listaNotas.adicionar(titulo, texto);
                 formulario.reset();
             }
         }
@@ -18595,7 +18620,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var createFormNotas = function createFormNotas(adicionarNota, excluirNota, editarNota, listaNotas, index) {
 
     var props = {
-        notaAtual: listaNotas.pega(index),
+        key: index,
+        notaAtual: listaNotas.pegar(index),
         index: index,
         adicionarNota: adicionarNota,
         excluirNota: excluirNota,
@@ -18616,7 +18642,7 @@ function SecaoNotas(_ref) {
 
     var props = { className: 'notes' };
 
-    var children = listaNotas.map(function (notaAtual, index) {
+    var children = listaNotas.pegarTodos().map(function (notaAtual, index) {
         return createFormNotas(adicionarNota, excluirNota, editarNota, listaNotas, index);
     });
 
@@ -18649,9 +18675,13 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (props, children) {
-  return _react2.default.createElement('section', props, children);
+// export default props => React.createElement('section', props)
+
+var Section = function Section(props) {
+  return _react2.default.createElement('section', props);
 };
+
+exports.default = Section;
 
 /***/ }),
 /* 32 */
@@ -18683,9 +18713,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // NÃO TEM MAIS IF
 
-exports.default = function (props) {
+// export default props => React.createElement('input', props)
+
+var FormInput = function FormInput(props) {
   return _react2.default.createElement('input', props);
 };
+
+exports.default = FormInput;
 
 /***/ }),
 /* 33 */
@@ -18715,9 +18749,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // export default FormTextArea;
 
-exports.default = function (props) {
+// export default props => React.createElement('textarea', props)
+
+var FormTextArea = function FormTextArea(props) {
   return _react2.default.createElement('textarea', props);
 };
+
+exports.default = FormTextArea;
 
 /***/ }),
 /* 34 */
@@ -18751,9 +18789,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // export default FormButton;
 
-exports.default = function (props, children) {
-  return _react2.default.createElement('button', props, children);
+// export default props => React.createElement('button', props)
+
+var Button = function Button(props) {
+  return _react2.default.createElement('button', props);
 };
+
+exports.default = Button;
 
 /***/ }),
 /* 35 */
@@ -18784,9 +18826,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // }
 
 
-exports.default = function (props, children) {
-        return _react2.default.createElement('form', props, children);
+// export default (props, children ) => React.createElement('form', props, children)
+
+
+// export default props => React.createElement('form', props)
+
+var Form = function Form(props) {
+        return _react2.default.createElement('form', props);
 };
+
+exports.default = Form;
 
 /***/ }),
 /* 36 */
@@ -18858,6 +18907,11 @@ var NovaLista = function () {
         key: 'pegar',
         value: function pegar(index) {
             return this._listaNotas[index];
+        }
+    }, {
+        key: 'pegarTodos',
+        value: function pegarTodos() {
+            return this._listaNotas;
         }
     }, {
         key: 'contaTotal',

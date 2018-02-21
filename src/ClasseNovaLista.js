@@ -44,6 +44,11 @@ class NovaLista {
     pegar(index) {
         return this._listaNotas[index]
     }
+
+    pegarTodos() {
+        return this._listaNotas
+    }
+
     contaTotal() {
         return this._listaNotas.length
     }

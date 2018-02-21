@@ -15,4 +15,8 @@ import React from 'react'
 
 // export default FormButton;
 
-export default (props, children) => React.createElement('button', props, children)
+// export default props => React.createElement('button', props)
+
+const Button = props => React.createElement('button', props)
+
+export default Button

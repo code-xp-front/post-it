@@ -6,7 +6,8 @@ import FormNotas from './FormNotasReact'
 const createFormNotas = (adicionarNota, excluirNota, editarNota, listaNotas, index) => {
 
     const props = {
-        notaAtual: listaNotas.pega(index), 
+        key: index,
+        notaAtual: listaNotas.pegar(index), 
         index: index, 
         adicionarNota: adicionarNota, 
         excluirNota: excluirNota, 
@@ -23,7 +24,7 @@ function SecaoNotas ( { listaNotas, adicionarNota, excluirNota, editarNota } ) {
 
     const props = { className: 'notes' };
 
-    const children = listaNotas.map( (notaAtual, index) => (
+    const children = listaNotas.pegarTodos().map( (notaAtual, index) => (
         createFormNotas(adicionarNota, excluirNota, editarNota, listaNotas, index)
     ))
 

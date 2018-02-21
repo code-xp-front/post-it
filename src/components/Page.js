@@ -15,6 +15,7 @@ import NovaLista from '../ClasseNovaLista'
 const montaFormNotas = (adicionarNota, excluirNota, editarNota) => {
 
     const props = {
+        key: 'form-note',
         notaAtual: new Nota('', ''),
         adicionarNota, // == IGUAL adicionarNota: adicionarNota
         excluirNota,
@@ -27,6 +28,7 @@ const montaFormNotas = (adicionarNota, excluirNota, editarNota) => {
 const montaSecaoNotas = (listaNotas, adicionarNota, excluirNota, editarNota) => {
 
     const props = {
+        key: 'section-notes',
         listaNotas,
         adicionarNota,
         excluirNota,
@@ -41,7 +43,12 @@ class Page extends React.Component {
 
     constructor(props) {
         super(props)
-        // this.atualizaPagina = this.atualizaPagina.bind(this)
+
+        this.atualizaPagina = this.atualizaPagina.bind(this)
+        this.adicionarNota = this.adicionarNota.bind(this)
+        this.editarNota = this.editarNota.bind(this)
+        this.excluirNota = this.excluirNota.bind(this)
+
         this.state = {
             listaNotas: new NovaLista(this.atualizaPagina)
         }
@@ -58,12 +65,12 @@ class Page extends React.Component {
         this.state.listaNotas.editar(index)
     }
 
-    adicionarNota(inputTitulo, inputTexto, formulario, index) {
+    adicionarNota(titulo, texto, formulario, index) {
 
         if (this.state.listaNotas.pegar(index)) {
-            this.state.listaNotas.salvar(index, inputTitulo.value, inputTexto.value);
+            this.state.listaNotas.salvar(index, titulo, texto);
         } else {
-            this.state.listaNotas.adicionar(inputTitulo.value, inputTexto.value);
+            this.state.listaNotas.adicionar(titulo, texto);
             formulario.reset();
         }
     }
