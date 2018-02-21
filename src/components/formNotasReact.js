@@ -52,7 +52,9 @@ const createBotaoSalvar = (adicionarNota, notaAlterada, index) => {
         key: 'note-button-save',
         className: 'note__control',
         type: 'button',
-        onClick: event => adicionarNota(notaAlterada.titulo, notaAlterada.texto, event.target.form, index)
+        onClick: event => {
+            adicionarNota(notaAlterada.titulo, notaAlterada.texto, event.target.form, index)
+        }
     }
 
     const children = 'Salvar'
@@ -66,7 +68,10 @@ const createButtonRemover = (excluirNota, index) => {
     const props = {
         key: 'note-button-delete',
         className: 'note__excluir',
-        onClick: event => excluirNota(event, index)
+        onClick: event => {
+            event.stopPropagation()
+            excluirNota(notaAlterada.index)
+        }
     }
 
     const children = React.createElement('i', {
@@ -90,26 +95,14 @@ function FormNotas({notaAtual, index, adicionarNota, excluirNota, editarNota}) {
     // let children;
     let props = { className: 'note' };
 
-    // if (index === undefined) {
-    //     // template nova nota
-    //     children = [inputTitulo, inputTexto, botaoSalvar]
-    // } else {
-
-    //     if (notaAlterada.editando === true) {
-            
-    //         children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
-
-    //     } else {
-    //         props.onClick = () => editarNota(index);
-    //         children = [botaoExcluir, inputTitulo, inputTexto];
-    //     }
+    // if (notaAlterada.editando === true) {
+    //     formNotas.className = 'note note--editing';
+    //     inputTitulo.className = 'note__title note--editing';
+    //     inputTexto.className = 'note__body note__body--editing';
     // }
 
-
-    if (notaAlterada.editando === true) {
-        formNotas.className = 'note note--editing';
-        inputTitulo.className = 'note__title note--editing';
-        inputTexto.className = 'note__body note__body--editing';
+    if (index !== undefined && !notaAlterada.editando) {
+        props.onClick = () => editarNota(index)
     }
 
     // return React.createElement(Form, propsForm, children)
@@ -126,3 +119,17 @@ function FormNotas({notaAtual, index, adicionarNota, excluirNota, editarNota}) {
 export default FormNotas;
 
 
+// if (index === undefined) {
+    //     // template nova nota
+    //     children = [inputTitulo, inputTexto, botaoSalvar]
+    // } else {
+
+    //     if (notaAlterada.editando === true) {
+            
+    //         children = [botaoExcluir, inputTitulo, inputTexto, botaoSalvar];
+
+    //     } else {
+    //         props.onClick = () => editarNota(index);
+    //         children = [botaoExcluir, inputTitulo, inputTexto];
+    //     }
+    // }

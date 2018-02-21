@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import Page from './components/Page'
+import Page from './components/page'
 
 
 ReactDOM.render( 

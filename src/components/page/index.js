@@ -1,8 +1,10 @@
 import React from 'react'
-import SectionNotas from './secaoNotasReact'
-import FormNotas from './FormNotasReact'
-import Nota from '../Nota'
-import NovaLista from '../ClasseNovaLista'
+import SectionNotas from '../secaoNotasReact'
+import FormNotas from '../FormNotasReact'
+import Nota from '../../Nota'
+import NovaLista from '../../ClasseNovaLista'
+
+import './page.css'
 
 
 
@@ -83,7 +85,7 @@ class Page extends React.Component {
 
     render() {
 
-        const props = { className: 'container' }
+        // const props = { className: 'container' }
 
         let formNotas = montaFormNotas(this.adicionarNota, this.excluirNota, this.editarNota)
         let secaoNotas = montaSecaoNotas(this.state.listaNotas, this.adicionarNota, this.excluirNota, this.editarNota)
@@ -93,7 +95,7 @@ class Page extends React.Component {
         // return React.createElement('main', props, children)
 
         return (
-            <main {...props}>
+            <main className='container'>
                 {formNotas}
                 {secaoNotas}
             </main>

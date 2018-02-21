@@ -3,20 +3,19 @@ import Section from './sectionReact'
 import FormNotas from './FormNotasReact'
 
 
-const createFormNotas = (adicionarNota, excluirNota, editarNota, listaNotas, index) => {
+const createFormNotas = (adicionarNota, excluirNota, editarNota, notaAtual, index) => {
 
     const props = {
-        key: index,
-        notaAtual: listaNotas.pegar(index),
-        index: index,
-        adicionarNota: adicionarNota,
-        excluirNota: excluirNota,
-        editarNota: editarNota
+        notaAtual,
+        index,
+        adicionarNota,
+        excluirNota,
+        editarNota
     }
 
     // return React.createElement(FormNotas, props)
     return (
-        <FormNotas {...props} />
+        <FormNotas key={index}  {...props} />
     )
 
 }
@@ -32,7 +31,7 @@ function SecaoNotas({ listaNotas, adicionarNota, excluirNota, editarNota }) {
     return (
         <Section {...props}>
             {listaNotas.pegarTodos().map((notaAtual, index) => (
-                createFormNotas(adicionarNota, excluirNota, editarNota, listaNotas, index)
+                createFormNotas(adicionarNota, excluirNota, editarNota, notaAtual, index)
             ))}
         </Section>
     )
