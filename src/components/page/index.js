@@ -5,6 +5,7 @@ import Nota from '../../Nota'
 import NovaLista from '../../ClasseNovaLista'
 
 import './page.css'
+// import flor from './flor.png'
 
 
 
@@ -89,6 +90,8 @@ class Page extends React.Component {
 
         let formNotas = montaFormNotas(this.adicionarNota, this.excluirNota, this.editarNota)
         let secaoNotas = montaSecaoNotas(this.state.listaNotas, this.adicionarNota, this.excluirNota, this.editarNota)
+
+        // cosnole.log('I get called from print.js!');
 
         // const children = [formNotas, secaoNotas]
 

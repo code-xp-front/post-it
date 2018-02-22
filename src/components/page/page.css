@@ -1,4 +1,12 @@
+@font-face {
+    font-family: 'Quicksand';
+    src: url('./fonts/Quicksand.otf') format('opentype');
+    font-style: normal;
+}
+
 .container {
     max-width: 80%;
     margin: 0 auto;
+    background: url('./img/img.png');
+    font-family: 'Quicksand', sans-serif;
 }
