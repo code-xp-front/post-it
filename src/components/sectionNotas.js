@@ -18,7 +18,7 @@ function montaFormNotas(posicao, notaAtual, adicionarNota, removerNota, editarFo
 function SectionNotas({ listaNotas, adicionarNota, removerNota, editarFormulario }) {
     const props = { className: 'notes' }
 
-    const children = listaNotas.pegaTodos().map((notaAtual, posicao) => (
+    const children = listaNotas.map((notaAtual, posicao) => (
         montaFormNotas(posicao, notaAtual, adicionarNota, removerNota, editarFormulario)
     ))
 

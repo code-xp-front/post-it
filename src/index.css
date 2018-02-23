@@ -1,0 +1,13 @@
+html, body, #root {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    box-sizing: border-box;
+    padding: 1rem 0;
+    margin: 0;
+    background-image: url('./background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
