@@ -28,16 +28,4 @@ export default class Nota {
     set editando(novoEditando) {
         this._editando = novoEditando
     }
-
-    estaCadastrando() {
-        return this.posicao === undefined;
-    }
-
-    estaVisualizando() {
-        return this.posicao !== undefined && !this.editando
-    }
-
-    estaAlterando() {
-        return this.posicao !== undefined && this.editando
-    }
 }

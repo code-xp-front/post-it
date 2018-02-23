@@ -1,0 +1,22 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 60px;
+    min-height: 60px;
+    padding: 0.5rem calc(10% + 1rem);
+    position: relative;
+    background: #fff;
+    border-bottom: 1px solid #d4dadf;
+    box-shadow: 0 1px 1px 0 #f0f1f4;
+    z-index: 20;
+}
+
+.navbar__logo {
+    margin: 0;
+}
+
+.navbar__logout {
+    color: #000;
+    text-decoration: none;
+}

@@ -1,0 +1,13 @@
+.home {
+    height: 100%;
+    width: 100%;
+    padding: 1.5rem 1rem;
+    background-image: url('./cortica.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.home__container {
+    max-width: 80%;
+    margin: 0 auto;
+}
