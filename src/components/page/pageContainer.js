@@ -1,11 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {adicionarNota, removerNota, habilitarEdicao, alterarNota} from './actions'
+import {adicionarNota, removerNota, habilitarEdicao, alterarNota} from '../../actions'
 import Page from './index'
 
 
 
-const mapStateToProps = state => { listaNotas: state.notas }
+const mapStateToProps = state => {
+    // console.log(state)
+    return { listaNotas: state.listaNotas }
+}
 
 const mapDispatchToProps = dispatch => (
     {
@@ -20,7 +23,7 @@ const mapDispatchToProps = dispatch => (
             
         },
 
-        removerNota: (evento, index) => {
+        excluirNota: (evento, index) => {
             evento.stopPropagation();
             dispatch(removerNota(index));
         },

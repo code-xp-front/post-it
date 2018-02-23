@@ -6,7 +6,7 @@ import FormNotas from './FormNotasReact'
 const createFormNotas = (adicionarNota, excluirNota, editarNota, notaAtual, index) => {
 
     const props = {
-        notaAtual: listaNotas[index],
+        notaAtual,
         key: index,
         index,
         adicionarNota,

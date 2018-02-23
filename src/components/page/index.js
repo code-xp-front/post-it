@@ -17,7 +17,8 @@ const montaFormNotas = (adicionarNota, excluirNota, editarNota) => {
         editarNota
     }
 
-    return React.createElement(FormNotas, props)
+    // return React.createElement(FormNotas, props)
+    return <FormNotas {...props} />
 }
 
 const montaSecaoNotas = (listaNotas, adicionarNota, excluirNota, editarNota) => {
@@ -30,17 +31,18 @@ const montaSecaoNotas = (listaNotas, adicionarNota, excluirNota, editarNota) => 
         editarNota
     }
 
-    return React.createElement(SectionNotas, props)
+    // return React.createElement(SectionNotas, props)
+    return <SectionNotas {...props} />
 }
 
 
-const Page = (listaNotas, adicionarNota, excluirNota, editarNota) => {
+const Page = ({listaNotas, adicionarNota, excluirNota, editarNota}) => {
 
 
     const props = { className: 'container' }
 
-    let formNotas = montaFormNotas(this.adicionarNota, this.excluirNota, this.editarNota)
-    let secaoNotas = montaSecaoNotas(this.state.listaNotas, this.adicionarNota, this.excluirNota, this.editarNota)
+    let formNotas = montaFormNotas(adicionarNota, excluirNota, editarNota)
+    let secaoNotas = montaSecaoNotas(listaNotas, adicionarNota, excluirNota, editarNota)
 
 
     return (

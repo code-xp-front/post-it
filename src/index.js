@@ -4,7 +4,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import redutor from './reducers'
 
-import Page from './components/page'
+import Page from './components/page/pageContainer'
 
 let store = createStore(redutor)
 
