@@ -5,14 +5,6 @@ import Nota from '../../Nota'
 import NovaLista from '../../ClasseNovaLista'
 
 import './page.css'
-// import flor from './flor.png'
-
-
-
-// let secao = document.getElementsByClassName('notes')[0];
-
-
-// const listaNotas = new NovaLista(observaMudancasNaLista);
 
 
 const montaFormNotas = (adicionarNota, excluirNota, editarNota) => {
@@ -42,71 +34,64 @@ const montaSecaoNotas = (listaNotas, adicionarNota, excluirNota, editarNota) => 
 }
 
 
-class Page extends React.Component {
-
-    constructor(props) {
-        super(props)
-
-        this.atualizaPagina = this.atualizaPagina.bind(this)
-        this.adicionarNota = this.adicionarNota.bind(this)
-        this.editarNota = this.editarNota.bind(this)
-        this.excluirNota = this.excluirNota.bind(this)
-
-        this.state = {
-            listaNotas: new NovaLista(this.atualizaPagina)
-        }
-    }
-
-    atualizaPagina(novaLista) {
-        console.log('quem é this' + this)
-        this.setState({
-            listaNotas: novaLista
-        })
-    }
-
-    editarNota(index) {
-        this.state.listaNotas.editar(index)
-    }
-
-    adicionarNota(titulo, texto, formulario, index) {
-
-        if (this.state.listaNotas.pegar(index)) {
-            this.state.listaNotas.salvar(index, titulo, texto);
-        } else {
-            this.state.listaNotas.adicionar(titulo, texto);
-            formulario.reset();
-        }
-    }
-
-    excluirNota(evento, index) {
-        evento.stopPropagation();
-        this.state.listaNotas.remover(index);
-    }
+const Page = (listaNotas, adicionarNota, excluirNota, editarNota) => {
 
 
-    render() {
+    const props = { className: 'container' }
 
-        // const props = { className: 'container' }
+    let formNotas = montaFormNotas(this.adicionarNota, this.excluirNota, this.editarNota)
+    let secaoNotas = montaSecaoNotas(this.state.listaNotas, this.adicionarNota, this.excluirNota, this.editarNota)
 
-        let formNotas = montaFormNotas(this.adicionarNota, this.excluirNota, this.editarNota)
-        let secaoNotas = montaSecaoNotas(this.state.listaNotas, this.adicionarNota, this.excluirNota, this.editarNota)
 
-        // cosnole.log('I get called from print.js!');
+    return (
+        <main {...props}>
+            {formNotas}
+            {secaoNotas}
+        </main>
+    )
 
-        // const children = [formNotas, secaoNotas]
-
-        // return React.createElement('main', props, children)
-
-        return (
-            <main className='container'>
-                {formNotas}
-                {secaoNotas}
-            </main>
-        )
-
-    }
 }
 
 export default Page;
 
 // ♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥♥
+
+// constructor(props) {
+    //     super(props)
+
+    //     this.atualizaPagina = this.atualizaPagina.bind(this)
+    //     this.adicionarNota = this.adicionarNota.bind(this)
+    //     this.editarNota = this.editarNota.bind(this)
+    //     this.excluirNota = this.excluirNota.bind(this)
+
+    //     this.state = {
+    //         listaNotas: new NovaLista(this.atualizaPagina)
+    //     }
+    // }
+
+// const atualizaPagina = (novaLista) => {
+//         // console.log('quem é this' + this)
+//         this.setState({
+//             listaNotas: novaLista
+//         })
+//     }
+
+// const editarNota = (index) => {
+//         listaNotas.editar(index)
+//     }
+
+// const adicionarNota = (titulo, texto, formulario, index) => {
+
+//         if (listaNotas.pegar(index)) {
+//             listaNotas.salvar(index, titulo, texto);
+//         } else {
+//             listaNotas.adicionar(titulo, texto);
+//             formulario.reset();
+//         }
+//     }
+
+// const excluirNota = (evento, index) => {
+//         evento.stopPropagation();
+//         listaNotas.remover(index);
+// }
+

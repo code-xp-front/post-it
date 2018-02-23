@@ -20,14 +20,14 @@ export function removerNota(index) {
     }
 }
 
-export function editarNota(index) {
+export function habilitarEdicao(index) {
     return {
         type: EDIT_NOTE,
         index
     }
 }
 
-export function salvarNota(index, titulo, texto) {
+export function alterarNota(index, titulo, texto) {
     return {
         type: SAVE_NOTE,
         index,

@@ -6,7 +6,8 @@ import FormNotas from './FormNotasReact'
 const createFormNotas = (adicionarNota, excluirNota, editarNota, notaAtual, index) => {
 
     const props = {
-        notaAtual,
+        notaAtual: listaNotas[index],
+        key: index,
         index,
         adicionarNota,
         excluirNota,
@@ -15,7 +16,7 @@ const createFormNotas = (adicionarNota, excluirNota, editarNota, notaAtual, inde
 
     // return React.createElement(FormNotas, props)
     return (
-        <FormNotas key={index}  {...props} />
+        <FormNotas {...props} />
     )
 
 }
@@ -30,7 +31,7 @@ function SecaoNotas({ listaNotas, adicionarNota, excluirNota, editarNota }) {
     // return React.createElement(Section, props, children);
     return (
         <Section {...props}>
-            {listaNotas.pegarTodos().map((notaAtual, index) => (
+            {listaNotas.map((notaAtual, index) => (
                 createFormNotas(adicionarNota, excluirNota, editarNota, notaAtual, index)
             ))}
         </Section>
