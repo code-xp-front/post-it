@@ -1,8 +1,8 @@
 
-const ADD_NOTE = 'ADD_NOTE'
-const REMOVE_NOTE = 'REMOVE_NOTE'
-const EDIT_NOTE = 'EDIT_NOTE'
-const SAVE_NOTE = 'SAVE_NOTE'
+export const ADD_NOTE = 'ADD_NOTE'
+export const REMOVE_NOTE = 'REMOVE_NOTE'
+export const EDIT_NOTE = 'EDIT_NOTE'
+export const SAVE_NOTE = 'SAVE_NOTE'
 
 
 export function adicionarNota(titulo, texto) {
