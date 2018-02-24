@@ -1,14 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Nota from '../../nota'
-import FormNotas from '../formNotas'
-import SectionNotas from '../sectionNotas'
+import { Redirect } from 'react-router-dom'
+import Nota from '../../../nota'
+import FormNotas from '../../formNotas'
+import SectionNotas from '../../sectionNotas'
 import { 
     adicionaNota, 
     removeNota, 
     habilitaEdicao, 
     alteraNota 
-} from '../../actions'
+} from '../../../actions'
 import './home.css'
 
 
@@ -34,23 +35,27 @@ function montaSectionNotas(listaNotas, adicionarNota, removerNota, editarFormula
     return <SectionNotas {...props} />
 }
 
-function Home({ listaNotas, adicionarNota, removerNota, editarFormulario }) {
+function Home({ usuario, listaNotas, adicionarNota, removerNota, editarFormulario }) {
     const props = { className: 'home' }
 
     let formNotas = montaFormNotas(adicionarNota, removerNota, editarFormulario)
     let sectionNotas = montaSectionNotas(listaNotas, adicionarNota, removerNota, editarFormulario)
 
-    return (
+
+    return usuario ? (
         <main {...props}>
             <article className="home__container">
                 {formNotas}
                 {sectionNotas}
             </article>
         </main>
+    ) : (
+        <Redirect to="/login" />
     )
 }
 
 const mapStateToProps = state => ({
+    usuario: state.usuario,
     listaNotas: state.notas
 })
 

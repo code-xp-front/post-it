@@ -2,6 +2,9 @@ export const ADICIONA_NOTA = 'ADICIONA_NOTA'
 export const REMOVE_NOTA = 'REMOVE_NOTA'
 export const HABILITA_EDICAO = 'HABILITA_EDICAO'
 export const ALTERA_NOTA = 'ALTERA_NOTA'
+export const LOGA_USUARIO = 'LOGA_USUARIO'
+export const DESLOGA_USUARIO = 'DESLOGA_USUARIO'
+
 
 export function adicionaNota(titulo, texto) {
     return {
@@ -31,5 +34,17 @@ export function alteraNota(posicao, titulo, texto) {
         posicao,
         titulo,
         texto
+    }
+}
+
+export function logaUsuario() {
+    return {
+        type: LOGA_USUARIO
+    }
+}
+
+export function deslogaUsuario() {
+    return {
+        type: DESLOGA_USUARIO,
     }
 }

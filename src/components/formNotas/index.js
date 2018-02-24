@@ -1,9 +1,11 @@
 import React from 'react'
-import Form from './form.js'
-import FormInput from './formInput.js'
-import FormTextarea from './formTextarea.js'
-import FormButton from './formButton.js'
-import Nota from '../nota'
+import FaClose from 'react-icons/lib/fa/close'
+import Form from '../form'
+import FormInput from '../form/formInput'
+import FormTextarea from '../form/formTextarea'
+import FormButton from '../form/formButton'
+import Nota from '../../nota'
+import './formNotas.css'
 
 
 function montaInputTitulo(notaCopiada, posicao) {
@@ -47,9 +49,7 @@ function montaButtonRemover(removerNota, posicao) {
         onClick: event => removerNota(event, posicao)
     }
 
-    const children = <i className='fa fa-times' aria-hidden={true} />
-
-    return <FormButton {...props}>{children}</FormButton>
+    return <FormButton {...props}><FaClose /></FormButton>
 }
 
 function montaButtonConcluir(adicionarNota, notaCopiada, posicao) {

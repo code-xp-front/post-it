@@ -1,6 +1,7 @@
 import React from 'react'
-import Section from './section'
-import FormNotas from './formNotas'
+import Section from '../section'
+import FormNotas from '../formNotas'
+import './secaoNotas.css'
 
 
 function montaFormNotas(posicao, notaAtual, adicionarNota, removerNota, editarFormulario) {
