@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.18.0",
+    "express": "^4.16.2",
     "next": "^5.0.0",
     "normalize.css": "^8.0.0",
     "react": "^16.2.0",
