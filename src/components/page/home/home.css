@@ -5,6 +5,7 @@
     background-image: url('./moorgate-coworking-46.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    overflow: auto;
 }
 
 .home__container {

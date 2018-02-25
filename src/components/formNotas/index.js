@@ -8,7 +8,7 @@ import Nota from '../../nota'
 import './formNotas.css'
 
 
-function montaInputTitulo(notaCopiada, posicao) {
+function montaInputTitulo(notaCopiada) {
     const props = {
         className: 'note__title',
         type: 'text',
@@ -18,14 +18,14 @@ function montaInputTitulo(notaCopiada, posicao) {
         onChange: event => notaCopiada.titulo = event.target.value
     }
 
-    if (posicao !== undefined && !notaCopiada.editando) {
+    if (notaCopiada.posicao !== undefined && !notaCopiada.editando) {
         props.readOnly = true
     }
 
     return <FormInput {...props} />
 }
 
-function montaTextareaTexto(notaCopiada, posicao) {
+function montaTextareaTexto(notaCopiada) {
     const props = {
         className: 'note__body', 
         name: 'texto', 
@@ -35,29 +35,29 @@ function montaTextareaTexto(notaCopiada, posicao) {
         onChange: event => notaCopiada.texto = event.target.value
     }
 
-    if (posicao !== undefined && !notaCopiada.editando) {
+    if (notaCopiada.posicao !== undefined && !notaCopiada.editando) {
         props.readOnly = true
     }
 
     return <FormTextarea {...props} />
 }
 
-function montaButtonRemover(removerNota, posicao) {
+function montaButtonRemover(removerNota, notaCopiada) {
     const props = {
         className: 'note__control', 
         type: 'button', 
-        onClick: event => removerNota(event, posicao)
+        onClick: event => removerNota(event, notaCopiada.posicao)
     }
 
     return <FormButton {...props}><FaClose /></FormButton>
 }
 
-function montaButtonConcluir(adicionarNota, notaCopiada, posicao) {
+function montaButtonConcluir(adicionarNota, notaCopiada) {
     const props = {
         className: 'note__control', 
         type: 'button', 
         onClick: event => {
-            adicionarNota(notaCopiada.titulo, notaCopiada.texto, event.target.form, posicao)
+            adicionarNota(notaCopiada.titulo, notaCopiada.texto, event.target.form, notaCopiada.posicao)
         }
     }
 
@@ -66,25 +66,25 @@ function montaButtonConcluir(adicionarNota, notaCopiada, posicao) {
     return <FormButton {...props}>{children}</FormButton>
 }
 
-function FormNotas({ posicao, notaAtual, adicionarNota, removerNota, editarFormulario }) {
-    let notaCopiada = new Nota(notaAtual.titulo, notaAtual.texto, notaAtual.editando)
+function FormNotas({ notaAtual, adicionarNota, removerNota, editarFormulario }) {
+    let notaCopiada = new Nota(notaAtual.posicao, notaAtual.titulo, notaAtual.texto, notaAtual.editando)
     
-    let inputTitulo = montaInputTitulo(notaCopiada, posicao)
-    let textareaTexto = montaTextareaTexto(notaCopiada, posicao)
-    let buttonRemover = montaButtonRemover(removerNota, posicao)
-    let buttonConcluir = montaButtonConcluir(adicionarNota, notaCopiada, posicao)
+    let inputTitulo = montaInputTitulo(notaCopiada)
+    let textareaTexto = montaTextareaTexto(notaCopiada)
+    let buttonRemover = montaButtonRemover(removerNota, notaCopiada)
+    let buttonConcluir = montaButtonConcluir(adicionarNota, notaCopiada)
     
     let props = { className: 'note' }
-    if (posicao !== undefined && !notaCopiada.editando) {
-        props.onClick = () => editarFormulario(posicao)
+    if (notaCopiada.posicao !== undefined && !notaCopiada.editando) {
+        props.onClick = () => editarFormulario(notaCopiada.posicao)
     }
 
     return (
         <Form {...props}>
-            {posicao !== undefined && notaCopiada.editando && buttonRemover}
+            {notaCopiada.posicao !== undefined && notaCopiada.editando && buttonRemover}
             {inputTitulo}
             {textareaTexto}
-            {(posicao === undefined || notaCopiada.editando) && buttonConcluir}
+            {(notaCopiada.posicao === undefined || notaCopiada.editando) && buttonConcluir}
         </Form>
     )
 }

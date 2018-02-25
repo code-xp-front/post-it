@@ -34,8 +34,8 @@ const Navbar = ({ usuario, deslogaUsuario }) => (
             )}
             {usuario && (
             <li>
-                <a className="navbar-pages__link" onClick={deslogaUsuario}>
-                    <FaPowerOff /> Sair
+                <a className="navbar-pages__link navbar-pages__link--sair" onClick={deslogaUsuario}>
+                    <FaPowerOff className="navbar-pages-link-icon"/> Sair
                 </a>
             </li>
             )}

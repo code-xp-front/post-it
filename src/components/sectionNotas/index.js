@@ -4,26 +4,15 @@ import FormNotas from '../formNotas'
 import './secaoNotas.css'
 
 
-function montaFormNotas(posicao, notaAtual, adicionarNota, removerNota, editarFormulario) {
-    const props = {
-        posicao,
-        notaAtual,
-        removerNota,
-        adicionarNota,
-        editarFormulario,
-    }
-
-    return <FormNotas key={posicao} {...props} />
-}
-
 function SectionNotas({ listaNotas, adicionarNota, removerNota, editarFormulario }) {
-    const props = { className: 'notes' }
-
-    const children = listaNotas.map((notaAtual, posicao) => (
-        montaFormNotas(posicao, notaAtual, adicionarNota, removerNota, editarFormulario)
-    ))
-
-    return <Section {...props}>{children}</Section>
+    return (
+        <Section className="notes">
+            {listaNotas.map((notaAtual, posicao) => {
+                const propsFormNotas = { notaAtual, adicionarNota, removerNota, editarFormulario }
+                return <FormNotas key={posicao} {...propsFormNotas} />
+            })}
+        </Section>
+    )
 }
 
 export default SectionNotas

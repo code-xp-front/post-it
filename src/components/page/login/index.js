@@ -18,9 +18,9 @@ const Login = ({ usuario, logaUsuario }) => (
             <p>
                 Seja Bem vindo(a),<br />Entre para ver os seus post-it.
             </p>
-            <Form onSubmit={logaUsuario}>
-                <FormInput className="login__form-input" type="email" placeholder="E-mail" aria-label="email" />
-                <FormInput className="login__form-input" type="password" placeholder="senha" aria-label="senha" />
+            <Form onSubmit={event => logaUsuario(event)}>
+                <FormInput className="login__form-input" type="email" placeholder="E-mail" autoComplete="email" aria-label="email" />
+                <FormInput className="login__form-input" type="password" placeholder="Senha" autoComplete="current-password" aria-label="senha" />
                 <FormButton className="login__form-button" >Entrar</FormButton>
             </Form>
         </Container>
@@ -32,7 +32,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    logaUsuario: () => {
+    logaUsuario: (event) => {
+        event.preventDefault()
         dispatch(logaUsuario())
     }
 })

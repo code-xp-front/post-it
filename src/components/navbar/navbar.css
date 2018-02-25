@@ -58,6 +58,14 @@
     margin-bottom: 1rem;
 }
 
+.navbar-pages__link--sair {
+    display: flex;
+}
+
+.navbar-pages-link-icon {
+    margin-right: 0.5rem;
+}
+
 @media (min-width: 768px) {
     .navbar-menu-input, .navbar-menu-label {
         display: none;

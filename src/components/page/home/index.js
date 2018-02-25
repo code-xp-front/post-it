@@ -5,53 +5,37 @@ import Nota from '../../../nota'
 import FormNotas from '../../formNotas'
 import SectionNotas from '../../sectionNotas'
 import { 
+    listaNotas, 
     adicionaNota, 
     removeNota, 
     habilitaEdicao, 
-    alteraNota 
+    alteraNota
 } from '../../../actions'
 import './home.css'
 
 
-function montaFormNotas(adicionarNota, removerNota, editarFormulario) {
-    const props = {
-        notaAtual: new Nota('', ''), 
-        adicionarNota, 
-        removerNota, 
-        editarFormulario
+class Home extends React.Component {
+    componentDidMount() {
+        this.props.buscarNotas()
     }
 
-    return <FormNotas {...props} />
-}
-
-function montaSectionNotas(listaNotas, adicionarNota, removerNota, editarFormulario) {
-    const props = {
-        listaNotas, 
-        adicionarNota, 
-        removerNota, 
-        editarFormulario
+    render () {
+        const { usuario, listaNotas, adicionarNota, removerNota, editarFormulario } = this.props
+        const notaAtual = new Nota(undefined, '', '')
+        const propsFormNotas = { adicionarNota, removerNota, editarFormulario }
+        const propsSectionNotas = { listaNotas, adicionarNota, removerNota, editarFormulario }
+        
+        return usuario ? (
+            <main className="home">
+                <article className="home__container">
+                    <FormNotas notaAtual={notaAtual} {...propsFormNotas} />
+                    <SectionNotas {...propsSectionNotas} />
+                </article>
+            </main>
+        ) : (
+            <Redirect to="/login" />
+        )
     }
-
-    return <SectionNotas {...props} />
-}
-
-function Home({ usuario, listaNotas, adicionarNota, removerNota, editarFormulario }) {
-    const props = { className: 'home' }
-
-    let formNotas = montaFormNotas(adicionarNota, removerNota, editarFormulario)
-    let sectionNotas = montaSectionNotas(listaNotas, adicionarNota, removerNota, editarFormulario)
-
-
-    return usuario ? (
-        <main {...props}>
-            <article className="home__container">
-                {formNotas}
-                {sectionNotas}
-            </article>
-        </main>
-    ) : (
-        <Redirect to="/login" />
-    )
 }
 
 const mapStateToProps = state => ({
@@ -60,6 +44,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+    buscarNotas: () => {
+        dispatch(listaNotas())
+    },
     adicionarNota: (titulo, texto, formulario, posicao) => {
         if (posicao === undefined) {
             dispatch(adicionaNota(titulo, texto))
