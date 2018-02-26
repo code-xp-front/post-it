@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 const Index = () => (
     <div>
+        Oie
         <Link href="/about">
             <a>About Page</a>
         </Link>
