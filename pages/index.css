@@ -1,4 +1,18 @@
-.home {
+* {
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+.index {
     height: calc(100% - 60px);
     width: 100%;
     padding: 1.5rem 1rem;
@@ -8,7 +22,7 @@
     overflow: auto;
 }
 
-.home__container {
+.index__container {
     max-width: 80%;
     margin: 0 auto;
 }

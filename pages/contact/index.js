@@ -1,10 +1,10 @@
 import React from 'react'
-import Container from '../../container'
+import Layout from '../../components/layout'
 
 
-const AboutUs = () => (
-    <Container>
-        <h1>Quem somos</h1>
+const Contact = () => (
+    <Layout>
+        <h1>Contato</h1>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
             Curabitur vitae augue mi. Nulla ligula diam, dignissim et dapibus nec, 
@@ -17,8 +17,8 @@ const AboutUs = () => (
             dictum nec ipsum.
             Morbi eleifend eget velit a convallis
         </p>
-    </Container>
+    </Layout>
 )
 
 
-export default AboutUs
+export default Contact

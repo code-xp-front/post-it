@@ -1,19 +1,22 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
-import Container from '../../container'
-import Form from '../../form'
-import FormInput from '../../form/formInput'
-import FormButton from '../../form/formButton'
-import { logaUsuario } from '../../../actions'
+import withRedux from "next-redux-wrapper";
+import { Router } from 'next/router'
+import Layout from '../../components/layout'
+import Form from '../../components/form'
+import FormInput from '../../components/form/formInput'
+import FormButton from '../../components/form/formButton'
+import { logaUsuario } from '../../actions'
+import makeStore from '../../store'
 import './login.css'
 
 
-const Login = ({ usuario, logaUsuario }) => (
-    usuario ? (
-        <Redirect to="/" /> 
-    ) : ( 
-        <Container className="login">
+const Login = ({ usuario, logaUsuario }) => {
+    if (usuario) {
+        Router.push('/index')
+     }
+     
+     return ( 
+        <Layout className="login">
             <h1>Login</h1>
             <p>
                 Seja Bem vindo(a),<br />Entre para ver os seus post-it.
@@ -23,9 +26,9 @@ const Login = ({ usuario, logaUsuario }) => (
                 <FormInput className="login__form-input" type="password" placeholder="Senha" autoComplete="current-password" aria-label="senha" />
                 <FormButton className="login__form-button" >Entrar</FormButton>
             </Form>
-        </Container>
+        </Layout>
     )
-)
+}
 
 const mapStateToProps = state => ({
     usuario: state.usuario
@@ -39,4 +42,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default withRedux(makeStore, mapStateToProps, mapDispatchToProps)(Login)

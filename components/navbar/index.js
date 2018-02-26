@@ -2,7 +2,7 @@ import React from 'react'
 import FaBars from 'react-icons/lib/fa/bars'
 import FaPowerOff from 'react-icons/lib/fa/power-off'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link } from 'next/link'
 import { deslogaUsuario } from '../../actions'
 import './navbar.css'
 
@@ -16,18 +16,18 @@ const Navbar = ({ usuario, deslogaUsuario }) => (
         <label className="navbar-menu-label" htmlFor="menu-hamburguer"><FaBars /></label>
         <ul className="navbar-pages">
             <li>
-                <Link className="navbar-pages__link" to="/quem-somos">
+                <Link className="navbar-pages__link" href="/quem-somos">
                     Quem somos
                 </Link>
             </li>
             <li>
-                <Link className="navbar-pages__link" to="/contato">
+                <Link className="navbar-pages__link" href="/contato">
                     Contato
                 </Link>
             </li>
             {!usuario && (
             <li>
-                <Link className="navbar-pages__link" to="/login">
+                <Link className="navbar-pages__link" href="/login">
                     Login
                 </Link>
             </li>
