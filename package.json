@@ -22,7 +22,7 @@
     "prestart": "next build",
     "dev": "next",
     "build": "next build",
-    "start": "next start -p $PORT",
+    "start": "next start -p $PORT"
   },
   "repository": {
     "type": "git",
