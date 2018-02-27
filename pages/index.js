@@ -22,7 +22,7 @@ class Index extends React.Component {
         const propsSectionNotas = { listaNotas, adicionarNota, removerNota, editarFormulario }
         
         if (!usuario) {
-            Router.push('/login')
+            props.redirecionaParaLogin()
         }
 
         return (
@@ -35,6 +35,12 @@ class Index extends React.Component {
         )
     }
 }
+
+Index.defaultProps = {
+    redirecionaParaLogin: () => {
+        Router.push('/login')
+    }
+};
 
 const mapStateToProps = state => ({
     usuario: state.usuario,
