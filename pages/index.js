@@ -22,7 +22,7 @@ class Index extends React.Component {
         const propsSectionNotas = { listaNotas, adicionarNota, removerNota, editarFormulario }
         
         if (!usuario) {
-            props.redirecionaParaLogin()
+            this.props.redirecionaParaLogin()
         }
 
         return (
