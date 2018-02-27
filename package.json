@@ -19,10 +19,10 @@
   },
   "devDependencies": {},
   "scripts": {
+    "prestart": "next build",
     "dev": "next",
     "build": "next build",
     "start": "next start -p $PORT",
-    "heroku-postbuild": "next build"
   },
   "repository": {
     "type": "git",
