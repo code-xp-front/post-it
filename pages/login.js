@@ -1,6 +1,6 @@
 import React from 'react'
 import withRedux from "next-redux-wrapper";
-import Router from 'next/router'
+import { withRouter } from 'next/router'
 import Layout from '../components/layout'
 import Form from '../components/form'
 import FormInput from '../components/form/formInput'
@@ -10,9 +10,9 @@ import makeStore from '../store'
 import './login.css'
 
 
-const Login = ({ usuario, logaUsuario }) => {
+const Login = ({ usuario, router, logaUsuario }) => {
     if (usuario) {
-        Router.push('/')
+        router.push('/')
      }
      
      return ( 
@@ -42,4 +42,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-export default withRedux(makeStore, mapStateToProps, mapDispatchToProps)(Login)
+export default withRedux(makeStore, mapStateToProps, mapDispatchToProps)(withRouter(Login))
