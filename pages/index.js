@@ -1,6 +1,6 @@
 import React from 'react'
 import withRedux from "next-redux-wrapper";
-import Router from 'next/router'
+import { withRouter } from 'next/router'
 import Nota from '../nota'
 import Layout from "../components/layout"
 import FormNotas from '../components/formNotas'
@@ -22,7 +22,7 @@ class Index extends React.Component {
         const propsSectionNotas = { listaNotas, adicionarNota, removerNota, editarFormulario }
         
         if (!usuario) {
-            this.props.redirecionaParaLogin()
+            this.props.router.push('/login')
         }
 
         return (
@@ -35,12 +35,6 @@ class Index extends React.Component {
         )
     }
 }
-
-Index.defaultProps = {
-    redirecionaParaLogin: () => {
-        Router.push('/login')
-    }
-};
 
 const mapStateToProps = state => ({
     usuario: state.usuario,
@@ -68,4 +62,4 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-export default withRedux(makeStore, mapStateToProps, mapDispatchToProps)(Index)
+export default withRedux(makeStore, mapStateToProps, mapDispatchToProps)(withRouter(Index))
