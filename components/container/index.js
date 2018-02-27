@@ -3,9 +3,9 @@ import './container.css'
 
 
 const Container = ({ className, children }) => (
-    <article className={['container', className].join(' ')}>
+    <main className={['container', className].join(' ')}>
         {children}
-    </article>
+    </main>
 )
 
 export default Container

@@ -1,14 +1,14 @@
-.home {
-    height: calc(100% - 60px);
-    width: 100%;
+.index {
+    height: calc(100vh - 60px);
+    width: 100vw;
     padding: 1.5rem 1rem;
-    background-image: url('./moorgate-coworking-46.jpg');
+    background-image: url("/static/index-background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     overflow: auto;
 }
 
-.home__container {
+.index__container {
     max-width: 80%;
     margin: 0 auto;
 }

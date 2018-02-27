@@ -1,13 +1,13 @@
 import React from 'react'
-import Container from '../../container'
-import './notFound.css'
+import Layout from '../components/layout'
+import './nao-encontrada.css'
 
 
 const NotFound = () => (
-    <Container className="not-found">
+    <Layout className="not-found">
         <h1 className="not-found__title">Página não encontrada</h1>
         <h2 className="not-found__subtitle">404</h2>
-    </Container>
+    </Layout>
 )
 
 export default NotFound

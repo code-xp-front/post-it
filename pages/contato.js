@@ -1,9 +1,11 @@
 import React from 'react'
-import Container from '../../container'
+import withRedux from "next-redux-wrapper";
+import Layout from '../components/layout'
+import makeStore from '../store'
 
 
 const Contact = () => (
-    <Container>
+    <Layout>
         <h1>Contato</h1>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -17,8 +19,8 @@ const Contact = () => (
             dictum nec ipsum.
             Morbi eleifend eget velit a convallis
         </p>
-    </Container>
+    </Layout>
 )
 
 
-export default Contact
+export default withRedux(makeStore)(Contact)
