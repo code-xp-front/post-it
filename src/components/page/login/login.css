@@ -30,6 +30,13 @@
 .login__form-input + .login__form-input {
     margin-top: 0.5rem;
 }
+
 .login__form-button {
     margin-top: 1.3rem;
+}
+
+.login__form-button:disabled {
+    color: gray;
+    background: lightgray;
+    border-color: lightgray;
 }

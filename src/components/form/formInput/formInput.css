@@ -1,0 +1,8 @@
+.form-input--error {
+    border: 1px solid red !important;
+}
+
+.form-input__helper {
+    color: red;
+    margin: 0.3rem 0 0.2rem;
+}
