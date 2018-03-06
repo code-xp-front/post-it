@@ -1,8 +1,10 @@
 import React from 'react'
+import classnames from 'classnames'
+import './formButton.css'
 
 
-const FormButton = ({ children, ...props }) => (
-    <button {...props}>
+const FormButton = ({ secondary, children, ...props }) => (
+    <button {...props} className={classnames('form-button', {'form-button--secondary': secondary})}>
         {children}
     </button>
 )

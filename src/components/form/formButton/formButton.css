@@ -1,0 +1,14 @@
+.form-button {
+    color: white;
+    background: gray;
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+}
+
+.form-button--secondary {
+    color: gray;
+    background: white;
+    border: 2px solid gray;
+    border-radius: 5px;
+}
