@@ -15,7 +15,7 @@ function montaInputTitulo(notaCopiada) {
         name: 'titulo',
         placeholder: 'Título',
         defaultValue: notaCopiada.titulo,
-        onChange: event => notaCopiada.titulo = event.target.value
+        onChange: (name, value, isInvalid) => notaCopiada.titulo = value
     }
 
     if (notaCopiada.posicao !== undefined && !notaCopiada.editando) {
