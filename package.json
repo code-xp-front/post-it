@@ -35,7 +35,8 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
-    "start": "webpack-dev-server --open",
+    "server": "webpack-dev-server --open",
+    "start": "node server.js",
     "deploy": "gh-pages -d dist"
   },
   "repository": {
