@@ -1,15 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Container from '../../container'
 import Form from '../../form'
 import FormInput from '../../form/formInput'
 import FormButton from '../../form/formButton'
 import { logaUsuario } from '../../../actions'
-import './login.css'
+import './account.css'
 
 
-class Login extends React.Component {
+class Account extends React.Component {
     constructor(props) {
         super(props);
         this.state = { isInvalid: false }
@@ -20,6 +20,7 @@ class Login extends React.Component {
     handleSubmit(event) {
         console.log('enviar dados para API', {
             email: this.email,
+            telefone: this.telefone,
             senha: this.senha
         })
 
@@ -39,37 +40,63 @@ class Login extends React.Component {
                 <Redirect to="/" /> 
             ) : ( 
                 <Container className="login">
-                    <h1>Login</h1>
+                    <h1>Conta</h1>
                     <p>
-                        Seja Bem vindo(a),<br />Entre para ver os seus post-it.
+                        Cadastre-se e adicione muitos post-its!
                     </p>
                     <Form onSubmit={this.handleSubmit}>
                         <FormInput 
-                            className="login__form-input" 
+                            className="account__form-input" 
                             type="email" 
                             name="email"
                             placeholder="E-mail" 
                             autoComplete="email" 
-                            aria-label="email" 
+                            aria-label="Email" 
+                            onChange={this.handleChange}
+                            required />
+
+                        <FormInput 
+                            mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                            className="account__form-input" 
+                            type="tel" 
+                            name="telefone"
+                            placeholder="Telefone"
+                            autoComplete="tel" 
+                            aria-label="Telefone" 
                             onChange={this.handleChange}
                             required />
                         
                         <FormInput 
-                            className="login__form-input" 
+                            className="account__form-input" 
                             type="password" 
                             name="senha"
                             placeholder="Senha" 
                             autoComplete="current-password" 
-                            aria-label="senha"
+                            aria-label="Senha"
                             onChange={this.handleChange}
+                            equals={{
+                                value: this.senhaConfirmada,
+                                error: 'Senhas não conferem'
+                            }}
+                            required />
+                        
+                        <FormInput 
+                            className="account__form-input" 
+                            type="password" 
+                            name="senhaConfirmada"
+                            placeholder="Confirme a senha" 
+                            aria-label="Confirme a senha"
+                            onChange={this.handleChange}
+                            equals={{
+                                value: this.senha,
+                                error: 'Senhas não conferem'
+                            }}
                             required />
                         
                         <FormButton className="login__form-button" disabled={this.state.isInvalid}>
-                            Entrar
+                            Cadastrar
                         </FormButton>
                     </Form>
-
-                    <Link className="login__link" to="/conta">Criar uma conta</Link>
                 </Container>
             )
         )
@@ -88,4 +115,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Account)

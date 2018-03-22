@@ -1,11 +1,11 @@
-.login {
+.account {
     padding: 3rem 0 0;
     display: block;
     max-width: 300px;
     margin: 0 auto;
 }
 
-.login__form-input {
+.account__form-input {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.2rem;
     display: block;
@@ -15,7 +15,7 @@
     border-radius: 5px;
 }
 
-.login__form-button {
+.account__form-button {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.2rem;
     color: #fff;
@@ -27,22 +27,16 @@
     border-radius: 5px;
 }
 
-.login__form-input + .login__form-input {
+.account__form-input + .account__form-input {
     margin-top: 0.5rem;
 }
 
-.login__form-button {
+.account__form-button {
     margin-top: 1.3rem;
 }
 
-.login__form-button:disabled {
+.account__form-button:disabled {
     color: gray;
     background: lightgray;
     border-color: lightgray;
-}
-
-.login__link {
-    display: block;
-    margin-top: 0.75rem;
-    text-align: center;
 }

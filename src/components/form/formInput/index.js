@@ -1,4 +1,5 @@
 import React from 'react'
+import MaskedInput from 'react-text-mask'
 import classnames from 'classnames'
 import './formInput.css'
 
@@ -33,6 +34,12 @@ class FormInput extends React.Component {
             return
         }
 
+        if (this.props.equals && this.props.equals.value && this.props.equals.value !== value) {
+            this.setState({ error: this.props.equals.error })
+            this.props.onChange(name, value, true);
+            return
+        }
+
         this.props.onChange(name, value, false)
         this.setState({ error: '' })
     }
@@ -43,10 +50,18 @@ class FormInput extends React.Component {
 
         return (
             <React.Fragment>
-                <input 
-                    {...props} 
-                    className={classnames(className, {'form-input--error': error})} 
-                    onChange={this.validate} />
+                {props.mask ? (
+                    <MaskedInput
+                        {...props}
+                        className={classnames(className, {'form-input--error': error})} 
+                        onChange={this.validate} />
+                ) : (
+                    <input 
+                        {...props} 
+                        className={classnames(className, {'form-input--error': error})} 
+                        onChange={this.validate} />
+                )}
+                
                 
                 {error && <p className="form-input__helper">{error}</p>}
             </React.Fragment>
