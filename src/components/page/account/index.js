@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import Container from '../../container'
 import Form from '../../form'
 import FormInput from '../../form/formInput'
@@ -93,10 +93,12 @@ class Account extends React.Component {
                             }}
                             required />
                         
-                        <FormButton className="login__form-button" disabled={this.state.isInvalid}>
+                        <FormButton className="account__form-button" disabled={this.state.isInvalid}>
                             Cadastrar
                         </FormButton>
                     </Form>
+
+                    <Link className="account__link" to="/login">Fazer login</Link>
                 </Container>
             )
         )

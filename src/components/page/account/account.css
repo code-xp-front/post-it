@@ -40,3 +40,9 @@
     background: lightgray;
     border-color: lightgray;
 }
+
+.account__link {
+    display: block;
+    margin-top: 0.75rem;
+    text-align: center;
+}
