@@ -34,11 +34,11 @@
     "webpack-dev-server": "^2.11.1"
   },
   "scripts": {
+    "heroku-prebuild": "npm run build",
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
     "server": "webpack-dev-server --open",
-    "start": "node server.js",
-    "deploy": "gh-pages -d dist"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
